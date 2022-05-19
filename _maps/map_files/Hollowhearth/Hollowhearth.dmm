@@ -1,15 +1,15 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
-/turf/open/space/basic,
-/area/space)
-"jV" = (
+/turf/open/floor/plating,
+/area/hallway/primary/central)
+"ow" = (
 /obj/effect/landmark/observer_start,
-/turf/open/space/basic,
-/area/space)
-"Vk" = (
+/turf/open/floor/plating,
+/area/hallway/primary/central)
+"QD" = (
 /obj/effect/landmark/latejoin,
-/turf/open/space/basic,
-/area/space)
+/turf/open/floor/plating,
+/area/hallway/primary/central)
 
 (1,1,1) = {"
 aa
@@ -31753,8 +31753,8 @@ aa
 aa
 aa
 aa
-Vk
-Vk
+QD
+QD
 aa
 aa
 aa
@@ -32010,8 +32010,8 @@ aa
 aa
 aa
 aa
-Vk
-Vk
+QD
+QD
 aa
 aa
 aa
@@ -32267,8 +32267,8 @@ aa
 aa
 aa
 aa
-Vk
-Vk
+QD
+QD
 aa
 aa
 aa
@@ -32524,8 +32524,8 @@ aa
 aa
 aa
 aa
-Vk
-Vk
+QD
+QD
 aa
 aa
 aa
@@ -32781,13 +32781,13 @@ aa
 aa
 aa
 aa
-Vk
-Vk
+QD
+QD
 aa
 aa
 aa
 aa
-jV
+ow
 aa
 aa
 aa
@@ -33038,8 +33038,8 @@ aa
 aa
 aa
 aa
-Vk
-Vk
+QD
+QD
 aa
 aa
 aa
@@ -33295,8 +33295,8 @@ aa
 aa
 aa
 aa
-Vk
-Vk
+QD
+QD
 aa
 aa
 aa
@@ -33552,8 +33552,8 @@ aa
 aa
 aa
 aa
-Vk
-Vk
+QD
+QD
 aa
 aa
 aa
@@ -33809,8 +33809,8 @@ aa
 aa
 aa
 aa
-Vk
-Vk
+QD
+QD
 aa
 aa
 aa
@@ -34066,8 +34066,8 @@ aa
 aa
 aa
 aa
-Vk
-Vk
+QD
+QD
 aa
 aa
 aa
@@ -34323,8 +34323,8 @@ aa
 aa
 aa
 aa
-Vk
-Vk
+QD
+QD
 aa
 aa
 aa
@@ -34580,8 +34580,8 @@ aa
 aa
 aa
 aa
-Vk
-Vk
+QD
+QD
 aa
 aa
 aa
