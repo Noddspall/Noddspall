@@ -768,7 +768,6 @@ SUBSYSTEM_DEF(shuttle)
 	preview_shuttle.movement_force = list("KNOCKDOWN" = 0, "THROW" = 0)
 	preview_shuttle.mode = SHUTTLE_PREARRIVAL//No idle shuttle moving. Transit dock get removed if shuttle moves too long.
 	if(generated_transit)
-		preview_shuttle.destination = "overmap"
 		preview_shuttle.enterTransit()
 	else
 		preview_shuttle.initiate_docking(D)

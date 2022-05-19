@@ -19,15 +19,6 @@
 	anchored = TRUE
 	var/engine_power = 1
 	var/state = ENGINE_WELDED //welding shmelding
-	var/extension_type = /datum/shuttle_extension/engine/burst
-	var/datum/shuttle_extension/engine/extension
-
-/obj/structure/shuttle/engine/Initialize()
-	. = ..()
-	if(extension_type)
-		AddComponent(/datum/component/engine_effect)
-		extension = new extension_type(src)
-		ApplyExtension()
 
 /obj/structure/shuttle/engine/examine(mob/user)
 	. = ..()
@@ -36,20 +27,6 @@
 
 /obj/structure/shuttle/engine/proc/DrawThrust()
 	SEND_SIGNAL(src, COMSIG_ENGINE_DRAWN_POWER)
-
-/obj/structure/shuttle/engine/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
-	if(state == ENGINE_WELDED)
-		ApplyExtension()
-
-/obj/structure/shuttle/engine/proc/ApplyExtension()
-	if(!extension)
-		return
-	extension.ApplyToPosition(get_turf(src))
-
-/obj/structure/shuttle/engine/proc/RemoveExtension()
-	if(!extension)
-		return
-	extension.RemoveExtension()
 
 //Ugh this is a lot of copypasta from emitters, welding need some boilerplate reduction
 /obj/structure/shuttle/engine/can_be_unfasten_wrench(mob/user, silent)
@@ -89,7 +66,6 @@
 				state = ENGINE_WELDED
 				to_chat(user, SPAN_NOTICE("You weld \the [src] to the floor."))
 				alter_engine_power(engine_power)
-				ApplyExtension()
 
 		if(ENGINE_WELDED)
 			if(!I.tool_start_check(user, amount=0))
@@ -103,15 +79,11 @@
 				state = ENGINE_WRENCHED
 				to_chat(user, SPAN_NOTICE("You cut \the [src] free from the floor."))
 				alter_engine_power(-engine_power)
-				RemoveExtension()
 	return TRUE
 
 /obj/structure/shuttle/engine/Destroy()
 	if(state == ENGINE_WELDED)
 		alter_engine_power(-engine_power)
-		RemoveExtension()
-	if(extension)
-		QDEL_NULL(extension)
 	. = ..()
 
 //Propagates the change to the shuttle.
@@ -128,14 +100,12 @@
 	icon_state = "heater"
 	desc = "Directs energy into compressed particles in order to power engines."
 	engine_power = 0 // todo make these into 2x1 parts
-	extension_type = null
 
 /obj/structure/shuttle/engine/platform
 	name = "engine platform"
 	icon_state = "platform"
 	desc = "A platform for engine components."
 	engine_power = 0
-	extension_type = null
 
 /obj/structure/shuttle/engine/propulsion
 	name = "propulsion engine"
@@ -171,7 +141,6 @@
 	name = "engine router"
 	icon_state = "router"
 	desc = "Redirects around energized particles in engine structures."
-	extension_type = null
 
 /obj/structure/shuttle/engine/large
 	name = "engine"

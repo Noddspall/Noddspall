@@ -288,7 +288,6 @@
 	new /obj/item/storage/toolbox/electrical(src)
 	new /obj/item/electronics/apc(src)
 	new /obj/item/electronics/airalarm(src)
-	new /obj/item/circuitboard/machine/propulsion_engine(src)
 
 /obj/structure/closet/crate/build_your_shuttle_extra
 	icon_state = "engi_crate"
@@ -298,4 +297,3 @@
 	new /obj/item/stack/sheet/iron/fifty(src)
 	new /obj/item/stack/sheet/glass/fifty(src)
 	new /obj/item/stack/sheet/mineral/titanium/fifty(src)
-	new /obj/item/circuitboard/machine/propulsion_engine(src)

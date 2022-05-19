@@ -98,8 +98,6 @@
 	ignore += typesof(/obj/item/clothing/head/mob_holder)
 	//Those require connections, and work fine
 	ignore += typesof(/obj/effect/mapping_helpers/smart_pipe)
-	//Those expect to be handled by a datum overmap object
-	ignore += typesof(/obj/effect/abstract/overmap)
 	//Those expect to be handled by the delivery system
 	ignore += typesof(/obj/item/delivery_cargo)
 	//Mold structures expect to be managed by a controller

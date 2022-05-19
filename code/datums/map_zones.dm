@@ -4,7 +4,6 @@
 	var/static/next_id = 0
 	var/next_vlevel_id = 0
 	var/list/traits
-	var/datum/overmap_object/related_overmap_object
 	var/parallax_movedir
 	///Extensions for z levels as overmap objects
 	var/list/all_extensions = list()
@@ -29,11 +28,8 @@
 	/// List of all gravity generators inside of the sub levels of this map zone
 	var/list/gravity_generators = list()
 
-/datum/map_zone/New(passed_name, datum/overmap_object/passed_ov_obj)
+/datum/map_zone/New(passed_name)
 	name = passed_name
-	related_overmap_object = passed_ov_obj
-	if(related_overmap_object)
-		related_overmap_object.related_map_zone = src
 	SSmapping.map_zones += src
 	next_id++ 
 	id = next_id

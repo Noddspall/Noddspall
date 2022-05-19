@@ -19,7 +19,6 @@
 	var/locked = FALSE
 	/// Authorization request cooldown to prevent request spam to admin staff
 	COOLDOWN_DECLARE(request_cooldown)
-	var/uses_overmap = TRUE
 
 /obj/machinery/computer/shuttle/Initialize(mapload)
 	. = ..()
@@ -27,95 +26,16 @@
 		connect_to_shuttle(SSshuttle.get_containing_shuttle(src))
 
 /obj/machinery/computer/shuttle/ui_interact(mob/user, datum/tgui/ui)
-	if(uses_overmap)
-		var/obj/docking_port/mobile/M = SSshuttle.getShuttle(shuttleId)
-		if(!M)
-			return
-		M.possible_destinations = possible_destinations //Because shuttles being dumb with their data structure not making a speck of sense, something to fix another day
-		var/list/dat = list("<center>")
-		var/status_info
-		if(admin_controlled)
-			status_info = "Unauthorized Access"
-		else if(locked)
-			status_info = "Locked"
-		else
-			switch(M.mode)
-				if(SHUTTLE_IGNITING)
-					status_info = "Igniting"
-				if(SHUTTLE_IDLE)
-					status_info = "Idle"
-				if(SHUTTLE_RECHARGING)
-					status_info = "Recharging"
-				else
-					status_info = "In Transit"
-		dat += "STATUS: <b>[status_info]</b>"
-		var/link
-		if(M.mode == SHUTTLE_IDLE)
-			link = "href='?src=[REF(src)];task=overmap_launch'"
-		else
-			link = "class='linkOff'"
-		dat += "<BR><BR><a [link]>Depart to Overmap</a><BR>"
-
-		dat += "<a href='?src=[REF(src)];task=engines_on']>Engines On</a> <a href='?src=[REF(src)];task=engines_off']>Engines Off</a>"
-
-		dat += "<BR><BR><a [M.my_overmap_object ? "href='?src=[REF(src)];task=overmap_view'" : "class='linkOff'"]>Overmap View</a>"
-		dat += "<BR><a [M.my_overmap_object ? "href='?src=[REF(src)];task=overmap_ship_controls'" : "class='linkOff'"]>Ship Controls</a></center>"
-		var/datum/browser/popup = new(user, "shuttle_computer", name, 300, 200)
-		popup.set_content(dat.Join())
-		popup.open()
-	else
-		ui = SStgui.try_update_ui(user, src, ui)
-		if(!ui)
-			ui = new(user, src, "ShuttleConsole", name)
-			ui.open()
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "ShuttleConsole", name)
+		ui.open()
 
 /obj/machinery/computer/shuttle/Topic(href, href_list)
 	var/mob/user = usr
 	if(!isliving(user) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		return
-	var/obj/docking_port/mobile/M = SSshuttle.getShuttle(shuttleId)
-	switch(href_list["task"])
-		if("engines_off")
-			M.TurnEnginesOff()
-			say("Engines offline.")
-		if("engines_on")
-			M.TurnEnginesOn()
-			say("Engines online.")
-		if("overmap_view")
-			if(M.my_overmap_object)
-				M.my_overmap_object.GrantOvermapView(usr, get_turf(src))
-				return
-		if("overmap_ship_controls")
-			if(M.my_overmap_object)
-				M.my_overmap_object.DisplayUI(usr, get_turf(src))
-				return
-		if("overmap_launch")
-			if(!uses_overmap)
-				return
-			if(!launch_check(usr))
-				return
-			if(M.launch_status == ENDGAME_LAUNCHED)
-				to_chat(usr, SPAN_WARNING("You've already escaped. Never going back to that place again!"))
-				return
-			if(no_destination_swap)
-				if(M.mode == SHUTTLE_RECHARGING)
-					to_chat(usr, SPAN_WARNING("Shuttle engines are not ready for use."))
-					return
-				if(M.mode != SHUTTLE_IDLE)
-					to_chat(usr, SPAN_WARNING("Shuttle already in transit."))
-					return
-			if(uses_overmap)
-				if(M.DrawDockingThrust())
-					M.possible_destinations = possible_destinations
-					M.destination = "overmap"
-					M.mode = SHUTTLE_IGNITING
-					M.setTimer(5 SECONDS)
-					say("Shuttle departing. Please stand away from the doors.")
-					log_shuttle("[key_name(usr)] has sent shuttle \"[M]\" into the overmap.")
-					ui_interact(usr)
-					return
-				else
-					say("Engine power insufficient to take off.")
+
 	ui_interact(usr)
 
 /obj/machinery/computer/shuttle/ui_data(mob/user)
@@ -175,8 +95,6 @@
 
 /obj/machinery/computer/shuttle/ui_act(action, params)
 	. = ..()
-	if(uses_overmap)
-		return
 	if(.)
 		return
 	if(!allowed(usr))

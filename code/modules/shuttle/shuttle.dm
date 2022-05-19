@@ -39,7 +39,6 @@
 	///are we registered in SSshuttles?
 	var/registered = FALSE
 
-	var/datum/overmap_object/shuttle/my_overmap_object
 	var/possible_destinations
 	var/obj/docking_port/stationary/freeform_port
 
@@ -372,37 +371,6 @@
 	var/can_move_docking_ports = FALSE
 	var/list/hidden_turfs = list()
 
-	var/list/all_extensions = list()
-	var/list/engine_extensions = list()
-
-	var/overmap_shuttle_type = /datum/overmap_object/shuttle
-
-	/// The direction override that overmap objects representing this shuttle apply to it. Needs to be tracked seperately to the old method because shuttles should work fine without overmap objects. Null means not overriden, direction means it is (with 0 being stop)
-	var/overmap_parallax_dir
-
-/obj/docking_port/mobile/proc/DrawDockingThrust()
-	var/drawn_power = 0
-	for(var/i in engine_extensions)
-		var/datum/shuttle_extension/engine/ext = i
-		if(!ext.turned_on)
-			continue
-		drawn_power += ext.DrawThrust(5)
-
-	if(drawn_power > 1)
-		return TRUE
-	else
-		return FALSE
-
-/obj/docking_port/mobile/proc/TurnEnginesOn()
-	for(var/i in engine_extensions)
-		var/datum/shuttle_extension/engine/ext = i
-		ext.turned_on = TRUE
-
-/obj/docking_port/mobile/proc/TurnEnginesOff()
-	for(var/i in engine_extensions)
-		var/datum/shuttle_extension/engine/ext = i
-		ext.turned_on = FALSE
-
 /obj/docking_port/mobile/register(replace = FALSE)
 	. = ..()
 	if(!id)
@@ -432,11 +400,6 @@
 /obj/docking_port/mobile/Destroy(force)
 	if(force)
 		unregister()
-		for(var/i in all_extensions)
-			var/datum/shuttle_extension/extension = i
-			extension.RemoveFromShuttle()
-		engine_extensions = null
-		all_extensions = null
 		destination = null
 		previous = null
 		QDEL_NULL(assigned_transit) //don't need it where we're goin'!
@@ -586,31 +549,7 @@
 	if(freeform_port)
 		qdel(freeform_port, TRUE)
 		freeform_port = null
-	if(destination == "overmap")
-		mode = SHUTTLE_CALL
-		destination = null
-		timer = INFINITY
-		var/datum/map_zone/mapzone = get_map_zone()
-		var/datum/overmap_object/current_overmap_object = mapzone.related_overmap_object
-		var/spawn_x_coord
-		var/spawn_y_coord
-		var/datum/overmap_sun_system/system_to_spawn_in
-		if(!current_overmap_object)
-			WARNING("NO CURRENT OVERMAP OBJECT WHEN ATTEMPT TO GO TO OVERMAP.")
-			//Fallback to not ruin gameplay
-			spawn_x_coord = 1
-			spawn_y_coord = 1
-			system_to_spawn_in = SSovermap.main_system
-		else
-			spawn_x_coord = current_overmap_object.x
-			spawn_y_coord = current_overmap_object.y
-			system_to_spawn_in = current_overmap_object.current_system
-
-		var/datum/overmap_object/shuttle/spawned_shuttle = new overmap_shuttle_type(system_to_spawn_in, spawn_x_coord, spawn_y_coord)
-		spawned_shuttle.RegisterToShuttle(src)
-		if(my_overmap_object.shuttle_controller)
-			my_overmap_object.shuttle_controller.busy = FALSE
-	else if(!destination)
+	if(!destination)
 		// sent to transit with no destination -> unlimited timer
 		timer = INFINITY
 	var/obj/docking_port/stationary/S0 = get_docked()

@@ -5,7 +5,7 @@
 
 /datum/map_config
 	// Metadata
-	var/config_filename = "_maps/metastation.json"
+	var/config_filename
 	var/defaulted = TRUE  // set to FALSE by LoadConfig() succeeding
 	// Config from maps.txt
 	var/config_max_users = 0
@@ -13,22 +13,14 @@
 	var/voteweight = 1
 	var/votable = FALSE
 
-	// Config actually from the JSON - should default to Meta
-	var/map_name = "Meta Station"
-	var/map_path = "map_files/MetaStation"
-	var/map_file = "MetaStation.dmm"
+	var/map_name
+	var/map_path
+	var/map_file
 
 	var/traits = null
-	var/space_ruin_levels = 3
-
-	var/minetype = "lavaland"
 
 	var/allow_custom_shuttles = TRUE
-	var/shuttles = list(
-		"cargo" = "cargo_box",
-		"ferry" = "ferry_fancy",
-		"whiteship" = "whiteship_box",
-		"emergency" = "emergency_box")
+	var/shuttles = list()
 
 	var/job_faction = FACTION_STATION
 
@@ -37,13 +29,6 @@
 	/// Dictionary of job sub-typepath to template changes dictionary
 	var/job_changes = list()
 
-	/// Type of the global trading hub that will be created
-	var/global_trading_hub_type = /datum/trade_hub/worldwide
-	/// A lazylist of types of trading hubs to be spawned
-	var/localized_trading_hub_types = list(/datum/trade_hub/randomname, /datum/trade_hub/randomname)
-
-	/// The type of the overmap object the station will act as on the overmap
-	var/overmap_object_type = /datum/overmap_object/shuttle/station
 	/// The weather controller the station levels will have
 	var/weather_controller_type = /datum/weather_controller
 	/// Type of our day and night controller, can be left blank for none
@@ -59,16 +44,14 @@
 	/// Possible water colors of the loaded map
 	var/list/water_color
 
-	var/amount_of_planets_spawned = 1
-
 	var/ore_node_seeder_type
 
 	/// Whether the levels of the station levels self loop
-	var/self_looping = TRUE
+	var/self_looping = FALSE
 	/// Amount of margin padding added to each side of the map. This is required to be atleast 2 for selflooping
 	var/map_margin = 5
 
-	var/banned_event_tags = list(TAG_PLANETARY)
+	var/list/banned_event_tags = list()
 
 /datum/map_config/New()
 	//Make sure that all levels in station have the default station traits, unless they're overriden
@@ -87,11 +70,11 @@
 /proc/load_map_config(filename = "data/next_map.json", default_to_box, delete_after, error_if_missing = TRUE)
 	var/datum/map_config/config
 	if (default_to_box)
-		config = new /datum/map_config/metastation()
+		config = new /datum/map_config/hollowhearth()
 		return config
 	config = LoadConfig(filename, error_if_missing)
 	if (!config)
-		config = new /datum/map_config/metastation()  // Fall back to Box
+		config = new /datum/map_config/hollowhearth()  // Fall back to Box
 	if (delete_after)
 		fdel(filename)
 	return config

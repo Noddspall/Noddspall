@@ -109,3 +109,13 @@ require only minor tweaks.
 #define TRANSIT_SIZE_BORDER 3
 
 #define MAP_EDGE_PAD 5
+
+//Helpful getters
+#define STATION_OVERMAP_OBJECT SSmapping.station_map_zone.related_overmap_object
+#define STATION_WEATHER_CONTROLLER SSmapping.station_map_zone.weather_controller
+
+///Due to the lack of even knowing where to put it in, I'm putting my helper defines stuff here
+#define CHECK_AND_PICK_OR_NULL(some_list) some_list ? pick(some_list) : null
+
+#define VECTOR_LENGTH(x,y) sqrt(x**2+y**2)
+#define TWO_POINT_DISTANCE(xa,ya,xb,yb) sqrt(((yb-ya)**2) + ((xa-xb)**2))

@@ -588,7 +588,6 @@
 	icon_state = "dorm_available"
 	light_color = LIGHT_COLOR_BLUE
 	density = FALSE
-	uses_overmap = FALSE
 
 /obj/machinery/computer/shuttle/pod/Initialize(mapload)
 	. = ..()

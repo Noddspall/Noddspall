@@ -593,36 +593,6 @@
 		/obj/item/camera_bug = 1
 	)
 
-/// Space loot spawner. Some sort of random and rare tool. Only a single drop.
-/obj/effect/spawner/lootdrop/space/fancytool
-	lootcount = 1
-	loot = list(
-		/obj/item/wrench/abductor = 1,
-		/obj/item/wirecutters/abductor = 1,
-		/obj/item/screwdriver/abductor = 1,
-		/obj/item/crowbar/abductor = 1,
-		/obj/item/weldingtool/abductor = 1,
-		/obj/item/multitool/abductor = 1,
-		/obj/item/scalpel/alien = 1,
-		/obj/item/hemostat/alien = 1,
-		/obj/item/retractor/alien = 1,
-		/obj/item/circular_saw/alien = 1,
-		/obj/item/surgicaldrill/alien = 1,
-		/obj/item/cautery/alien = 1,
-		/obj/item/wrench/caravan = 1,
-		/obj/item/wirecutters/caravan = 1,
-		/obj/item/screwdriver/caravan = 1,
-		/obj/item/crowbar/red/caravan = 1
-	)
-
-/// Mail loot spawner. Some sort of random and rare building tool. No alien tech here.
-/obj/effect/spawner/lootdrop/space/fancytool/engineonly
-	loot = list(
-		/obj/item/wrench/caravan = 1,
-		/obj/item/wirecutters/caravan = 1,
-		/obj/item/screwdriver/caravan = 1,
-		/obj/item/crowbar/red/caravan = 1
-	)
 
 /// Mail loot spawner. Drop pool of advanced medical tools typically from research. Not endgame content.
 /obj/effect/spawner/lootdrop/space/fancytool/advmedicalonly
