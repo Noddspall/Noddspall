@@ -491,3 +491,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 		M.forceMove(closet)
 		return
 	..() //Call parent as fallback
+
+/obj/effect/landmark/error
+	name = "error"
+	icon_state = "error_room"

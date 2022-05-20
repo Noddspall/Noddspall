@@ -22,11 +22,7 @@
 		/datum/job_department/command,
 		)
 
-	paycheck = PAYCHECK_COMMAND
-	paycheck_department = ACCOUNT_SEC
-
 	display_order = JOB_DISPLAY_ORDER_HEAD_OF_SECURITY
-	bounty_types = CIV_JOB_SEC
 
 	banned_quirks = list(SEC_RESTRICTED_QUIRKS, HEAD_RESTRICTED_QUIRKS)
 

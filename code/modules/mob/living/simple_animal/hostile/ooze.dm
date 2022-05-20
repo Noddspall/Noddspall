@@ -142,9 +142,6 @@
 		return FALSE
 	consume.stop_consuming()
 
-/mob/living/simple_animal/hostile/ooze/gelatinous/add_cell_sample()
-	AddElement(/datum/element/swabable, CELL_LINE_TABLE_GELATINOUS, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
-
 ///This ability lets the gelatinious ooze speed up for a little bit
 /datum/action/cooldown/metabolicboost
 	name = "Metabolic boost"
@@ -314,9 +311,6 @@
 		var/obj/item/reagent_containers/food/meal = potential_food
 		foodtype = meal.foodtype
 	return foodtype & MEAT || foodtype & VEGETABLES //Dont forget to add edible component compat here later
-
-/mob/living/simple_animal/hostile/ooze/grapes/add_cell_sample()
-	AddElement(/datum/element/swabable, CELL_LINE_TABLE_GRAPE, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 
 ///Ability that allows the owner to fire healing globules at mobs, targetting specific limbs.
 /obj/effect/proc_holder/globules

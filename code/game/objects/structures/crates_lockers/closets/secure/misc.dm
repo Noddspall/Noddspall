@@ -47,7 +47,6 @@
 	new /obj/item/storage/firstaid/brute(src)
 	new /obj/item/storage/firstaid/regular(src)
 	new /obj/item/defibrillator/compact/combat/loaded/nanotrasen(src)
-	new /mob/living/simple_animal/bot/medbot(src)
 
 /obj/structure/closet/secure_closet/ert_engi
 	name = "emergency response team engineer locker"

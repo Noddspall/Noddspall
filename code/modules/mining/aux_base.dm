@@ -223,8 +223,6 @@
 			var/turf/place = colony_turfs[i]
 			if(!place)
 				return BAD_COORDS
-			if(!istype(place.loc, /area/lavaland/surface))
-				return BAD_AREA
 			if(disallowed_turf_types[place.type])
 				return BAD_TURF
 

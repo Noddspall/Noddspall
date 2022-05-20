@@ -435,7 +435,6 @@
 	STR.max_items = 25
 	STR.insert_preposition = "in"
 	STR.set_holdable(list(
-		/obj/item/slime_extract,
 		/obj/item/reagent_containers/syringe,
 		/obj/item/reagent_containers/dropper,
 		/obj/item/reagent_containers/glass/beaker,
@@ -445,9 +444,7 @@
 		/obj/item/food/deadmouse,
 		/obj/item/food/monkeycube,
 		/obj/item/organ,
-		/obj/item/bodypart,
-		/obj/item/petri_dish,
-		/obj/item/swab
+		/obj/item/bodypart
 		))
 
 /*

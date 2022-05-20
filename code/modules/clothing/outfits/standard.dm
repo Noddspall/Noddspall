@@ -452,7 +452,6 @@
 		/obj/item/gun/magic/wand/death/debug = 1,
 		/obj/item/debug/human_spawner = 1,
 		/obj/item/debug/omnitool = 1,
-		/obj/item/storage/box/stabilized = 1,
 		/obj/item/gun/energy/taser = 1,
 	)
 	belt = /obj/item/storage/belt/utility/chief/full

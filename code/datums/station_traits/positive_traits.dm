@@ -31,17 +31,6 @@
 		new /obj/item/reagent_containers/food/drinks/beer(toLaunch)
 	new /obj/effect/pod_landingzone(T, toLaunch)
 
-/datum/station_trait/galactic_grant
-	name = "Galactic grant"
-	trait_type = STATION_TRAIT_POSITIVE
-	weight = 5
-	show_in_report = TRUE
-	report_message = "Your station has been selected for a special grant. Some extra funds has been made available to your cargo department."
-
-/datum/station_trait/galactic_grant/on_round_start()
-	var/datum/bank_account/cargo_bank = SSeconomy.get_dep_account(ACCOUNT_CAR)
-	cargo_bank.adjust_money(rand(2000, 5000))
-
 /datum/station_trait/premium_internals_box
 	name = "Premium internals boxes"
 	trait_type = STATION_TRAIT_POSITIVE
@@ -49,28 +38,6 @@
 	show_in_report = TRUE
 	report_message = "The internals boxes for your crew have been filled with bonus equipment."
 	trait_to_give = STATION_TRAIT_PREMIUM_INTERNALS
-
-/datum/station_trait/bountiful_bounties
-	name = "Bountiful bounties"
-	trait_type = STATION_TRAIT_POSITIVE
-	weight = 5
-	show_in_report = TRUE
-	report_message = "It seems collectors in this system are extra keen to on bounties, and will pay more to see their completion."
-
-/datum/station_trait/bountiful_bounties/on_round_start()
-	SSeconomy.bounty_modifier *= 1.2
-
-/datum/station_trait/strong_supply_lines
-	name = "Strong supply lines"
-	trait_type = STATION_TRAIT_POSITIVE
-	weight = 5
-	show_in_report = TRUE
-	report_message = "Prices are low in this system, BUY BUY BUY!"
-	blacklist = list(/datum/station_trait/distant_supply_lines)
-
-
-/datum/station_trait/strong_supply_lines/on_round_start()
-	SSeconomy.pack_price_modifier *= 0.8
 
 /datum/station_trait/scarves
 	name = "Scarves"
@@ -113,18 +80,6 @@
 	report_message = "Our workers accidentaly forgot more of their personal belongings in the maintenace areas."
 	blacklist = list(/datum/station_trait/empty_maint)
 	trait_to_give = STATION_TRAIT_FILLED_MAINT
-
-/datum/station_trait/quick_shuttle
-	name = "Quick Shuttle"
-	trait_type = STATION_TRAIT_POSITIVE
-	weight = 5
-	show_in_report = TRUE
-	report_message = "Due to proximity to our supply station, the cargo shuttle will have a quicker flight time to your cargo department."
-	blacklist = list(/datum/station_trait/slow_shuttle)
-
-/datum/station_trait/quick_shuttle/on_round_start()
-	. = ..()
-	SSshuttle.supply.callTime *= 0.5
 
 /datum/station_trait/deathrattle_department
 	name = "deathrattled department"

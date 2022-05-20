@@ -39,7 +39,3 @@ GLOBAL_LIST_INIT(excavation_finds_weight, InitExcavFinds())
 	type_to_spawn = /obj/item/unknown_artifact
 	weight = 5
 
-//Guess this can exist until more stuff is introduced
-/datum/excavation_find/relic
-	type_to_spawn = /obj/item/relic
-	weight = 5

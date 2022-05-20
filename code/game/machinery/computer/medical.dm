@@ -151,23 +151,6 @@
 							continue
 						dat += "<br><a href='?src=[REF(src)];vir=[Dt]'>[Dis.name]</a>"
 					dat += "<br><a href='?src=[REF(src)];screen=1'>Back</a>"
-				if(6)
-					dat += "<center><b>Medical Robot Monitor</b></center>"
-					dat += "<a href='?src=[REF(src)];screen=1'>Back</a>"
-					dat += "<br><b>Medical Robots:</b>"
-					var/bdat = null
-					for(var/mob/living/simple_animal/bot/medbot/M in GLOB.alive_mob_list)
-						if(M.z != z)
-							continue //only find medibots on the same z-level as the computer
-						var/turf/bl = get_turf(M)
-						if(bl) //if it can't find a turf for the medibot, then it probably shouldn't be showing up
-							bdat += "[M.name] - <b>\[[bl.x],[bl.y]\]</b> - [M.on ? "Online" : "Offline"]<br>"
-					if(!bdat)
-						dat += "<br><center>None detected</center>"
-					else
-						dat += "<br>[bdat]"
-
-				else
 		else
 			dat += "<A href='?src=[REF(src)];login=1'>{Log In}</A>"
 	var/datum/browser/popup = new(user, "med_rec", "Medical Records Console", 600, 400)

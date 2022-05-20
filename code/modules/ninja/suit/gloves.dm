@@ -52,7 +52,6 @@
 	A.add_fingerprint(wearer)
 
 	draining = TRUE
-	. = A.ninjadrain_act(suit,wearer,src)
 	draining = FALSE
 
 	if(isnum(.)) //Numerical values of drained handle their feedback here, Alpha values handle it themselves (Research hacking)

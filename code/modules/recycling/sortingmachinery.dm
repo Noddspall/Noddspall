@@ -8,7 +8,6 @@
 	var/giftwrapped = FALSE
 	var/sort_tag = 0
 	var/obj/item/paper/note
-	var/obj/item/barcode/sticker
 
 /obj/structure/big_delivery/Initialize()
 	. = ..()
@@ -46,8 +45,6 @@
 		else
 			. += "There's a [note.name] attached to it..."
 			. += note.examine(user)
-	if(sticker)
-		. += "There's a barcode attached to the side."
 
 /obj/structure/big_delivery/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/dest_tagger))
@@ -97,50 +94,6 @@
 			overlaystring = copytext(overlaystring, 5) //5 == length("gift") + 1
 		add_overlay(overlaystring)
 
-	else if(istype(W, /obj/item/sales_tagger))
-		var/obj/item/sales_tagger/tagger = W
-		if(sticker)
-			to_chat(user, SPAN_WARNING("This package already has a barcode attached!"))
-			return
-		if(!(tagger.payments_acc))
-			to_chat(user, SPAN_WARNING("Swipe an ID on [tagger] first!"))
-			return
-		if(tagger.paper_count <= 0)
-			to_chat(user, SPAN_WARNING("[tagger] is out of paper!"))
-			return
-		user.visible_message(SPAN_NOTICE("[user] attaches a barcode to [src]."), SPAN_NOTICE("You attach a barcode to [src]."))
-		tagger.paper_count -= 1
-		sticker = new /obj/item/barcode(src)
-		sticker.payments_acc = tagger.payments_acc	//new tag gets the tagger's current account.
-		sticker.cut_multiplier = tagger.cut_multiplier	//same, but for the percentage taken.
-
-		var/list/wrap_contents = src.GetAllContents()
-		for(var/obj/I in wrap_contents)
-			I.AddComponent(/datum/component/pricetag, sticker.payments_acc, tagger.cut_multiplier)
-		var/overlaystring = "[icon_state]_tag"
-		if(giftwrapped)
-			overlaystring = copytext(overlaystring, 5)
-		add_overlay(overlaystring)
-	else if(istype(W, /obj/item/barcode))
-		var/obj/item/barcode/stickerA = W
-		if(sticker)
-			to_chat(user, SPAN_WARNING("This package already has a barcode attached!"))
-			return
-		if(!(stickerA.payments_acc))
-			to_chat(user, SPAN_WARNING("This barcode seems to be invalid. Guess it's trash now."))
-			return
-		if(!user.transferItemToLoc(W, src))
-			to_chat(user, SPAN_WARNING("For some reason, you can't attach [W]!"))
-			return
-		sticker = stickerA
-		var/list/wrap_contents = src.GetAllContents()
-		for(var/obj/I in wrap_contents)
-			I.AddComponent(/datum/component/pricetag, sticker.payments_acc, sticker.cut_multiplier)
-		var/overlaystring = "[icon_state]_tag"
-		if(giftwrapped)
-			overlaystring = copytext_char(overlaystring, 5) //5 == length("gift") + 1
-		add_overlay(overlaystring)
-
 
 	else
 		return ..()
@@ -165,8 +118,6 @@
 			to_chat(user, SPAN_WARNING("You fail to remove [O]'s wrapping!"))
 
 /obj/structure/big_delivery/proc/unwrap_contents()
-	if(!sticker)
-		return
 	for(var/obj/I in src.GetAllContents())
 		SEND_SIGNAL(I, COMSIG_STRUCTURE_UNWRAPPED)
 
@@ -184,7 +135,6 @@
 	var/giftwrapped = 0
 	var/sort_tag = 0
 	var/obj/item/paper/note
-	var/obj/item/barcode/sticker
 
 /obj/item/small_delivery/Initialize()
 	. = ..()
@@ -239,8 +189,6 @@
 		else
 			. += "There's a [note.name] attached to it..."
 			. += note.examine(user)
-	if(sticker)
-		. += "There's a barcode attached to the side."
 
 /obj/item/small_delivery/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/dest_tagger))
@@ -290,54 +238,7 @@
 			overlaystring = copytext_char(overlaystring, 5) //5 == length("gift") + 1
 		add_overlay(overlaystring)
 
-	else if(istype(W, /obj/item/sales_tagger))
-		var/obj/item/sales_tagger/tagger = W
-		if(sticker)
-			to_chat(user, SPAN_WARNING("This package already has a barcode attached!"))
-			return
-		if(!(tagger.payments_acc))
-			to_chat(user, SPAN_WARNING("Swipe an ID on [tagger] first!"))
-			return
-		if(tagger.paper_count <= 0)
-			to_chat(user, SPAN_WARNING("[tagger] is out of paper!"))
-			return
-		user.visible_message(SPAN_NOTICE("[user] attaches a barcode to [src]."), SPAN_NOTICE("You attach a barcode to [src]."))
-		tagger.paper_count -= 1
-		sticker = new /obj/item/barcode(src)
-		sticker.payments_acc = tagger.payments_acc	//new tag gets the tagger's current account.
-		sticker.cut_multiplier = tagger.cut_multiplier	//as above, as before.
-
-		var/list/wrap_contents = src.GetAllContents()
-		for(var/obj/I in wrap_contents)
-			I.AddComponent(/datum/component/pricetag, sticker.payments_acc, tagger.cut_multiplier)
-		var/overlaystring = "[icon_state]_tag"
-		if(giftwrapped)
-			overlaystring = copytext(overlaystring, 5)
-		add_overlay(overlaystring)
-
-	else if(istype(W, /obj/item/barcode))
-		var/obj/item/barcode/stickerA = W
-		if(sticker)
-			to_chat(user, SPAN_WARNING("This package already has a barcode attached!"))
-			return
-		if(!(stickerA.payments_acc))
-			to_chat(user, SPAN_WARNING("This barcode seems to be invalid. Guess it's trash now."))
-			return
-		if(!user.transferItemToLoc(W, src))
-			to_chat(user, SPAN_WARNING("For some reason, you can't attach [W]!"))
-			return
-		sticker = stickerA
-		var/list/wrap_contents = src.GetAllContents()
-		for(var/obj/I in wrap_contents)
-			I.AddComponent(/datum/component/pricetag, sticker.payments_acc, sticker.cut_multiplier)
-		var/overlaystring = "[icon_state]_tag"
-		if(giftwrapped)
-			overlaystring = copytext_char(overlaystring, 5) //5 == length("gift") + 1
-		add_overlay(overlaystring)
-
 /obj/item/small_delivery/proc/unwrap_contents()
-	if(!sticker)
-		return
 	for(var/obj/I in src.GetAllContents())
 		SEND_SIGNAL(I, COMSIG_ITEM_UNWRAPPED)
 
@@ -400,100 +301,3 @@
 		var/n = text2num(href_list["nextTag"])
 		currTag = n
 	openwindow(usr)
-
-/obj/item/sales_tagger
-	name = "sales tagger"
-	desc = "A scanner that lets you tag wrapped items for sale, splitting the profit between you and cargo."
-	icon = 'icons/obj/device.dmi'
-	icon_state = "salestagger"
-	worn_icon_state = "salestagger"
-	inhand_icon_state = "electronic"
-	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
-	w_class = WEIGHT_CLASS_TINY
-	slot_flags = ITEM_SLOT_BELT
-	///The account which is receiving the split profits.
-	var/datum/bank_account/payments_acc = null
-	var/paper_count = 10
-	var/max_paper_count = 20
-	///The person who tagged this will receive the sale value multiplied by this number.
-	var/cut_multiplier = 0.5
-	///Maximum value for cut_multiplier.
-	var/cut_max = 0.5
-	///Minimum value for cut_multiplier.
-	var/cut_min = 0.01
-
-/obj/item/sales_tagger/examine(mob/user)
-	. = ..()
-	. += SPAN_NOTICE("[src] has [paper_count]/[max_paper_count] available barcodes. Refill with paper.")
-	. += SPAN_NOTICE("Profit split on sale is currently set to [round(cut_multiplier*100)]%. <b>Alt-click</b> to change.")
-	if(payments_acc)
-		. += SPAN_NOTICE("<b>Ctrl-click</b> to clear the registered account.")
-
-/obj/item/sales_tagger/attackby(obj/item/I, mob/living/user, params)
-	. = ..()
-	if(istype(I, /obj/item/card/id))
-		var/obj/item/card/id/potential_acc = I
-		if(potential_acc.registered_account)
-			if(payments_acc == potential_acc.registered_account)
-				to_chat(user, SPAN_NOTICE("ID card already registered."))
-				return
-			else
-				payments_acc = potential_acc.registered_account
-				playsound(src, 'sound/machines/ping.ogg', 40, TRUE)
-				to_chat(user, SPAN_NOTICE("[src] registers the ID card. Tag a wrapped item to create a barcode."))
-		else if(!potential_acc.registered_account)
-			to_chat(user, SPAN_WARNING("This ID card has no account registered!"))
-			return
-	if(istype(I, /obj/item/paper))
-		if (!(paper_count >=  max_paper_count))
-			paper_count += 10
-			qdel(I)
-			if (paper_count >=  max_paper_count)
-				paper_count = max_paper_count
-				to_chat(user, SPAN_NOTICE("[src]'s paper supply is now full."))
-				return
-			to_chat(user, SPAN_NOTICE("You refill [src]'s paper supply, you have [paper_count] left."))
-			return
-		else
-			to_chat(user, SPAN_NOTICE("[src]'s paper supply is full."))
-			return
-
-/obj/item/sales_tagger/attack_self(mob/user)
-	. = ..()
-	if(paper_count <=  0)
-		to_chat(user, SPAN_WARNING("You're out of paper!'."))
-		return
-	if(!payments_acc)
-		to_chat(user, SPAN_WARNING("You need to swipe [src] with an ID card first."))
-		return
-	paper_count -= 1
-	playsound(src, 'sound/machines/click.ogg', 40, TRUE)
-	to_chat(user, SPAN_NOTICE("You print a new barcode."))
-	var/obj/item/barcode/new_barcode = new /obj/item/barcode(src)
-	new_barcode.payments_acc = payments_acc		// The sticker gets the scanner's registered account.
-	new_barcode.cut_multiplier = cut_multiplier		// Also the registered percent cut.
-	user.put_in_hands(new_barcode)
-
-/obj/item/sales_tagger/CtrlClick(mob/user)
-	. = ..()
-	payments_acc = null
-	to_chat(user, SPAN_NOTICE("You clear the registered account."))
-
-/obj/item/sales_tagger/AltClick(mob/user)
-	. = ..()
-	var/potential_cut = input("How much would you like to pay out to the registered card?","Percentage Profit ([round(cut_min*100)]% - [round(cut_max*100)]%)") as num|null
-	if(!potential_cut)
-		cut_multiplier = initial(cut_multiplier)
-	cut_multiplier = clamp(round(potential_cut/100, cut_min), cut_min, cut_max)
-	to_chat(user, SPAN_NOTICE("[round(cut_multiplier*100)]% profit will be received if a package with a barcode is sold."))
-
-/obj/item/barcode
-	name = "barcode tag"
-	desc = "A tiny tag, associated with a crewmember's account. Attach to a wrapped item to give that account a portion of the wrapped item's profit."
-	icon = 'icons/obj/bureaucracy.dmi'
-	icon_state = "barcode"
-	w_class = WEIGHT_CLASS_TINY
-	///All values inheirited from the sales tagger it came from.
-	var/datum/bank_account/payments_acc = null
-	var/cut_multiplier = 0.5

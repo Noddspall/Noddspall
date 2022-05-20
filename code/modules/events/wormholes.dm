@@ -101,14 +101,6 @@
 		var/turf/target_turf = linked.loc
 		do_teleport(movable_atom, target_turf, TRUE, TRUE, FALSE, FALSE, channel = TELEPORT_CHANNEL_WORMHOLE)
 
-/obj/effect/portal/wormhole/attackby(obj/item/weapon, mob/user, params)
-	if(stable && istype(weapon, /obj/item/anomaly_neutralizer))
-		to_chat(user, SPAN_NOTICE("You destabilize \the [src] with \the [weapon]."))
-		destabilize()
-		qdel(weapon)
-		return
-	return ..()
-
 /// Make it visually stable and be able to be interacted with some rnd devices and such.
 /obj/effect/portal/wormhole/proc/make_stable()
 	stable = TRUE
@@ -145,8 +137,8 @@
 			empulse(turf_one, 4, 1)
 			empulse(turf_two, 4, 1)
 	/// Create an anomaly core at either of the places where wormholes used to be.
-	var/turf/location = prob(50) ? turf_one : turf_two
-	new /obj/item/raw_anomaly_core/random(location)
+	//var/turf/location = prob(50) ? turf_one : turf_two
+	//new /obj/item/raw_anomaly_core/random(location)
 
 #undef WORMHOLE_DESTAB_FIRE
 #undef WORMHOLE_DESTAB_EMP

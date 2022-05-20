@@ -90,10 +90,6 @@
 	var/mining_points = 0
 	/// The name registered on the card (for example: Dr Bryan See)
 	var/registered_name = null
-	/// Linked bank account.
-	var/datum/bank_account/registered_account
-	/// Linked paystand.
-	var/obj/machinery/paystand/my_store
 	/// Registered owner's age.
 	var/registered_age = 30
 
@@ -123,13 +119,6 @@
 		update_icon()
 
 	RegisterSignal(src, COMSIG_ATOM_UPDATED_ICON, .proc/update_in_wallet)
-
-/obj/item/card/id/Destroy()
-	if (registered_account)
-		registered_account.bank_cards -= src
-	if (my_store && my_store.my_card == src)
-		my_store.my_card = null
-	return ..()
 
 /obj/item/card/id/get_id_examine_strings(mob/user)
 	. = ..()
@@ -376,10 +365,6 @@
 	// Hard reset access
 	access.Cut()
 
-/// Clears the economy account from the ID card.
-/obj/item/card/id/proc/clear_account()
-	registered_account = null
-
 
 /**
  * Helper proc. Creates access lists for the access procs.
@@ -427,84 +412,6 @@
 				if(ispath(trim))
 					SSid_access.apply_trim_to_card(src, trim)
 
-/obj/item/card/id/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/rupee))
-		to_chat(user, SPAN_WARNING("Your ID smartly rejects the strange shard of glass. Who knew, apparently it's not ACTUALLY valuable!"))
-		return
-	else if(istype(W, /obj/item/holochip))
-		insert_money(W, user)
-		return
-	else if(istype(W, /obj/item/stack/spacecash))
-		insert_money(W, user, TRUE)
-		return
-	else if(istype(W, /obj/item/coin))
-		insert_money(W, user, TRUE)
-		return
-	else if(istype(W, /obj/item/storage/bag/money))
-		var/obj/item/storage/bag/money/money_bag = W
-		var/list/money_contained = money_bag.contents
-		var/money_added = mass_insert_money(money_contained, user)
-		if (money_added)
-			to_chat(user, SPAN_NOTICE("You stuff the contents into the card! They disappear in a puff of bluespace smoke, adding [money_added] worth of credits to the linked account."))
-		return
-	else
-		return ..()
-
-/**
- * Insert credits or coins into the ID card and add their value to the associated bank account.
- *
- * Arguments:
- * money - The item to attempt to convert to credits and insert into the card.
- * user - The user inserting the item.
- * physical_currency - Boolean, whether this is a physical currency such as a coin and not a holochip.
- */
-/obj/item/card/id/proc/insert_money(obj/item/money, mob/user, physical_currency)
-	if(!registered_account)
-		to_chat(user, SPAN_WARNING("[src] doesn't have a linked account to deposit [money] into!"))
-		return
-	var/cash_money = money.get_item_credit_value()
-	if(!cash_money)
-		to_chat(user, SPAN_WARNING("[money] doesn't seem to be worth anything!"))
-		return
-	registered_account.adjust_money(cash_money)
-	SSblackbox.record_feedback("amount", "credits_inserted", cash_money)
-	log_econ("[cash_money] credits were inserted into [src] owned by [src.registered_name]")
-	if(physical_currency)
-		to_chat(user, SPAN_NOTICE("You stuff [money] into [src]. It disappears in a small puff of bluespace smoke, adding [cash_money] credits to the linked account."))
-	else
-		to_chat(user, SPAN_NOTICE("You insert [money] into [src], adding [cash_money] credits to the linked account."))
-
-	to_chat(user, SPAN_NOTICE("The linked account now reports a balance of [registered_account.account_balance] cr."))
-	qdel(money)
-
-/**
- * Insert multiple money or money-equivalent items at once.
- *
- * Arguments:
- * money - List of items to attempt to convert to credits and insert into the card.
- * user - The user inserting the items.
- */
-/obj/item/card/id/proc/mass_insert_money(list/money, mob/user)
-	if(!registered_account)
-		to_chat(user, SPAN_WARNING("[src] doesn't have a linked account to deposit into!"))
-		return FALSE
-
-	if (!money || !money.len)
-		return FALSE
-
-	var/total = 0
-
-	for (var/obj/item/physical_money in money)
-		total += physical_money.get_item_credit_value()
-		CHECK_TICK
-
-	registered_account.adjust_money(total)
-	SSblackbox.record_feedback("amount", "credits_inserted", total)
-	log_econ("[total] credits were inserted into [src] owned by [src.registered_name]")
-	QDEL_LIST(money)
-
-	return total
-
 /// Helper proc. Can the user alt-click the ID?
 /obj/item/card/id/proc/alt_click_can_use_id(mob/living/user)
 	if(!isliving(user))
@@ -514,72 +421,8 @@
 
 	return TRUE
 
-/// Attempts to set a new bank account on the ID card.
-/obj/item/card/id/proc/set_new_account(mob/living/user)
-	. = FALSE
-	var/datum/bank_account/old_account = registered_account
-
-	var/new_bank_id = input(user, "Enter your account ID number.", "Account Reclamation", 111111) as num | null
-
-	if (isnull(new_bank_id))
-		return
-
-	if(!alt_click_can_use_id(user))
-		return
-	if(!new_bank_id || new_bank_id < 111111 || new_bank_id > 999999)
-		to_chat(user, SPAN_WARNING("The account ID number needs to be between 111111 and 999999."))
-		return
-	if (registered_account && registered_account.account_id == new_bank_id)
-		to_chat(user, SPAN_WARNING("The account ID was already assigned to this card."))
-		return
-
-	var/datum/bank_account/B = SSeconomy.bank_accounts_by_id["[new_bank_id]"]
-	if(B)
-		if (old_account)
-			old_account.bank_cards -= src
-
-		B.bank_cards += src
-		registered_account = B
-		to_chat(user, SPAN_NOTICE("The provided account has been linked to this ID card."))
-
-		return TRUE
-
-	to_chat(user, SPAN_WARNING("The account ID number provided is invalid."))
-	return
-
-/obj/item/card/id/AltClick(mob/living/user)
-	if(!alt_click_can_use_id(user))
-		return
-
-	if(!registered_account)
-		set_new_account(user)
-		return
-
-	if (registered_account.being_dumped)
-		registered_account.bank_card_talk(SPAN_WARNING("内部服务器错误"), TRUE)
-		return
-
-	var/amount_to_remove =  FLOOR(input(user, "How much do you want to withdraw? Current Balance: [registered_account.account_balance]", "Withdraw Funds", 5) as num|null, 1)
-
-	if(!amount_to_remove || amount_to_remove < 0)
-		return
-	if(!alt_click_can_use_id(user))
-		return
-	if(registered_account.adjust_money(-amount_to_remove))
-		var/obj/item/holochip/holochip = new (user.drop_location(), amount_to_remove)
-		user.put_in_hands(holochip)
-		to_chat(user, SPAN_NOTICE("You withdraw [amount_to_remove] credits into a holochip."))
-		SSblackbox.record_feedback("amount", "credits_removed", amount_to_remove)
-		log_econ("[amount_to_remove] credits were removed from [src] owned by [src.registered_name]")
-		return
-	else
-		var/difference = amount_to_remove - registered_account.account_balance
-		registered_account.bank_card_talk(SPAN_WARNING("ERROR: The linked account requires [difference] more credit\s to perform that withdrawal."), TRUE)
-
 /obj/item/card/id/examine(mob/user)
 	. = ..()
-	if(registered_account)
-		. += "The account linked to the ID belongs to '[registered_account.account_holder]' and reports a balance of [registered_account.account_balance] cr."
 	. += SPAN_NOTICE("<i>There's more information below, you can look again to take a closer look...</i>")
 
 /obj/item/card/id/examine_more(mob/user)
@@ -589,24 +432,6 @@
 		msg += "The card indicates that the holder is [registered_age] years old. [(registered_age < AGE_MINOR) ? "There's a holographic stripe that reads <b>[SPAN_DANGER("'MINOR: DO NOT SERVE ALCOHOL OR TOBACCO'")]</b> along the bottom of the card." : ""]"
 	if(mining_points)
 		msg += "There's [mining_points] mining equipment redemption point\s loaded onto this card."
-	if(registered_account)
-		msg += "The account linked to the ID belongs to '[registered_account.account_holder]' and reports a balance of [registered_account.account_balance] cr."
-		if(registered_account.account_job)
-			var/datum/bank_account/D = SSeconomy.get_dep_account(registered_account.account_job.paycheck_department)
-			if(D)
-				msg += "The [D.account_holder] reports a balance of [D.account_balance] cr."
-		msg += SPAN_INFO("Alt-Click the ID to pull money from the linked account in the form of holochips.")
-		msg += SPAN_INFO("You can insert credits into the linked account by pressing holochips, cash, or coins against the ID.")
-		if(registered_account.civilian_bounty)
-			msg += "<span class='info'><b>There is an active civilian bounty.</b>"
-			msg += SPAN_INFO("<i>[registered_account.bounty_text()]</i>")
-			msg += SPAN_INFO("Quantity: [registered_account.bounty_num()]")
-			msg += SPAN_INFO("Reward: [registered_account.bounty_value()]")
-		if(registered_account.account_holder == user.real_name)
-			msg += SPAN_BOLDNOTICE("If you lose this ID card, you can reclaim your account by Alt-Clicking a blank ID card while holding it and entering your account ID number.")
-	else
-		msg += SPAN_INFO("There is no registered account linked to this card. Alt-Click to add one.")
-
 	return msg
 
 /obj/item/card/id/GetAccess()
@@ -685,40 +510,6 @@
 
 /obj/item/card/id/away/deep_storage //deepstorage.dmm space ruin
 	name = "bunker access ID"
-
-/obj/item/card/id/departmental_budget
-	name = "departmental card (ERROR)"
-	desc = "Provides access to the departmental budget."
-	icon_state = "budgetcard"
-	var/department_ID = ACCOUNT_CIV
-	var/department_name = ACCOUNT_CIV_NAME
-	registered_age = null
-
-/obj/item/card/id/departmental_budget/Initialize()
-	. = ..()
-	var/datum/bank_account/B = SSeconomy.get_dep_account(department_ID)
-	if(B)
-		registered_account = B
-		if(!B.bank_cards.Find(src))
-			B.bank_cards += src
-		name = "departmental card ([department_name])"
-		desc = "Provides access to the [department_name]."
-	SSeconomy.dep_cards += src
-
-/obj/item/card/id/departmental_budget/Destroy()
-	SSeconomy.dep_cards -= src
-	return ..()
-
-/obj/item/card/id/departmental_budget/update_label()
-	return
-
-/obj/item/card/id/departmental_budget/car
-	department_ID = ACCOUNT_CAR
-	department_name = ACCOUNT_CAR_NAME
-	icon_state = "car_budget" //saving up for a new tesla
-
-/obj/item/card/id/departmental_budget/AltClick(mob/living/user)
-	registered_account.bank_card_talk(SPAN_WARNING("Withdrawing is not compatible with this card design."), TRUE) //prevents the vault bank machine being useless and putting money from the budget to your card to go over personal crates
 
 /obj/item/card/id/advanced
 	name = "identification card"
@@ -964,10 +755,6 @@
 	assigned_icon_state = "assigned_centcom"
 	trim = /datum/id_trim/admin
 	wildcard_slots = WILDCARD_LIMIT_ADMIN
-
-/obj/item/card/id/advanced/debug/Initialize()
-	. = ..()
-	registered_account = SSeconomy.get_dep_account(ACCOUNT_CAR)
 
 /obj/item/card/id/advanced/debug/fret
 	name = "\improper FRET agent ID card"
@@ -1221,15 +1008,6 @@
 				to_chat(user, SPAN_NOTICE("You successfully forge the ID card."))
 				log_game("[key_name(user)] has forged \the [initial(name)] with name \"[registered_name]\", occupation \"[assignment]\" and trim \"[trim?.assignment]\".")
 
-				if(!registered_account)
-					if(ishuman(user))
-						var/mob/living/carbon/human/accountowner = user
-
-						var/datum/bank_account/account = SSeconomy.bank_accounts_by_id["[accountowner.account_id]"]
-						if(account)
-							account.bank_cards += src
-							registered_account = account
-							to_chat(user, SPAN_NOTICE("Your account number has been automatically assigned."))
 				return
 			if(forged)
 				registered_name = initial(registered_name)
@@ -1241,9 +1019,6 @@
 				forged = FALSE
 				to_chat(user, SPAN_NOTICE("You successfully reset the ID card."))
 				return
-		if (popup_input == "Change Account ID")
-			set_new_account(user)
-			return
 	return ..()
 
 /// A special variant of the classic chameleon ID card which accepts all access.

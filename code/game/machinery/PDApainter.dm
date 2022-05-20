@@ -348,8 +348,6 @@
 			if((machine_stat & BROKEN) || !stored_id_card)
 				return TRUE
 
-			stored_id_card.clear_account()
-
 			return TRUE
 
 /// Security departmental variant. Limited to PDAs defined in the SSid_access.sub_department_managers_tgui data structure.

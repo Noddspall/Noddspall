@@ -6,17 +6,6 @@
 	report_message = "Dangerous fauna is present in the area of this station."
 	trait_to_give = STATION_TRAIT_CARP_INFESTATION
 
-/datum/station_trait/distant_supply_lines
-	name = "Distant supply lines"
-	trait_type = STATION_TRAIT_NEGATIVE
-	weight = 3
-	show_in_report = TRUE
-	report_message = "Due to the distance to our normal supply lines, cargo orders are more expensive."
-	blacklist = list(/datum/station_trait/strong_supply_lines)
-
-/datum/station_trait/distant_supply_lines/on_round_start()
-	SSeconomy.pack_price_modifier *= 1.2
-
 /datum/station_trait/late_arrivals
 	name = "Late Arrivals"
 	trait_type = STATION_TRAIT_NEGATIVE
@@ -105,7 +94,6 @@
 		/datum/job/bartender,
 		/datum/job/cook,
 		/datum/job/botanist,
-		/datum/job/cargo_technician,
 		/datum/job/mime,
 		/datum/job/janitor,
 		/datum/job/prisoner,
@@ -119,39 +107,6 @@
 /datum/station_trait/overflow_job_bureaucracy/proc/set_overflow_job_override(datum/source, new_overflow_role)
 	SIGNAL_HANDLER
 	SSjob.set_overflow_role(chosen_job)
-
-/datum/station_trait/slow_shuttle
-	name = "Slow Shuttle"
-	trait_type = STATION_TRAIT_NEGATIVE
-	weight = 5
-	show_in_report = TRUE
-	report_message = "Due to distance to our supply station, the cargo shuttle will have a slower flight time to your cargo department."
-	blacklist = list(/datum/station_trait/quick_shuttle)
-
-/datum/station_trait/slow_shuttle/on_round_start()
-	. = ..()
-	SSshuttle.supply.callTime *= 1.5
-
-/datum/station_trait/bot_languages
-	name = "Bot Language Matrix Malfunction"
-	trait_type = STATION_TRAIT_NEGATIVE
-	weight = 3
-	show_in_report = TRUE
-	report_message = "Your station's friendly bots have had their language matrix fried due to an event, resulting in some strange and unfamiliar speech patterns."
-
-/datum/station_trait/bot_languages/New()
-	. = ..()
-	/// What "caused" our robots to go haywire (fluff)
-	var/event_source = pick(list("an ion storm", "a syndicate hacking attempt", "a malfunction", "issues with your onboard AI", "an intern's mistakes", "budget cuts"))
-	report_message = "Your station's friendly bots have had their language matrix fried due to [event_source], resulting in some strange and unfamiliar speech patterns."
-
-/datum/station_trait/bot_languages/on_round_start()
-	. = ..()
-	//All bots that exist round start have their set language randomized.
-	for(var/mob/living/simple_animal/bot/found_bot in GLOB.alive_mob_list)
-		/// The bot's language holder - so we can randomize and change their language
-		var/datum/language_holder/bot_languages = found_bot.get_language_holder()
-		bot_languages.selected_language = bot_languages.get_random_spoken_language()
 
 /datum/station_trait/revenge_of_pun_pun
 	name = "Revenge of Pun Pun"

@@ -11,9 +11,6 @@
 	outfit = /datum/outfit/job/janitor
 	plasmaman_outfit = /datum/outfit/plasmaman/janitor
 
-	paycheck = PAYCHECK_EASY
-	paycheck_department = ACCOUNT_SRV
-
 	display_order = JOB_DISPLAY_ORDER_JANITOR
 	departments_list = list(
 		/datum/job_department/service,

@@ -20,9 +20,6 @@
 	. += "[SPAN_NOTICE("It's loaded with [credits] credit[( credits > 1 ) ? "s" : ""]")]\n"+\
 	SPAN_NOTICE("Alt-Click to split.")
 
-/obj/item/holochip/get_item_credit_value()
-	return credits
-
 /obj/item/holochip/update_name()
 	name = "\improper [credits] credit holochip"
 	return ..()

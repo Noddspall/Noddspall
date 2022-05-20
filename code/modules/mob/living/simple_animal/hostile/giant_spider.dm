@@ -695,11 +695,6 @@
 	web_speed = 0.7
 	menu_description = "Self-sufficient spider variant capable of healing themselves and producing webbbing fast, but has less health. Toxin injection of 10u per bite."
 
-/mob/living/simple_animal/hostile/giant_spider/hunter/flesh/Moved(atom/oldloc, dir)
-	. = ..()
-	if(prob(5))
-		new /obj/effect/decal/cleanable/blood/bubblegum(loc)
-
 /mob/living/simple_animal/hostile/giant_spider/hunter/flesh/AttackingTarget()
 	if(is_busy)
 		return

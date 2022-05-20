@@ -103,7 +103,6 @@
 	///Cryo will continue to treat people with 0 damage but existing wounds, but will sound off when damage healing is done in case doctors want to directly treat the wounds instead
 	var/treating_wounds = FALSE
 	fair_market_price = 10
-	payment_department = ACCOUNT_MED
 
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/Initialize()
@@ -202,9 +201,6 @@ GLOBAL_VAR_INIT(cryo_overlay_cover_off, mutable_appearance('icons/obj/cryogenics
 		return
 	. += (on && is_operational) ? GLOB.cryo_overlay_cover_on : GLOB.cryo_overlay_cover_off
 
-/obj/machinery/atmospherics/components/unary/cryo_cell/nap_violation(mob/violator)
-	open_machine()
-
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/proc/set_on(new_value)
 	if(on == new_value)
@@ -233,8 +229,6 @@ GLOBAL_VAR_INIT(cryo_overlay_cover_off, mutable_appearance('icons/obj/cryogenics
 	var/mob/living/mob_occupant = occupant
 	if(mob_occupant.on_fire)
 		mob_occupant.extinguish_mob()
-	if(!check_nap_violations())
-		return
 	if(mob_occupant.stat == DEAD) // We don't bother with dead people.
 		return
 	if(mob_occupant.get_organic_health() >= mob_occupant.getMaxHealth()) // Don't bother with fully healed people.

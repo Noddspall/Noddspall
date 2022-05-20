@@ -28,7 +28,6 @@
 	var/list/chem_buttons //Used when emagged to scramble which chem is used, eg: mutadone -> morphine
 	var/scrambled_chems = FALSE //Are chem buttons scrambled? used as a warning
 	var/enter_message = SPAN_NOTICE("<b>You feel cool air surround you. You go numb as your senses turn inward.</b>")
-	payment_department = ACCOUNT_MED
 	fair_market_price = 5
 
 /obj/machinery/sleeper/Initialize(mapload)
@@ -156,13 +155,6 @@
 	. = ..()
 	. += SPAN_NOTICE("Alt-click [src] to [state_open ? "close" : "open"] it.")
 
-/obj/machinery/sleeper/process()
-	..()
-	check_nap_violations()
-
-/obj/machinery/sleeper/nap_violation(mob/violator)
-	open_machine()
-
 /obj/machinery/sleeper/ui_data()
 	var/list/data = list()
 	data["occupied"] = occupant ? 1 : 0
@@ -213,7 +205,6 @@
 		return
 
 	var/mob/living/mob_occupant = occupant
-	check_nap_violations()
 	switch(action)
 		if("door")
 			if(state_open)

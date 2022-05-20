@@ -82,12 +82,6 @@
 	difficulty = 3
 	excludefromjob = list("Head of Security", "Warden")
 
-/datum/objective_item/steal/reactive
-	name = "the reactive teleport armor."
-	targetitem = /obj/item/clothing/suit/armor/reactive/teleport
-	difficulty = 5
-	excludefromjob = list("Research Director")
-
 /datum/objective_item/steal/documents
 	name = "any set of secret documents of any organization."
 	targetitem = /obj/item/documents //Any set of secret documents. Doesn't have to be NT's
@@ -101,18 +95,6 @@
 /datum/objective_item/steal/nuke_core/New()
 	special_equipment += /obj/item/storage/box/syndie_kit/nuke
 	..()
-
-/datum/objective_item/steal/supermatter
-	name = "a sliver of a supermatter crystal. Be sure to use the proper safety equipment when extracting the sliver!"
-	targetitem = /obj/item/nuke_core/supermatter_sliver
-	difficulty = 15
-
-/datum/objective_item/steal/supermatter/New()
-	special_equipment += /obj/item/storage/box/syndie_kit/supermatter
-	..()
-
-/datum/objective_item/steal/supermatter/TargetExists()
-	return GLOB.main_supermatter_engine != null
 
 //Items with special checks!
 /datum/objective_item/steal/plasma
@@ -155,17 +137,6 @@
 		if(P.picture.has_blueprints) //if the blueprints are in frame
 			return TRUE
 	return FALSE
-
-/datum/objective_item/steal/slime
-	name = "an unused sample of slime extract."
-	targetitem = /obj/item/slime_extract
-	difficulty = 3
-	excludefromjob = list("Research Director","Scientist")
-
-/datum/objective_item/steal/slime/check_special_completion(obj/item/slime_extract/E)
-	if(E.Uses > 0)
-		return 1
-	return 0
 
 /datum/objective_item/steal/blackbox
 	name = "The Blackbox."

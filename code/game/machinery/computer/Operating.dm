@@ -10,12 +10,10 @@
 
 	var/obj/structure/table/optable/table
 	var/list/advanced_surgeries = list()
-	var/datum/techweb/linked_techweb
 	light_color = LIGHT_COLOR_BLUE
 
 /obj/machinery/computer/operating/Initialize()
 	. = ..()
-	linked_techweb = SSresearch.science_tech
 	find_table()
 
 /obj/machinery/computer/operating/Destroy()
@@ -35,13 +33,6 @@
 			advanced_surgeries |= D.surgeries
 		return TRUE
 	return ..()
-
-/obj/machinery/computer/operating/proc/sync_surgeries()
-	for(var/i in linked_techweb.researched_designs)
-		var/datum/design/surgery/D = SSresearch.techweb_design_by_id(i)
-		if(!istype(D))
-			continue
-		advanced_surgeries |= D.surgery
 
 /obj/machinery/computer/operating/proc/find_table()
 	for(var/direction in GLOB.alldirs)
@@ -131,10 +122,6 @@
 	. = ..()
 	if(.)
 		return
-	switch(action)
-		if("sync")
-			sync_surgeries()
-			. = TRUE
 	. = TRUE
 
 #undef MENU_OPERATION

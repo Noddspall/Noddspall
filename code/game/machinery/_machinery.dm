@@ -128,7 +128,6 @@
 	var/interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN_SILICON | INTERACT_MACHINE_SET_MACHINE
 	var/fair_market_price = 69
 	var/market_verb = "Customer"
-	var/payment_department = ACCOUNT_ENG
 
 	// For storing and overriding ui id
 	var/tgui_id // ID of TGUI interface
@@ -401,35 +400,6 @@
 			return FALSE
 
 	return TRUE // If we passed all of those checks, woohoo! We can interact with this machine.
-
-/obj/machinery/proc/check_nap_violations()
-	if(!SSeconomy.full_ancap)
-		return TRUE
-	if(occupant && !state_open)
-		var/mob/living/L = occupant
-		var/obj/item/card/id/I = L.get_idcard(TRUE)
-		if(I)
-			var/datum/bank_account/insurance = I.registered_account
-			if(!insurance)
-				say("[market_verb] NAP Violation: No bank account found.")
-				nap_violation(L)
-				return FALSE
-			else
-				if(!insurance.adjust_money(-fair_market_price))
-					say("[market_verb] NAP Violation: Unable to pay.")
-					nap_violation(L)
-					return FALSE
-				var/datum/bank_account/D = SSeconomy.get_dep_account(payment_department)
-				if(D)
-					D.adjust_money(fair_market_price)
-		else
-			say("[market_verb] NAP Violation: No ID card found.")
-			nap_violation(L)
-			return FALSE
-	return TRUE
-
-/obj/machinery/proc/nap_violation(mob/violator)
-	return
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 

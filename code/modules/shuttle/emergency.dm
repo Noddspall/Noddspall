@@ -630,7 +630,7 @@
 	width = 3
 	height = 4
 	hidden = TRUE
-	var/target_area = /area/lavaland/surface/outdoors
+	var/target_area
 	var/edge_distance = 16
 	// Minimal distance from the map edge, setting this too low can result in shuttle landing on the edge and getting "sliced"
 
@@ -652,9 +652,6 @@
 	// Fallback: couldn't find anything
 	WARNING("docking port '[id]' could not be randomly placed in [target_area]: of [original_len] turfs, none were suitable")
 	return INITIALIZE_HINT_QDEL
-
-/obj/docking_port/stationary/random/icemoon
-	target_area = /area/icemoon/surface/outdoors
 
 //Pod suits/pickaxes
 

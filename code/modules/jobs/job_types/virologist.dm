@@ -13,11 +13,7 @@
 	outfit = /datum/outfit/job/virologist
 	plasmaman_outfit = /datum/outfit/plasmaman/viro
 
-	paycheck = PAYCHECK_MEDIUM
-	paycheck_department = ACCOUNT_MED
-
 	display_order = JOB_DISPLAY_ORDER_VIROLOGIST
-	bounty_types = CIV_JOB_VIRO
 	departments_list = list(
 		/datum/job_department/medical,
 		)

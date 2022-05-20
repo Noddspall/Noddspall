@@ -40,7 +40,6 @@
 
 /datum/map_template/shuttle/common
 	port_id = "common"
-	who_can_purchase = null
 
 /datum/map_template/shuttle/common/vulture
 	suffix = "vulture"

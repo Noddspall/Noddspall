@@ -13,11 +13,7 @@
 	outfit = /datum/outfit/job/engineer
 	plasmaman_outfit = /datum/outfit/plasmaman/engineering
 
-	paycheck = PAYCHECK_MEDIUM
-	paycheck_department = ACCOUNT_ENG
-
 	display_order = JOB_DISPLAY_ORDER_STATION_ENGINEER
-	bounty_types = CIV_JOB_ENG
 	departments_list = list(
 		/datum/job_department/engineering,
 		)

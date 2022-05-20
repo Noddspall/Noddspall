@@ -10,15 +10,6 @@
 	greyscale_colors = CIRCUIT_COLOR_COMMAND
 	build_path = /obj/machinery/computer/upload/borg
 
-/obj/item/circuitboard/computer/bsa_control
-	name = "Bluespace Artillery Controls (Computer Board)"
-	build_path = /obj/machinery/computer/bsa_control
-
-//obj/item/circuitboard/computer/shield
-// name = "Shield Control (Computer Board)"
-// greyscale_colors = CIRCUIT_COLOR_COMMAND
-// build_path = /obj/machinery/computer/stationshield
-
 //Engineering
 
 /obj/item/circuitboard/computer/apc_control
@@ -190,11 +181,6 @@
 	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
 	build_path = /obj/machinery/computer/monitor/secret
 
-/obj/item/circuitboard/computer/sat_control
-	name = "Satellite Network Control (Computer Board)"
-	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
-	build_path = /obj/machinery/computer/sat_control
-
 /obj/item/circuitboard/computer/solar_control
 	name = "Solar Control (Computer Board)"  //name fixed 250810
 	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
@@ -312,10 +298,6 @@
 	name = "Salvage Pod Recall (Computer Board)"
 	build_path = /obj/machinery/computer/shuttle/white_ship/pod/recall
 
-/obj/item/circuitboard/computer/bountypad
-	name = "Bounty Pad (Computer Board)"
-	build_path = /obj/machinery/computer/piratepad_control/civilian
-
 //Medical
 
 /obj/item/circuitboard/computer/crew
@@ -350,65 +332,10 @@
 	greyscale_colors = CIRCUIT_COLOR_SCIENCE
 	build_path = /obj/machinery/computer/launchpad
 
-/obj/item/circuitboard/computer/mech_bay_power_console
-	name = "Mech Bay Power Control Console (Computer Board)"
-	greyscale_colors = CIRCUIT_COLOR_SCIENCE
-	build_path = /obj/machinery/computer/mech_bay_power_console
-
-/obj/item/circuitboard/computer/mecha_control
-	name = "Exosuit Control Console (Computer Board)"
-	greyscale_colors = CIRCUIT_COLOR_SCIENCE
-	build_path = /obj/machinery/computer/mecha
-
-/obj/item/circuitboard/computer/nanite_chamber_control
-	name = "Nanite Chamber Control (Computer Board)"
-	greyscale_colors = CIRCUIT_COLOR_SCIENCE
-	build_path = /obj/machinery/computer/nanite_chamber_control
-
-/obj/item/circuitboard/computer/nanite_cloud_controller
-	name = "Nanite Cloud Control (Computer Board)"
-	greyscale_colors = CIRCUIT_COLOR_SCIENCE
-	build_path = /obj/machinery/computer/nanite_cloud_controller
-
-/obj/item/circuitboard/computer/rdconsole
-	name = "R&D Console (Computer Board)"
-	greyscale_colors = CIRCUIT_COLOR_SCIENCE
-	build_path = /obj/machinery/computer/rdconsole
-
-/obj/item/circuitboard/computer/rdservercontrol
-	name = "R&D Server Control (Computer Board)"
-	greyscale_colors = CIRCUIT_COLOR_SCIENCE
-	build_path = /obj/machinery/computer/rdservercontrol
-
-/obj/item/circuitboard/computer/research
-	name = "Research Monitor (Computer Board)"
-	greyscale_colors = CIRCUIT_COLOR_SCIENCE
-	build_path = /obj/machinery/computer/security/research
-
-/obj/item/circuitboard/computer/robotics
-	name = "Robotics Control (Computer Board)"
-	greyscale_colors = CIRCUIT_COLOR_SCIENCE
-	build_path = /obj/machinery/computer/robotics
-
 /obj/item/circuitboard/computer/teleporter
 	name = "Teleporter (Computer Board)"
 	greyscale_colors = CIRCUIT_COLOR_SCIENCE
 	build_path = /obj/machinery/computer/teleporter
-
-/obj/item/circuitboard/computer/xenobiology
-	name = "Xenobiology Console (Computer Board)"
-	greyscale_colors = CIRCUIT_COLOR_SCIENCE
-	build_path = /obj/machinery/computer/camera_advanced/xenobio
-
-/obj/item/circuitboard/computer/scan_consolenew
-	name = "DNA Console (Computer Board)"
-	greyscale_colors = CIRCUIT_COLOR_SCIENCE
-	build_path = /obj/machinery/computer/scan_consolenew
-
-/obj/item/circuitboard/computer/mechpad
-	name = "Mecha Orbital Pad Console (Computer Board)"
-	greyscale_colors = CIRCUIT_COLOR_SCIENCE
-	build_path = /obj/machinery/computer/mechpad
 
 //Security
 
@@ -454,65 +381,7 @@
 
 //Service
 
-/obj/item/circuitboard/computer/chef_order
-	name = "Produce Orders Console (Computer Board)"
-	greyscale_colors = CIRCUIT_COLOR_SUPPLY
-	build_path = /obj/machinery/computer/chef_order
-
 //Supply
-
-/obj/item/circuitboard/computer/cargo
-	name = "Supply Console (Computer Board)"
-	greyscale_colors = CIRCUIT_COLOR_SUPPLY
-	build_path = /obj/machinery/computer/cargo
-	var/contraband = FALSE
-
-/obj/item/circuitboard/computer/cargo/multitool_act(mob/living/user)
-	. = ..()
-	if(!(obj_flags & EMAGGED))
-		contraband = !contraband
-		to_chat(user, SPAN_NOTICE("Receiver spectrum set to [contraband ? "Broad" : "Standard"]."))
-	else
-		to_chat(user, SPAN_ALERT("The spectrum chip is unresponsive."))
-
-/obj/item/circuitboard/computer/cargo/emag_act(mob/living/user)
-	if(!(obj_flags & EMAGGED))
-		contraband = TRUE
-		obj_flags |= EMAGGED
-		to_chat(user, SPAN_NOTICE("You adjust [src]'s routing and receiver spectrum, unlocking special supplies and contraband."))
-
-/obj/item/circuitboard/computer/cargo/configure_machine(obj/machinery/computer/cargo/machine)
-	if(!istype(machine))
-		CRASH("Cargo board attempted to configure incorrect machine type: [machine] ([machine?.type])")
-
-	machine.contraband = contraband
-	if (obj_flags & EMAGGED)
-		machine.obj_flags |= EMAGGED
-	else
-		machine.obj_flags &= ~EMAGGED
-
-/obj/item/circuitboard/computer/cargo/express
-	name = "Express Supply Console (Computer Board)"
-	build_path = /obj/machinery/computer/cargo/express
-
-/obj/item/circuitboard/computer/cargo/express/emag_act(mob/living/user)
-	if(!(obj_flags & EMAGGED))
-		contraband = TRUE
-		obj_flags |= EMAGGED
-		to_chat(user, SPAN_NOTICE("You change the routing protocols, allowing the Drop Pod to land anywhere on the station."))
-
-/obj/item/circuitboard/computer/cargo/express/multitool_act(mob/living/user)
-	if (!(obj_flags & EMAGGED))
-		contraband = !contraband
-		to_chat(user, SPAN_NOTICE("Receiver spectrum set to [contraband ? "Broad" : "Standard"]."))
-	else
-		to_chat(user, SPAN_NOTICE("You reset the destination-routing protocols and receiver spectrum to factory defaults."))
-		contraband = FALSE
-		obj_flags &= ~EMAGGED
-
-/obj/item/circuitboard/computer/cargo/request
-	name = "Supply Request Console (Computer Board)"
-	build_path = /obj/machinery/computer/cargo/request
 
 /obj/item/circuitboard/computer/ferry
 	name = "Transport Ferry (Computer Board)"

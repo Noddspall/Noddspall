@@ -221,12 +221,6 @@
 	network = list("mine", "auxbase")
 	circuit = /obj/item/circuitboard/computer/mining
 
-/obj/machinery/computer/security/research
-	name = "research camera console"
-	desc = "Used to access the various cameras in science."
-	network = list("rd")
-	circuit = /obj/item/circuitboard/computer/research
-
 /obj/machinery/computer/security/hos
 	name = "\improper Head of Security's camera console"
 	desc = "A custom security console with added access to the labor camp network."

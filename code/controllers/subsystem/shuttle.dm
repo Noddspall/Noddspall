@@ -34,30 +34,9 @@ SUBSYSTEM_DEF(shuttle)
 	var/last_mode = SHUTTLE_IDLE
 	var/last_call_time = 6000
 	var/list/hostile_environments = list() //Things blocking escape shuttle from leaving
-	var/list/trade_blockade = list() //Things blocking cargo from leaving.
-	var/supply_blocked = FALSE
 
-		//supply shuttle stuff
-	var/obj/docking_port/mobile/supply/supply
-	var/ordernum = 1 //order number given to next order
-	var/points = 5000 //number of trade-points we have
 	var/centcom_message = "" //Remarks from CentCom on how well you checked the last order.
 	var/list/discoveredPlants = list() //Typepaths for unusual plants we've already sent CentCom, associated with their potencies
-
-	/// All of the possible supply packs that can be purchased by cargo
-	var/list/supply_packs = list()
-
-	/// Queued supplies to be purchased for the chef
-	var/list/chef_groceries = list()
-
-	/// Queued supply packs to be purchased
-	var/list/shoppinglist = list()
-
-	/// Wishlist items made by crew for cargo to purchase at their leisure
-	var/list/requestlist = list()
-
-	/// A listing of previously delivered supply packs
-	var/list/orderhistory = list()
 
 	/// A list of job accesses that are able to purchase any shuttles
 	var/list/has_purchase_shuttle_access
@@ -92,27 +71,7 @@ SUBSYSTEM_DEF(shuttle)
 	var/list/sold_shuttles_cache = list()
 
 /datum/controller/subsystem/shuttle/Initialize(timeofday)
-	ordernum = rand(1, 9000)
-
-	var/list/pack_processing = subtypesof(/datum/supply_pack)
-	while(length(pack_processing))
-		var/datum/supply_pack/pack = pack_processing[length(pack_processing)]
-		pack_processing.len--
-		if(ispath(pack, /datum/supply_pack))
-			pack = new pack
-
-		var/list/generated_packs = pack.generate_supply_packs()
-		if(generated_packs)
-			pack_processing += generated_packs
-			continue
-
-		if(!pack.contains)
-			continue
-
-		supply_packs[pack.id] = pack
-
 	initial_load()
-	has_purchase_shuttle_access = init_has_purchase_shuttle_access()
 
 	if(!arrivals)
 		WARNING("No /obj/docking_port/mobile/arrivals placed on the map!")
@@ -120,8 +79,6 @@ SUBSYSTEM_DEF(shuttle)
 		WARNING("No /obj/docking_port/mobile/emergency placed on the map!")
 	if(!backup_shuttle)
 		WARNING("No /obj/docking_port/mobile/emergency/backup placed on the map!")
-	if(!supply)
-		WARNING("No /obj/docking_port/mobile/supply placed on the map!")
 
 	init_sold_shuttles()
 	return ..()
@@ -403,30 +360,6 @@ SUBSYSTEM_DEF(shuttle)
 	hostile_environments -= bad
 	checkHostileEnvironment()
 
-
-/datum/controller/subsystem/shuttle/proc/registerTradeBlockade(datum/bad)
-	trade_blockade[bad] = TRUE
-	checkTradeBlockade()
-
-/datum/controller/subsystem/shuttle/proc/clearTradeBlockade(datum/bad)
-	trade_blockade -= bad
-	checkTradeBlockade()
-
-
-/datum/controller/subsystem/shuttle/proc/checkTradeBlockade()
-	for(var/datum/d in trade_blockade)
-		if(!istype(d) || QDELETED(d))
-			trade_blockade -= d
-	supply_blocked = trade_blockade.len
-
-	if(supply_blocked && (supply.mode == SHUTTLE_IGNITING))
-		supply.mode = SHUTTLE_STRANDED
-		supply.timer = null
-		//Make all cargo consoles speak up
-	if(!supply_blocked && (supply.mode == SHUTTLE_STRANDED))
-		supply.mode = SHUTTLE_DOCKED
-		//Make all cargo consoles speak up
-
 /datum/controller/subsystem/shuttle/proc/checkHostileEnvironment()
 	for(var/datum/d in hostile_environments)
 		if(!istype(d) || QDELETED(d))
@@ -610,29 +543,13 @@ SUBSYSTEM_DEF(shuttle)
 	if (istype(SSshuttle.hostile_environments))
 		hostile_environments = SSshuttle.hostile_environments
 
-	if (istype(SSshuttle.supply))
-		supply = SSshuttle.supply
-
 	if (istype(SSshuttle.discoveredPlants))
 		discoveredPlants = SSshuttle.discoveredPlants
-
-	if (istype(SSshuttle.shoppinglist))
-		shoppinglist = SSshuttle.shoppinglist
-	if (istype(SSshuttle.requestlist))
-		requestlist = SSshuttle.requestlist
-	if (istype(SSshuttle.orderhistory))
-		orderhistory = SSshuttle.orderhistory
-
-	if (istype(SSshuttle.shuttle_loan))
-		shuttle_loan = SSshuttle.shuttle_loan
 
 	if (istype(SSshuttle.shuttle_purchase_requirements_met))
 		shuttle_purchase_requirements_met = SSshuttle.shuttle_purchase_requirements_met
 
-	var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_CAR)
 	centcom_message = SSshuttle.centcom_message
-	ordernum = SSshuttle.ordernum
-	points = D.account_balance
 	emergency_no_escape = SSshuttle.emergency_no_escape
 	emergency_call_amount = SSshuttle.emergency_call_amount
 	shuttle_purchased = SSshuttle.shuttle_purchased
@@ -1007,20 +924,6 @@ SUBSYSTEM_DEF(shuttle)
 					log_admin("[key_name(usr)] load/replaced [mdp] with the shuttle manipulator.</span>")
 					SSblackbox.record_feedback("text", "shuttle_manipulator", 1, "[mdp.name]")
 				shuttle_loading = FALSE
-				if(emergency == mdp) //you just changed the emergency shuttle, there are events in game + captains that can change your snowflake choice.
-					var/set_purchase = tgui_alert(usr, "Do you want to also disable shuttle purchases/random events that would change the shuttle?", "Butthurt Admin Prevention", list("Yes, disable purchases/events", "No, I want to possibly get owned"))
-					if(set_purchase == "Yes, disable purchases/events")
-						SSshuttle.shuttle_purchased = SHUTTLEPURCHASE_FORCED
-
-/datum/controller/subsystem/shuttle/proc/init_has_purchase_shuttle_access()
-	var/list/has_purchase_shuttle_access = list()
-
-	for (var/shuttle_id in SSmapping.shuttle_templates)
-		var/datum/map_template/shuttle/shuttle_template = SSmapping.shuttle_templates[shuttle_id]
-		if (!isnull(shuttle_template.who_can_purchase))
-			has_purchase_shuttle_access |= shuttle_template.who_can_purchase
-
-	return has_purchase_shuttle_access
 
 /datum/controller/subsystem/shuttle/proc/auto_transfer()
 	if(EMERGENCY_IDLE_OR_RECALLED)

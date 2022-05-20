@@ -229,8 +229,6 @@
 	purity = REAGENT_STANDARD_PURITY
 	self_consuming = TRUE
 	impure_chem = /datum/reagent/consumable/ice
-	inverse_chem_val = 0.5
-	inverse_chem = /datum/reagent/inverse/cryostylane
 	failed_chem = null
 	burning_volume = 0.05
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED | REAGENT_DEAD_PROCESS
@@ -343,17 +341,6 @@
 	color = "#CAFF43"
 	taste_description = "jelly"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-
-/datum/reagent/teslium/energized_jelly/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	if(isjellyperson(M))
-		shock_timer = 0 //immune to shocks
-		M.AdjustAllImmobility(-40  *REM * delta_time)
-		M.adjustStaminaLoss(-2 * REM * delta_time, 0)
-		if(isluminescent(M))
-			var/mob/living/carbon/human/H = M
-			var/datum/species/jelly/luminescent/L = H.dna.species
-			L.extract_cooldown = max(L.extract_cooldown - (20 * REM * delta_time), 0)
-	..()
 
 /datum/reagent/firefighting_foam
 	name = "Firefighting Foam"

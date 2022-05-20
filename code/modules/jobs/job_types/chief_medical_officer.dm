@@ -22,11 +22,7 @@
 		/datum/job_department/command,
 		)
 
-	paycheck = PAYCHECK_COMMAND
-	paycheck_department = ACCOUNT_MED
-
 	display_order = JOB_DISPLAY_ORDER_CHIEF_MEDICAL_OFFICER
-	bounty_types = CIV_JOB_MED
 
 	banned_quirks = list(HEAD_RESTRICTED_QUIRKS)
 

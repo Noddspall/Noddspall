@@ -96,15 +96,6 @@
 	result = /obj/item/food/cake/brain
 	subcategory = CAT_CAKE
 
-/datum/crafting_recipe/food/slimecake
-	name = "Slime cake"
-	reqs = list(
-		/obj/item/slime_extract = 1,
-		/obj/item/food/cake/plain = 1
-	)
-	result = /obj/item/food/cake/slimecake
-	subcategory = CAT_CAKE
-
 /datum/crafting_recipe/food/pumpkinspicecake
 	name = "Pumpkin spice cake"
 	reqs = list(

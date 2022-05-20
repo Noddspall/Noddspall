@@ -40,19 +40,17 @@ SUBSYSTEM_DEF(traumas)
 	)
 
 	phobia_mobs = list("spiders" = typecacheof(list(/mob/living/simple_animal/hostile/giant_spider)),
-		"security" = typecacheof(list(/mob/living/simple_animal/bot/secbot)),
 		"lizards" = typecacheof(list(/mob/living/simple_animal/hostile/lizard)),
 		"skeletons" = typecacheof(list(/mob/living/simple_animal/hostile/skeleton)),
 		"snakes" = typecacheof(list(/mob/living/simple_animal/hostile/retaliate/snake)),
 		"robots" = typecacheof(list(/mob/living/silicon/robot, /mob/living/silicon/ai,
-			/mob/living/simple_animal/drone, /mob/living/simple_animal/bot, /mob/living/simple_animal/hostile/swarmer,
+			/mob/living/simple_animal/drone, /mob/living/simple_animal/hostile/swarmer,
 		)),
-		"doctors" = typecacheof(list(/mob/living/simple_animal/bot/medbot)),
 		"the supernatural" = typecacheof(list(/mob/living/simple_animal/hostile/construct,
-			/mob/living/simple_animal/revenant, /mob/living/simple_animal/shade
+			/mob/living/simple_animal/shade
 		)),
 		"aliens" = typecacheof(list(/mob/living/carbon/alien, /mob/living/simple_animal/slime)),
-		"conspiracies" = typecacheof(list(/mob/living/simple_animal/bot/secbot, /mob/living/simple_animal/drone,
+		"conspiracies" = typecacheof(list(/mob/living/simple_animal/drone,
 			/mob/living/simple_animal/pet/penguin
 		)),
 		"birds" = typecacheof(list(
@@ -63,7 +61,7 @@ SUBSYSTEM_DEF(traumas)
 		"insects" = typecacheof(list(/mob/living/simple_animal/hostile/cockroach, /mob/living/simple_animal/hostile/bee))
 	)
 
-	phobia_objs = list("snakes" = typecacheof(list(/obj/item/rod_of_asclepius, /obj/item/toy/plush/snakeplushie)),
+	phobia_objs = list("snakes" = typecacheof(list(/obj/item/toy/plush/snakeplushie)),
 		"spiders" = typecacheof(list(/obj/structure/spider)),
 		"security" = typecacheof(list(
 			/obj/item/clothing/under/rank/security/officer, /obj/item/clothing/under/rank/security/warden,
@@ -107,7 +105,7 @@ SUBSYSTEM_DEF(traumas)
 			/obj/machinery/door/airlock/centcom, /obj/machinery/atmospherics/miner,
 		)),
 
-		"robots" = typecacheof(list(/obj/machinery/computer/upload, /obj/item/ai_module, /obj/machinery/recharge_station,
+		"robots" = typecacheof(list(/obj/machinery/computer/upload, /obj/item/ai_module,
 			/obj/item/aicard, /obj/structure/swarmer_beacon
 		)),
 
@@ -115,7 +113,7 @@ SUBSYSTEM_DEF(traumas)
 			/obj/item/reagent_containers/syringe, /obj/item/reagent_containers/pill/, /obj/item/reagent_containers/hypospray,
 			/obj/item/storage/firstaid, /obj/item/storage/pill_bottle, /obj/item/healthanalyzer,
 			/obj/structure/sign/departments/medbay, /obj/machinery/door/airlock/medical, /obj/machinery/sleeper, /obj/machinery/stasis,
-			/obj/machinery/dna_scannernew, /obj/machinery/atmospherics/components/unary/cryo_cell, /obj/item/surgical_drapes,
+			/obj/machinery/atmospherics/components/unary/cryo_cell, /obj/item/surgical_drapes,
 			/obj/item/retractor, /obj/item/hemostat, /obj/item/cautery, /obj/item/surgicaldrill, /obj/item/scalpel, /obj/item/circular_saw,
 			/obj/item/clothing/suit/bio_suit/plaguedoctorsuit, /obj/item/clothing/head/plaguedoctorhat, /obj/item/clothing/mask/gas/plaguedoctor,
 		)),
@@ -172,8 +170,7 @@ SUBSYSTEM_DEF(traumas)
 
 		"guns" = typecacheof(list(/obj/item/gun/ballistic, /obj/item/gun/energy, /obj/item/gun/syringe, /obj/item/gun/chem,
 			/obj/item/gun/blastcannon, /obj/item/gun/grenadelauncher, /obj/machinery/porta_turret, /obj/machinery/power/emitter,
-			/obj/item/ammo_casing, /obj/item/storage/belt/bandolier, /obj/item/storage/belt/holster, /obj/item/ammo_box,
-			/obj/item/mecha_ammo, /obj/item/mecha_parts/mecha_equipment/weapon/ballistic, /obj/item/mecha_parts/mecha_equipment/weapon/energy
+			/obj/item/ammo_casing, /obj/item/storage/belt/bandolier, /obj/item/storage/belt/holster, /obj/item/ammo_box
 		)),
 
 	"insects" = typecacheof(list(/obj/item/toy/plush/moth, /obj/item/toy/plush/beeplushie, /obj/item/clothing/mask/animal/rat/bee, /obj/item/clothing/suit/hooded/bee_costume, /obj/structure/beebox)),
@@ -198,7 +195,7 @@ SUBSYSTEM_DEF(traumas)
 		"conspiracies" = typecacheof(list(/datum/species/abductor, /datum/species/lizard, /datum/species/synth)),
 		"robots" = typecacheof(list(/datum/species/android)),
 		"the supernatural" = typecacheof(list(/datum/species/golem/runic)),
-		"aliens" = typecacheof(list(/datum/species/abductor, /datum/species/jelly, /datum/species/pod,/datum/species/shadow)),
+		"aliens" = typecacheof(list(/datum/species/abductor, /datum/species/pod,/datum/species/shadow)),
 		"anime" = typecacheof(list(/datum/species/human/felinid)),
 		"insects" = typecacheof(list(/datum/species/fly, /datum/species/moth))
 	)

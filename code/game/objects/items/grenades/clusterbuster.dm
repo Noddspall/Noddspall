@@ -84,35 +84,6 @@
 		for(var/i in 1 to steps)
 			step_away(src,loc)
 
-/obj/effect/payload_spawner/random_slime
-	var/volatile = FALSE
-
-/obj/effect/payload_spawner/random_slime/volatile
-	volatile = TRUE
-
-/obj/item/slime_extract/proc/activate_slime()
-	var/list/slime_chems = src.activate_reagents
-	if(!QDELETED(src))
-		var/chem = pick(slime_chems)
-		var/amount = 5
-		if(chem == "lesser plasma") //In the rare case we get another rainbow.
-			chem = /datum/reagent/toxin/plasma
-			amount = 4
-		if(chem == "holy water and uranium")
-			chem = /datum/reagent/uranium
-			reagents.add_reagent(/datum/reagent/water/holywater)
-		reagents.add_reagent(chem,amount)
-
-/obj/effect/payload_spawner/random_slime/spawn_payload(type, numspawned)
-	for(var/loop = numspawned ,loop > 0, loop--)
-		var/chosen = pick(subtypesof(/obj/item/slime_extract))
-		var/obj/item/slime_extract/P = new chosen(loc)
-		if(volatile)
-			addtimer(CALLBACK(P, /obj/item/slime_extract/proc/activate_slime), rand(15,60))
-		var/steps = rand(1,4)
-		for(var/i in 1 to steps)
-			step_away(src,loc)
-
 //////////////////////////////////
 //Custom payload clusterbusters
 /////////////////////////////////
@@ -155,10 +126,6 @@
 	name = "SyndiWrath"
 	payload = /obj/item/grenade/syndieminibomb
 
-/obj/item/grenade/clusterbuster/spawner_manhacks
-	name = "iViscerator"
-	payload = /obj/item/grenade/spawnergrenade/manhacks
-
 /obj/item/grenade/clusterbuster/spawner_spesscarp
 	name = "Invasion of the Space Carps"
 	payload = /obj/item/grenade/spawnergrenade/spesscarp
@@ -180,14 +147,3 @@
 	var/real_type = pick(subtypesof(/obj/item/grenade/clusterbuster))
 	new real_type(loc)
 	return INITIALIZE_HINT_QDEL
-
-//rainbow slime effect
-/obj/item/grenade/clusterbuster/slime
-	name = "Blorble Blorble"
-	icon_state = "slimebang"
-	base_state = "slimebang"
-	payload_spawner = /obj/effect/payload_spawner/random_slime
-	prime_sound = 'sound/effects/bubbles.ogg'
-
-/obj/item/grenade/clusterbuster/slime/volatile
-	payload_spawner = /obj/effect/payload_spawner/random_slime/volatile

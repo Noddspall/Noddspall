@@ -290,14 +290,6 @@
 	name = "\improper DNA injector (Anti-Laser Eyes)"
 	remove_mutations = list(LASEREYES)
 
-/obj/item/dnainjector/void
-	name = "\improper DNA injector (Void)"
-	add_mutations = list(VOID)
-
-/obj/item/dnainjector/antivoid
-	name = "\improper DNA injector (Anti-Void)"
-	remove_mutations = list(VOID)
-
 /obj/item/dnainjector/antenna
 	name = "\improper DNA injector (Antenna)"
 	add_mutations = list(ANTENNA)
@@ -416,22 +408,6 @@
 /obj/item/dnainjector/antithermal
 	name = "\improper DNA injector (Anti-Thermal Vision)"
 	remove_mutations = list(THERMAL)
-
-/obj/item/dnainjector/glow
-	name = "\improper DNA injector (Glowy)"
-	add_mutations = list(GLOWY)
-
-/obj/item/dnainjector/removeglow
-	name = "\improper DNA injector (Anti-Glowy)"
-	remove_mutations = list(GLOWY)
-
-/obj/item/dnainjector/antiglow
-	name = "\improper DNA injector (Antiglowy)"
-	add_mutations = list(ANTIGLOWY)
-
-/obj/item/dnainjector/removeantiglow
-	name = "\improper DNA injector (Anti-Antiglowy)"
-	remove_mutations = list(ANTIGLOWY)
 
 /obj/item/dnainjector/webbing
 	name = "\improper DNA injector (Webbing)"

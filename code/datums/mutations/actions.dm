@@ -157,41 +157,6 @@
 	exp_flash = 0
 	exp_fire= 4
 
-/datum/mutation/human/void
-	name = "Void Magnet"
-	desc = "A rare genome that attracts odd forces not usually observed."
-	quality = MINOR_NEGATIVE //upsides and downsides
-	text_gain_indication = SPAN_NOTICE("You feel a heavy, dull force just beyond the walls watching you.")
-	instability = 30
-	power = /obj/effect/proc_holder/spell/self/void
-	energy_coeff = 1
-	synchronizer_coeff = 1
-
-/datum/mutation/human/void/on_life(delta_time, times_fired)
-	if(!isturf(owner.loc))
-		return
-	if(DT_PROB((0.25+((100-dna.stability)/40)) * GET_MUTATION_SYNCHRONIZER(src), delta_time)) //very rare, but enough to annoy you hopefully. +0.5 probability for every 10 points lost in stability
-		new /obj/effect/immortality_talisman/void(get_turf(owner), owner)
-
-/obj/effect/proc_holder/spell/self/void
-	name = "Convoke Void" //magic the gathering joke here
-	desc = "A rare genome that attracts odd forces not usually observed. May sometimes pull you in randomly."
-	school = SCHOOL_EVOCATION
-	clothes_req = FALSE
-	charge_max = 600
-	invocation = "DOOOOOOOOOOOOOOOOOOOOM!!!"
-	invocation_type = INVOCATION_SHOUT
-	action_icon_state = "void_magnet"
-
-/obj/effect/proc_holder/spell/self/void/can_cast(mob/user = usr)
-	. = ..()
-	if(!isturf(user.loc))
-		return FALSE
-
-/obj/effect/proc_holder/spell/self/void/cast(list/targets, mob/user = usr)
-	. = ..()
-	new /obj/effect/immortality_talisman/void(get_turf(user), user)
-
 /datum/mutation/human/self_amputation
 	name = "Autotomy"
 	desc = "Allows a creature to voluntary discard a random appendage."

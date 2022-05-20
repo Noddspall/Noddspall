@@ -11,9 +11,6 @@
 	outfit = /datum/outfit/job/lawyer
 	plasmaman_outfit = /datum/outfit/plasmaman/bar
 
-	paycheck = PAYCHECK_EASY
-	paycheck_department = ACCOUNT_SRV
-
 	display_order = JOB_DISPLAY_ORDER_LAWYER
 	departments_list = list(
 		/datum/job_department/service,

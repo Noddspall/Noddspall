@@ -339,11 +339,7 @@
  * * 99-Infinity: Break your spinal cord, get paralyzed, take a bunch of damage too. Very unlucky!
 */
 /datum/component/tackler/proc/splat(mob/living/carbon/user, atom/hit)
-	if(istype(hit, /obj/machinery/vending)) // before we do anything else-
-		var/obj/machinery/vending/darth_vendor = hit
-		darth_vendor.tilt(user, TRUE)
-		return
-	else if(istype(hit, /obj/structure/window))
+	if(istype(hit, /obj/structure/window))
 		var/obj/structure/window/W = hit
 		splatWindow(user, W)
 		if(QDELETED(W))

@@ -53,7 +53,7 @@
 
 	for(cointype in typesof(/obj/item/coin))
 		var/obj/item/coin/C = new cointype
-		coinvalues["[cointype]"] = C.get_item_credit_value()
+		coinvalues["[cointype]"] = 10
 		qdel(C) //Sigh
 
 /obj/machinery/computer/slot_machine/Destroy()

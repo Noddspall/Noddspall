@@ -14,11 +14,7 @@
 	outfit = /datum/outfit/job/cook
 	plasmaman_outfit = /datum/outfit/plasmaman/chef
 
-	paycheck = PAYCHECK_EASY
-	paycheck_department = ACCOUNT_SRV
-
 	display_order = JOB_DISPLAY_ORDER_COOK
-	bounty_types = CIV_JOB_CHEF
 	required_languages = null
 	departments_list = list(
 		/datum/job_department/service,

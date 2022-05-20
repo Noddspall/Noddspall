@@ -902,12 +902,6 @@
 					matching_container = FALSE
 				if(!reaction.required_other)
 					matching_other = TRUE
-
-				else if(istype(cached_my_atom, /obj/item/slime_extract))
-					var/obj/item/slime_extract/extract = cached_my_atom
-
-					if(extract.Uses > 0) // added a limit to slime cores -- Muskets requested this
-						matching_other = TRUE
 			else
 				if(!reaction.required_container)
 					matching_container = TRUE
@@ -1173,19 +1167,11 @@
 
 			my_atom.audible_message(SPAN_NOTICE("[iconhtml] [selected_reaction.mix_message]"))
 
-		if(istype(cached_my_atom, /obj/item/slime_extract))
-			var/obj/item/slime_extract/extract = my_atom
-			extract.Uses--
-			if(extract.Uses <= 0) // give the notification that the slime core is dead
-				my_atom.visible_message(SPAN_NOTICE("[iconhtml] \The [my_atom]'s power is consumed in the reaction."))
-				extract.name = "used slime extract"
-				extract.desc = "This extract has been used up."
-
 	//If the reaction pollutes, pollute it here if we have an atom
 	if(selected_reaction.pollutant_type && my_atom)
 		var/turf/my_turf = get_turf(my_atom)
 		my_turf.pollute_turf(selected_reaction.pollutant_type, selected_reaction.pollutant_amount * multiplier)
-	
+
 	selected_reaction.on_reaction(src, null, multiplier)
 
 ///Possibly remove - see if multiple instant reactions is okay (Though, this "sorts" reactions by temp decending)

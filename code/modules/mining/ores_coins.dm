@@ -372,9 +372,6 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 		var/datum/material/M = i
 		value += M.value_per_unit * custom_materials[M]
 
-/obj/item/coin/get_item_credit_value()
-	return value
-
 /obj/item/coin/suicide_act(mob/living/user)
 	user.visible_message(SPAN_SUICIDE("[user] contemplates suicide with \the [src]!"))
 	if (!attack_self(user))
@@ -490,29 +487,5 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	material_flags = NONE
 
 /obj/item/coin/iron
-
-/obj/item/coin/gold/debug
-	custom_materials = list(/datum/material/gold = 400)
-	desc = "If you got this somehow, be aware that it will dust you. Almost certainly."
-
-/obj/item/coin/gold/debug/attack_self(mob/user)
-	if(cooldown < world.time)
-		if(string_attached) //does the coin have a wire attached
-			to_chat(user, SPAN_WARNING("The coin won't flip very well with something attached!") )
-			return FALSE//do not flip the coin
-		cooldown = world.time + 15
-		flick("coin_[coinflip]_flip", src)
-		coinflip = pick(sideslist)
-		icon_state = "coin_[coinflip]"
-		playsound(user.loc, 'sound/items/coinflip.ogg', 50, TRUE)
-		var/oldloc = loc
-		sleep(15)
-		if(loc == oldloc && user && !user.incapacitated())
-			user.visible_message(SPAN_NOTICE("[user] flips [src]. It lands on [coinflip]."), \
-				SPAN_NOTICE("You flip [src]. It lands on [coinflip]."), \
-				SPAN_HEAR("You hear the clattering of loose change."))
-		SSeconomy.fire()
-		to_chat(user,"<span class='bounty'>[SSeconomy.inflation_value()] is the inflation value.</span>")
-	return TRUE//did the coin flip? useful for suicide_act
 
 #undef ORESTACK_OVERLAYS_MAX

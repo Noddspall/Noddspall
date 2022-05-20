@@ -33,7 +33,6 @@ GLOBAL_LIST_INIT(trash_loot, list(//junk: useless, very easy to get, or ghetto c
 		/obj/item/paper = 1,
 		/obj/item/paper/crumpled = 1,
 		/obj/item/photo/old = 1,
-		/obj/item/disk/data = 1,
 		/obj/item/stack/sheet/cardboard = 1,
 		/obj/item/storage/box = 1,
 		/obj/item/c_tube = 1,
@@ -185,10 +184,6 @@ GLOBAL_LIST_INIT(uncommon_loot, list(//uncommon: useful items
 		/obj/item/clothing/gloves/tackler/offbrand = 1,
 		) = 8,
 
-	list(//strange objects
-		/obj/item/relic = 5,
-		) = 8,
-
 	list(//construction and crafting
 		/obj/item/stock_parts/cell/high = 1,
 		/obj/item/stack/sheet/mineral/wood/fifty = 1,
@@ -307,10 +302,7 @@ GLOBAL_LIST_INIT(oddity_loot, list(//oddity: strange or crazy items
 		/obj/item/spear/grey_tide = 1,
 		/obj/item/shadowcloak = 1,
 		/obj/item/clothing/head/helmet/abductor = 1,
-		/obj/item/dice/d20/fate/stealth/one_use = 1, //Looks like a d20, keep the d20 in the uncommon pool.
-		/obj/item/dice/d20/fate/stealth/cursed = 1, //Only rolls 1
 		/obj/item/clothing/shoes/jackboots/fast = 1,
-		/obj/item/clothing/suit/armor/reactive/table = 1,
 		/obj/item/storage/box/donkpockets/donkpocketgondola = 1
 	))
 

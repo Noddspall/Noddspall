@@ -95,24 +95,6 @@
 		alpha = 0
 	..()
 
-//Disk boxes
-
-/obj/item/storage/box/disks
-	name = "diskette box"
-	illustration = "disk_kit"
-
-/obj/item/storage/box/disks/PopulateContents()
-	for(var/i in 1 to 7)
-		new /obj/item/disk/data(src)
-
-/obj/item/storage/box/disks_nanite
-	name = "nanite program disks box"
-	illustration = "disk_kit"
-
-/obj/item/storage/box/disks_nanite/PopulateContents()
-	for(var/i in 1 to 7)
-		new /obj/item/disk/nanite_program(src)
-
 // Ordinary survival box
 /obj/item/storage/box/survival
 	name = "survival box"
@@ -608,15 +590,6 @@
 	for(var/i in 1 to 5)
 		new /obj/item/firing_pin(src)
 
-/obj/item/storage/box/firingpins/paywall
-	name = "box of paywall firing pins"
-	desc = "A box full of paywall firing pins, to allow newly-developed firearms to operate behind a custom-set paywall."
-	illustration = "firingpin"
-
-/obj/item/storage/box/firingpins/paywall/PopulateContents()
-	for(var/i in 1 to 5)
-		new /obj/item/firing_pin/paywall(src)
-
 /obj/item/storage/box/lasertagpins
 	name = "box of laser tag firing pins"
 	desc = "A box full of laser tag firing pins, to allow newly-developed firearms to require wearing brightly coloured plastic armor before being able to be used."
@@ -838,26 +811,11 @@
 	playsound(loc, "rustle", 50, TRUE, -5)
 	user.visible_message(SPAN_NOTICE("[user] hugs \the [src]."),SPAN_NOTICE("You hug \the [src]."))
 
-/////clown box & honkbot assembly
+/////clown box
 /obj/item/storage/box/clown
 	name = "clown box"
 	desc = "A colorful cardboard box for the clown"
 	illustration = "clown"
-
-/obj/item/storage/box/clown/attackby(obj/item/I, mob/user, params)
-	if((istype(I, /obj/item/bodypart/l_arm/robot)) || (istype(I, /obj/item/bodypart/r_arm/robot)))
-		if(contents.len) //prevent accidently deleting contents
-			to_chat(user, SPAN_WARNING("You need to empty [src] out first!"))
-			return
-		if(!user.temporarilyRemoveItemFromInventory(I))
-			return
-		qdel(I)
-		to_chat(user, SPAN_NOTICE("You add some wheels to the [src]! You've got a honkbot assembly now! Honk!"))
-		var/obj/item/bot_assembly/honkbot/A = new
-		qdel(src)
-		user.put_in_hands(A)
-	else
-		return ..()
 
 //////
 /obj/item/storage/box/hug/medical/PopulateContents()
@@ -1044,17 +1002,6 @@
 	for(var/i in 1 to 7)
 		new /obj/item/emptysandbag(src)
 
-/obj/item/storage/box/rndboards
-	name = "\proper the liberator's legacy"
-	desc = "A box containing a gift for worthy golems."
-	illustration = "scicircuit"
-
-/obj/item/storage/box/rndboards/PopulateContents()
-	new /obj/item/circuitboard/machine/protolathe/offstation(src)
-	new /obj/item/circuitboard/machine/destructive_analyzer(src)
-	new /obj/item/circuitboard/machine/circuit_imprinter/offstation(src)
-	new /obj/item/circuitboard/computer/rdconsole(src)
-
 /obj/item/storage/box/silver_sulf
 	name = "box of silver sulfadiazine patches"
 	desc = "Contains patches used to treat burns."
@@ -1167,7 +1114,6 @@
 		/obj/item/card/emag=1,\
 		/obj/item/stack/spacecash/c1000=50,\
 		/obj/item/healthanalyzer/advanced=1,\
-		/obj/item/disk/tech_disk/debug=1,\
 		/obj/item/uplink/debug=1,\
 		/obj/item/uplink/nuclear/debug=1,\
 		/obj/item/storage/box/beakers/bluespace=1,\
@@ -1288,30 +1234,10 @@
 /obj/item/storage/box/shipping/PopulateContents()
 	var/static/items_inside = list(
 		/obj/item/dest_tagger=1,\
-		/obj/item/sales_tagger=1,\
-		/obj/item/export_scanner=1,\
 		/obj/item/stack/package_wrap/small=2,\
 		/obj/item/stack/wrapping_paper/small=1
 		)
 	generate_items_inside(items_inside,src)
-
-/obj/item/storage/box/swab
-	name = "box of microbiological swabs"
-	desc = "Contains a number of sterile swabs for collecting microbiological samples."
-	illustration = "swab"
-
-/obj/item/storage/box/swab/PopulateContents()
-	for(var/i in 1 to 7)
-		new /obj/item/swab(src)
-
-/obj/item/storage/box/petridish
-	name = "box of petridishes"
-	desc = "This box purports to contain a number of high rim petridishes."
-	illustration = "petridish"
-
-/obj/item/storage/box/petridish/PopulateContents()
-	for(var/i in 1 to 7)
-		new /obj/item/petri_dish(src)
 
 /obj/item/storage/box/plumbing
 	name = "box of plumbing supplies"
@@ -1353,34 +1279,3 @@
 	..()
 	for(var/i in 1 to 7)
 		new /obj/item/tank/internals/emergency_oxygen/engi(src) //in case anyone ever wants to do anything with spawning them, apart from crafting the box
-
-/obj/item/storage/box/stabilized //every single stabilized extract from xenobiology
-	name = "box of stabilized extracts"
-	icon_state = "syndiebox"
-
-/obj/item/storage/box/stabilized/PopulateContents()
-	var/static/items_inside = list(
-		/obj/item/slimecross/stabilized/grey=1,\
-		/obj/item/slimecross/stabilized/orange=1,\
-		/obj/item/slimecross/stabilized/purple=1,\
-		/obj/item/slimecross/stabilized/blue=1,\
-		/obj/item/slimecross/stabilized/metal=1,\
-		/obj/item/slimecross/stabilized/yellow=1,\
-		/obj/item/slimecross/stabilized/darkpurple=1,\
-		/obj/item/slimecross/stabilized/darkblue=1,\
-		/obj/item/slimecross/stabilized/silver=1,\
-		/obj/item/slimecross/stabilized/bluespace=1,\
-		/obj/item/slimecross/stabilized/sepia=1,\
-		/obj/item/slimecross/stabilized/cerulean=1,\
-		/obj/item/slimecross/stabilized/pyrite=1,\
-		/obj/item/slimecross/stabilized/red=1,\
-		/obj/item/slimecross/stabilized/green=1,\
-		/obj/item/slimecross/stabilized/pink=1,\
-		/obj/item/slimecross/stabilized/gold=1,\
-		/obj/item/slimecross/stabilized/oil=1,\
-		/obj/item/slimecross/stabilized/black=1,\
-		/obj/item/slimecross/stabilized/lightpink=1,\
-		/obj/item/slimecross/stabilized/adamantine=1,\
-		/obj/item/slimecross/stabilized/rainbow=1,\
-		)
-	generate_items_inside(items_inside,src)

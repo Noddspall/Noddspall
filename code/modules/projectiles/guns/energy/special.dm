@@ -210,14 +210,6 @@
 	var/atmos_link = FALSE
 	var/firing_core = FALSE
 
-/obj/item/gun/energy/wormhole_projector/attackby(obj/item/C, mob/user)
-	if(istype(C, /obj/item/assembly/signaler/anomaly/bluespace))
-		to_chat(user, SPAN_NOTICE("You insert [C] into the wormhole projector and the weapon gently hums to life."))
-		firing_core = TRUE
-		playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
-		qdel(C)
-		return
-
 /obj/item/gun/energy/wormhole_projector/can_shoot()
 	if(!firing_core)
 		return FALSE
@@ -372,15 +364,6 @@
 	automatic_charge_overlays = FALSE
 	var/power = 4
 	var/firing_core = FALSE
-
-/obj/item/gun/energy/gravity_gun/attackby(obj/item/C, mob/user)
-	if(istype(C, /obj/item/assembly/signaler/anomaly/grav))
-		to_chat(user, SPAN_NOTICE("You insert [C] into the gravitational manipulator and the weapon gently hums to life."))
-		firing_core = TRUE
-		playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
-		qdel(C)
-		return
-	return ..()
 
 /obj/item/gun/energy/gravity_gun/can_shoot()
 	if(!firing_core)

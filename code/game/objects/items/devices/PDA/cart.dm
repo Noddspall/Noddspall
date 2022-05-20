@@ -387,55 +387,6 @@ Code:
 
 			menu += "<br>"
 
-		if (47) //quartermaster order records
-			menu = "<h4>[PDAIMG(crate)] Supply Record Interlink</h4>"
-
-			menu += "<BR><B>Supply shuttle</B><BR>"
-			menu += "Location: "
-			switch(SSshuttle.supply.mode)
-				if(SHUTTLE_CALL)
-					menu += "Moving to "
-					if(!is_station_level(SSshuttle.supply))
-						menu += "station"
-					else
-						menu += "CentCom"
-					menu += " ([SSshuttle.supply.timeLeft(600)] Mins)"
-				else
-					menu += "At "
-					if(!is_station_level(SSshuttle.supply))
-						menu += "CentCom"
-					else
-						menu += "station"
-			menu += "<BR>Current approved orders: <BR><ol>"
-			for(var/S in SSshuttle.shoppinglist)
-				var/datum/supply_order/SO = S
-				menu += "<li>#[SO.id] - [SO.pack.name] approved by [SO.orderer] [SO.reason ? "([SO.reason])":""]</li>"
-			menu += "</ol>"
-
-			menu += "Current requests: <BR><ol>"
-			for(var/S in SSshuttle.requestlist)
-				var/datum/supply_order/SO = S
-				menu += "<li>#[SO.id] - [SO.pack.name] requested by [SO.orderer]</li>"
-			menu += "</ol><font size=\"-3\">Upgrade NOW to Space Parts & Space Vendors PLUS for full remote order control and inventory management."
-
-		if (48) // quartermaster ore logs
-			menu = list("<h4>[PDAIMG(crate)] Ore Silo Logs</h4>")
-			if (GLOB.ore_silo_default)
-				var/list/logs = GLOB.silo_access_logs[REF(GLOB.ore_silo_default)]
-				var/len = LAZYLEN(logs)
-				var/i = 0
-				for(var/M in logs)
-					if (++i > 30)
-						menu += "(... older logs not shown ...)"
-						break
-					var/datum/ore_silo_log/entry = M
-					menu += "[len - i]. [entry.formatted]<br><br>"
-				if(i == 0)
-					menu += "Nothing!"
-			else
-				menu += "<b>No ore silo detected!</b>"
-			menu = jointext(menu, "")
-
 		if (49) //janitorial locator
 			menu = "<h4>[PDAIMG(bucket)] Persistent Custodial Object Locator</h4>"
 
@@ -477,23 +428,6 @@ Code:
 				else
 					menu += "[ldat]"
 
-				menu += "<h4>Located Cleanbots:</h4>"
-
-				ldat = null
-				for (var/mob/living/simple_animal/bot/cleanbot/B in GLOB.alive_mob_list)
-					var/turf/bl = get_turf(B)
-
-					if(bl)
-						if (bl.z != cl.z)
-							continue
-						var/direction = get_dir(src, B)
-						ldat += "Cleanbot - <b>\[[bl.x],[bl.y] ([uppertext(dir2text(direction))])\]</b> - [B.on ? "Online" : "Offline"]<br>"
-
-				if (!ldat)
-					menu += "None"
-				else
-					menu += "[ldat]"
-
 			else
 				menu += "ERROR: Unable to determine current location."
 			menu += "<br><br><A href='byond://?src=[REF(src)];choice=49'>Refresh GPS Locator</a>"
@@ -520,9 +454,6 @@ Code:
 					menu +="<font size=1><small>[comment.body]</font><br><font size=1><small><small><small>[comment.author] [comment.time_stamp]</small></small></small></small></font><br>"
 			menu += "<br> <A href='byond://?src=[REF(src)];choice=Newscaster Message'>Post Message</a>"
 
-		if (54) // Beepsky, Medibot, Floorbot, and Cleanbot access
-			menu = "<h4>[PDAIMG(medbot)] Bots Interlink</h4>"
-			bot_control()
 		if (55) // Emoji Guidebook for mimes
 			menu = "<h4>[PDAIMG(emoji)] Emoji Guidebook</h4>"
 			var/static/list/emoji_icon_states
@@ -632,85 +563,9 @@ Code:
 		var/parse = emoji_parse(":[href_list["emoji"]]:")
 		to_chat(usr, parse)
 
-	//Bot control section! Viciously ripped from radios for being laggy and terrible.
-	if(href_list["op"])
-		switch(href_list["op"])
-
-			if("control")
-				active_bot = locate(href_list["bot"]) in GLOB.bots_list
-
-			if("botlist")
-				active_bot = null
-			if("summon") //Args are in the correct order, they are stated here just as an easy reminder.
-				active_bot.bot_control("summon", usr, host_pda.GetAccess())
-			else //Forward all other bot commands to the bot itself!
-				active_bot.bot_control(href_list["op"], usr)
-
-	if(href_list["mule"]) //MULEbots are special snowflakes, and need different args due to how they work.
-		var/mob/living/simple_animal/bot/mulebot/mule = active_bot
-		if (istype(mule))
-			mule.bot_control(href_list["mule"], usr, pda=TRUE)
-
 	if(!host_pda)
 		return
 	host_pda.attack_self(usr)
-
-
-/obj/item/cartridge/proc/bot_control()
-	if(active_bot)
-		menu += "<B>[active_bot]</B><BR> Status: (<A href='byond://?src=[REF(src)];op=control;bot=[REF(active_bot)]'>[PDAIMG(refresh)]<i>refresh</i></A>)<BR>"
-		menu += "Model: [active_bot.model]<BR>"
-		menu += "Location: [get_area(active_bot)]<BR>"
-		menu += "Mode: [active_bot.get_mode()]"
-		if(active_bot.allow_pai)
-			menu += "<BR>pAI: "
-			if(active_bot.paicard && active_bot.paicard.pai)
-				menu += "[active_bot.paicard.pai.name]"
-				if(active_bot.bot_core.allowed(usr))
-					menu += " (<A href='byond://?src=[REF(src)];op=ejectpai'><i>eject</i></A>)"
-			else
-				menu += "<i>none</i>"
-
-		//MULEs!
-		if(active_bot.bot_type == MULE_BOT)
-			var/mob/living/simple_animal/bot/mulebot/MULE = active_bot
-			var/atom/Load = MULE.load
-			menu += "<BR>Current Load: [ !Load ? "<i>none</i>" : "[Load.name] (<A href='byond://?src=[REF(src)];mule=unload'><i>unload</i></A>)" ]<BR>"
-			menu += "Destination: [MULE.destination ? MULE.destination : "<i>None</i>"] (<A href='byond://?src=[REF(src)];mule=destination'><i>set</i></A>)<BR>"
-			menu += "Set ID: [MULE.suffix] <A href='byond://?src=[REF(src)];mule=setid'><i> Modify</i></A><BR>"
-			menu += "Power: [MULE.cell ? MULE.cell.percent() : 0]%<BR>"
-			menu += "Home: [!MULE.home_destination ? "<i>none</i>" : MULE.home_destination ]<BR>"
-			menu += "Delivery Reporting: <A href='byond://?src=[REF(src)];mule=report'>[MULE.report_delivery ? "(<B>On</B>)": "(<B>Off</B>)"]</A><BR>"
-			menu += "Auto Return Home: <A href='byond://?src=[REF(src)];mule=autoret'>[MULE.auto_return ? "(<B>On</B>)": "(<B>Off</B>)"]</A><BR>"
-			menu += "Auto Pickup Crate: <A href='byond://?src=[REF(src)];mule=autopick'>[MULE.auto_pickup ? "(<B>On</B>)": "(<B>Off</B>)"]</A><BR><BR>" //Hue.
-
-			menu += "\[<A href='byond://?src=[REF(src)];mule=stop'>Stop</A>\] "
-			menu += "\[<A href='byond://?src=[REF(src)];mule=go'>Proceed</A>\] "
-			menu += "\[<A href='byond://?src=[REF(src)];mule=home'>Return Home</A>\]<BR>"
-
-		else
-			menu += "<BR>\[<A href='byond://?src=[REF(src)];op=patroloff'>Stop Patrol</A>\] " //patrolon
-			menu += "\[<A href='byond://?src=[REF(src)];op=patrolon'>Start Patrol</A>\] " //patroloff
-			menu += "\[<A href='byond://?src=[REF(src)];op=summon'>Summon Bot</A>\]<BR>" //summon
-			menu += "Keep an ID inserted to upload access codes upon summoning."
-
-		menu += "<HR><A href='byond://?src=[REF(src)];op=botlist'>[PDAIMG(back)]Return to bot list</A>"
-	else
-		menu += "<BR><A href='byond://?src=[REF(src)];op=botlist'>[PDAIMG(refresh)]Scan for active bots</A><BR><BR>"
-		var/turf/current_turf = get_turf(src)
-		var/zlevel = current_turf.z
-		var/botcount = 0
-		for(var/B in GLOB.bots_list) //Git da botz
-			var/mob/living/simple_animal/bot/Bot = B
-			if(!Bot.on || Bot.z != zlevel || Bot.remote_disabled || !(bot_access_flags & Bot.bot_type)) //Only non-emagged bots on the same Z-level are detected!
-				continue //Also, the PDA must have access to the bot type.
-			menu += "<A href='byond://?src=[REF(src)];op=control;bot=[REF(Bot)]'><b>[Bot.name]</b> ([Bot.get_mode()])<BR>"
-			botcount++
-		if(!botcount) //No bots at all? Lame.
-			menu += "No bots found.<BR>"
-			return
-
-	return menu
 
 //If the cartridge adds a special line to the top of the messaging app
 /obj/item/cartridge/proc/message_header()

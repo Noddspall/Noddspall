@@ -43,9 +43,6 @@
 	)
 	AddElement(/datum/element/connect_loc, src, loc_connections)
 
-/mob/living/simple_animal/mouse/add_cell_sample()
-	AddElement(/datum/element/swabable, CELL_LINE_TABLE_MOUSE, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 10)
-
 /mob/living/simple_animal/mouse/proc/splat()
 	src.health = 0
 	src.icon_dead = "mouse_[body_color]_splat"
@@ -199,10 +196,6 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/vitamin = 2)
 	foodtypes = GROSS | MEAT | RAW
 	grind_results = list(/datum/reagent/blood = 20, /datum/reagent/liquidgibs = 5)
-
-/obj/item/food/deadmouse/Initialize()
-	. = ..()
-	AddElement(/datum/element/swabable, CELL_LINE_TABLE_MOUSE, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 10)
 
 /obj/item/food/deadmouse/examine(mob/user)
 	. = ..()

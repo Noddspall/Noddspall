@@ -128,7 +128,6 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 	new/datum/stack_recipe("floodlight frame", /obj/structure/floodlight_frame, 5, one_per_turf = TRUE, on_floor = TRUE), \
 	new/datum/stack_recipe("voting box", /obj/structure/votebox, 15, time = 50), \
 	new/datum/stack_recipe("pestle", /obj/item/pestle, 1, time = 50), \
-	new/datum/stack_recipe("hygienebot assembly", /obj/item/bot_assembly/hygienebot, 2, time = 5 SECONDS), \
 	new/datum/stack_recipe("shower frame", /obj/structure/showerframe, 2, time= 2 SECONDS), \
 	null, \
 	new/datum/stack_recipe("key ring", /obj/item/storage/key_ring, 1, time = 2 SECONDS), \
@@ -496,7 +495,6 @@ GLOBAL_LIST_INIT(cardboard_recipes, list ( \
 
 		new /datum/stack_recipe("survival box", /obj/item/storage/box/survival), \
 		new /datum/stack_recipe("extended tank survival box", /obj/item/storage/box/survival/engineer), \
-		new /datum/stack_recipe("disk box", /obj/item/storage/box/disks), \
 		new /datum/stack_recipe("light tubes box", /obj/item/storage/box/lights/tubes), \
 		new /datum/stack_recipe("light bulbs box", /obj/item/storage/box/lights/bulbs), \
 		new /datum/stack_recipe("mixed lights box", /obj/item/storage/box/lights/mixed), \

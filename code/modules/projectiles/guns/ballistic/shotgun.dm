@@ -180,36 +180,3 @@
 	. = ..()
 	if(.)
 		weapon_weight = WEAPON_MEDIUM
-
-/obj/item/gun/ballistic/shotgun/hook
-	name = "hook modified sawn-off shotgun"
-	desc = "Range isn't an issue when you can bring your victim to you."
-	icon_state = "hookshotgun"
-	inhand_icon_state = "hookshotgun"
-	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
-	inhand_x_dimension = 32
-	inhand_y_dimension = 32
-	mag_type = /obj/item/ammo_box/magazine/internal/shot/bounty
-	weapon_weight = WEAPON_MEDIUM
-	semi_auto = TRUE
-	flags_1 = CONDUCT_1
-	force = 18 //it has a hook on it
-	sharpness = SHARP_POINTY //it does in fact, have a hook on it
-	attack_verb_continuous = list("slashes", "hooks", "stabs")
-	attack_verb_simple = list("slash", "hook", "stab")
-	hitsound = 'sound/weapons/bladeslice.ogg'
-	//our hook gun!
-	var/obj/item/gun/magic/hook/bounty/hook
-
-/obj/item/gun/ballistic/shotgun/hook/Initialize()
-	. = ..()
-	hook = new /obj/item/gun/magic/hook/bounty(src)
-
-/obj/item/gun/ballistic/shotgun/hook/examine(mob/user)
-	. = ..()
-	. += SPAN_NOTICE("Right-click to shoot the hook.")
-
-/obj/item/gun/ballistic/shotgun/hook/afterattack_secondary(atom/target, mob/user, proximity_flag, click_parameters)
-	hook.afterattack(target, user, proximity_flag, click_parameters)
-	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN

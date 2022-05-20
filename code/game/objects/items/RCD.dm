@@ -36,28 +36,19 @@ RLD
 	var/upgrade = NONE
 	/// Bitflags for banned upgrades
 	var/banned_upgrades = NONE
-	var/datum/component/remote_materials/silo_mats //remote connection to the silo
-	var/silo_link = FALSE //switch to use internal or remote storage
 
 /obj/item/construction/Initialize(mapload)
 	. = ..()
 	spark_system = new /datum/effect_system/spark_spread
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
-	if(upgrade & RCD_UPGRADE_SILO_LINK)
-		silo_mats = AddComponent(/datum/component/remote_materials, "RCD", mapload, FALSE)
 
 /obj/item/construction/examine(mob/user)
 	. = ..()
 	. += "It currently holds [matter]/[max_matter] matter-units."
-	if(upgrade & RCD_UPGRADE_SILO_LINK)
-		. += "Remote storage link state: [silo_link ? "[silo_mats.on_hold() ? "ON HOLD" : "ON"]" : "OFF"]."
-		if(silo_link && silo_mats.mat_container && !silo_mats.on_hold())
-			. += "Remote connection has iron in equivalent to [silo_mats.mat_container.get_material_amount(/datum/material/iron)/500] RCD unit\s." //1 matter for 1 floor tile, as 4 tiles are produced from 1 iron
 
 /obj/item/construction/Destroy()
 	QDEL_NULL(spark_system)
-	silo_mats = null
 	return ..()
 
 /obj/item/construction/pre_attack(atom/target, mob/user, params)
@@ -85,8 +76,6 @@ RLD
 		to_chat(user, SPAN_WARNING("[src] can't install this upgrade!"))
 		return
 	upgrade |= rcd_up.upgrade
-	if((rcd_up.upgrade & RCD_UPGRADE_SILO_LINK) && !silo_mats)
-		silo_mats = AddComponent(/datum/component/remote_materials, "RCD", FALSE, FALSE)
 	playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
 	qdel(rcd_up)
 
@@ -139,46 +128,16 @@ RLD
 		spark_system.start()
 
 /obj/item/construction/proc/useResource(amount, mob/user)
-	if(!silo_mats || !silo_link)
-		if(matter < amount)
-			if(user)
-				to_chat(user, no_ammo_message)
-			return FALSE
-		matter -= amount
-		update_appearance()
-		return TRUE
-	else
-		if(silo_mats.on_hold())
-			if(user)
-				to_chat(user, SPAN_ALERT("Mineral access is on hold, please contact the quartermaster."))
-			return FALSE
-		if(!silo_mats.mat_container)
-			to_chat(user, SPAN_ALERT("No silo link detected. Connect to silo via multitool."))
-			return FALSE
-		if(!silo_mats.mat_container.has_materials(list(/datum/material/iron = 500), amount))
-			if(user)
-				to_chat(user, no_ammo_message)
-			return FALSE
-
-		var/list/materials = list()
-		materials[GET_MATERIAL_REF(/datum/material/iron)] = 500
-		silo_mats.mat_container.use_materials(materials, amount)
-		silo_mats.silo_log(src, "consume", -amount, "build", materials)
-		return TRUE
+	if(matter < amount)
+		if(user)
+			to_chat(user, no_ammo_message)
+		return FALSE
+	matter -= amount
+	update_appearance()
+	return TRUE
 
 /obj/item/construction/proc/checkResource(amount, mob/user)
-	if(!silo_mats || !silo_mats.mat_container)
-		if(silo_link)
-			to_chat(user, SPAN_ALERT("Connected silo link is invalid. Reconnect to silo via multitool."))
-			return FALSE
-		else
-			. = matter >= amount
-	else
-		if(silo_mats.on_hold())
-			if(user)
-				to_chat(user, SPAN_ALERT("Mineral access is on hold, please contact the quartermaster."))
-			return FALSE
-		. = silo_mats.mat_container.has_materials(list(/datum/material/iron = 500), amount)
+	. = matter >= amount
 	if(!. && user)
 		to_chat(user, no_ammo_message)
 		if(has_ammobar)
@@ -393,16 +352,6 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 			window_type = /obj/structure/window/fulltile
 
 	to_chat(user, SPAN_NOTICE("You change \the [src]'s window mode to [window_size] [window_glass] window."))
-
-/obj/item/construction/rcd/proc/toggle_silo_link(mob/user)
-	if(silo_mats)
-		if(!silo_mats.mat_container && !silo_link) // Allow them to turn off an invalid link
-			to_chat(user, SPAN_ALERT("No silo link detected. Connect to silo via multitool."))
-			return FALSE
-		silo_link = !silo_link
-		to_chat(user, SPAN_NOTICE("You change \the [src]'s storage link state: [silo_link ? "ON" : "OFF"]."))
-	else
-		to_chat(user, SPAN_WARNING("\the [src] doesn't have remote storage connection."))
 
 /// Very not ideal
 /obj/item/construction/rcd/proc/get_airlock_image(airlock_type)
@@ -686,10 +635,6 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 		"Machine Frames" = image(icon = 'icons/hud/radial.dmi', icon_state = "machine"),
 		"Computer Frames" = image(icon = 'icons/hud/radial.dmi', icon_state = "computer_dir"),
 		)
-	if(upgrade & RCD_UPGRADE_SILO_LINK)
-		choices += list(
-		"Silo Link" = image(icon = 'icons/obj/mining.dmi', icon_state = "silo"),
-		)
 	if(upgrade & RCD_UPGRADE_FURNISHING)
 		choices += list(
 		"Furnishing" = image(icon = 'icons/hud/radial.dmi', icon_state = "chair")
@@ -742,9 +687,6 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 		if("Change Furnishing Type")
 			change_furnishing_type(user)
 			return
-		if("Silo Link")
-			toggle_silo_link(user)
-			return
 		else
 			return
 	playsound(src, 'sound/effects/pop.ogg', 50, FALSE)
@@ -795,7 +737,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	no_ammo_message = SPAN_WARNING("Insufficient charge.")
 	desc = "A device used to rapidly build walls and floors."
 	canRturf = TRUE
-	banned_upgrades = RCD_UPGRADE_SILO_LINK
+	banned_upgrades = NONE
 	var/energyfactor = 72
 
 
@@ -1220,8 +1162,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	/obj/machinery/plumbing/grinder_chemical = 30,
 	/obj/machinery/plumbing/reaction_chamber = 15,
 	/obj/machinery/plumbing/splitter = 5,
-	/obj/machinery/plumbing/disposer = 10,
-	/obj/machinery/plumbing/growing_vat = 20
+	/obj/machinery/plumbing/disposer = 10
 )
 
 
@@ -1240,9 +1181,6 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	desc = "It contains the design for firelock, air alarm, fire alarm, apc circuits and crap power cells."
 	upgrade = RCD_UPGRADE_SIMPLE_CIRCUITS
 
-/obj/item/rcd_upgrade/silo_link
-	desc = "It contains direct silo connection RCD upgrade."
-	upgrade = RCD_UPGRADE_SILO_LINK
 /obj/item/rcd_upgrade/furnishing
 	desc = "It contains the design for chairs, stools, tables, and glass tables."
 	upgrade = RCD_UPGRADE_FURNISHING

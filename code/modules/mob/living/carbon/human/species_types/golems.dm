@@ -1011,11 +1011,7 @@
 				to_chat(H, SPAN_WARNING("You do not have enough cardboard!"))
 				return FALSE
 			to_chat(H, SPAN_NOTICE("You create a new cardboard golem shell."))
-			create_brother(H.loc)
-
-/datum/species/golem/cardboard/proc/create_brother(location)
-	new /obj/effect/mob_spawn/human/golem/servant(location, /datum/species/golem/cardboard, owner)
-	last_creation = world.time
+			//create_brother(H.loc)
 
 /datum/species/golem/leather
 	name = "Leather Golem"
@@ -1176,7 +1172,6 @@
 			continue //Do not affect our brothers
 
 		to_chat(L, SPAN_CULTLARGE("A spine-chilling sound chills you to the bone!"))
-		L.apply_status_effect(/datum/status_effect/bonechill)
 		SEND_SIGNAL(L, COMSIG_ADD_MOOD_EVENT, "spooked", /datum/mood_event/spooked)
 
 /datum/species/golem/snow

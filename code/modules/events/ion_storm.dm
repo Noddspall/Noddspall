@@ -12,7 +12,6 @@
 	var/removeRandomLawChance = 10 //chance the AI has one random supplied or inherent law removed
 	var/removeDontImproveChance = 10 //chance the randomly created law replaces a random law instead of simply being added
 	var/shuffleLawsChance = 10 //chance the AI's laws are shuffled afterwards
-	var/botEmagChance = 1
 	var/ionMessage = null
 	announceWhen = 1
 	announceChance = 33
@@ -22,7 +21,6 @@
 	removeRandomLawChance = 0
 	removeDontImproveChance = 0
 	shuffleLawsChance = 0
-	botEmagChance = 0
 
 /datum/round_event/ion_storm/announce(fake)
 	if(prob(announceChance) || fake)
@@ -52,11 +50,6 @@
 
 			log_game("Ion storm changed laws of [key_name(M)] to [english_list(M.laws.get_law_list(TRUE, TRUE))]")
 			M.post_lawchange()
-
-	if(botEmagChance)
-		for(var/mob/living/simple_animal/bot/bot in GLOB.alive_mob_list)
-			if(prob(botEmagChance))
-				bot.emag_act()
 
 /proc/generate_ion_law()
 	//Threats are generally bad things, silly or otherwise. Plural.

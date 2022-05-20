@@ -9,16 +9,12 @@
 	exp_requirements = 60
 	exp_required_type = EXP_TYPE_CREW
 	exp_granted_type = EXP_TYPE_CREW
-	bounty_types = CIV_JOB_ROBO
 
 	outfit = /datum/outfit/job/roboticist
 	plasmaman_outfit = /datum/outfit/plasmaman/robotics
 	departments_list = list(
 		/datum/job_department/science,
 		)
-
-	paycheck = PAYCHECK_MEDIUM
-	paycheck_department = ACCOUNT_SCI
 
 	display_order = JOB_DISPLAY_ORDER_ROBOTICIST
 

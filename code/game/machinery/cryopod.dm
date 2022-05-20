@@ -60,16 +60,6 @@ GLOBAL_LIST_EMPTY(cryopod_computers)
 	var/list/data = list()
 	data["frozen_crew"] = frozen_crew
 
-	var/obj/item/card/id/id_card
-	var/datum/bank_account/current_user
-	if(isliving(user))
-		var/mob/living/person = user
-		id_card = person.get_idcard()
-	if(id_card?.registered_account)
-		current_user = id_card.registered_account
-	if(current_user)
-		data["account_name"] = current_user.account_holder
-
 	return data
 
 /obj/item/circuitboard/computer/cryopodcontrol

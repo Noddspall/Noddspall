@@ -348,28 +348,6 @@ What a mess.*/
 						if((E.fields["name"] == R.fields["name"] || E.fields["id"] == R.fields["id"]))
 							active2 = E
 					screen = 3
-
-			if("Pay")
-				for(var/datum/data/crime/p in active2.fields["citation"])
-					if(p.dataId == text2num(href_list["cdataid"]))
-						var/obj/item/holochip/C = usr.is_holding_item_of_type(/obj/item/holochip)
-						if(C && istype(C))
-							var/pay = C.get_item_credit_value()
-							if(!pay)
-								to_chat(usr, SPAN_WARNING("[C] doesn't seem to be worth anything!"))
-							else
-								var/diff = p.fine - p.paid
-								GLOB.data_core.payCitation(active2.fields["id"], text2num(href_list["cdataid"]), pay)
-								to_chat(usr, SPAN_NOTICE("You have paid [pay] credit\s towards your fine."))
-								if (pay == diff || pay > diff || pay >= diff)
-									investigate_log("Citation Paid off: <strong>[p.crimeName]</strong> Fine: [p.fine] | Paid off by [key_name(usr)]", INVESTIGATE_RECORDS)
-									to_chat(usr, SPAN_NOTICE("The fine has been paid in full."))
-								SSblackbox.ReportCitation(text2num(href_list["cdataid"]),"","","","", 0, pay)
-								qdel(C)
-								playsound(src, "terminal_type", 25, FALSE)
-						else
-							to_chat(usr, SPAN_WARNING("Fines can only be paid with holochips!"))
-
 			if("Print Record")
 				if(!( printing ))
 					printing = 1

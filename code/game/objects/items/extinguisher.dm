@@ -266,13 +266,3 @@
 			theturf.MakeSlippery(TURF_WET_WATER, min_wet_time = 10 SECONDS, wet_time_to_add = 5 SECONDS)
 
 		user.visible_message(SPAN_NOTICE("[user] empties out \the [src] onto the floor using the release valve."), SPAN_INFO("You quietly empty out \the [src] using its release valve."))
-
-//firebot assembly
-/obj/item/extinguisher/attackby(obj/O, mob/user, params)
-	if(istype(O, /obj/item/bodypart/l_arm/robot) || istype(O, /obj/item/bodypart/r_arm/robot))
-		to_chat(user, SPAN_NOTICE("You add [O] to [src]."))
-		qdel(O)
-		qdel(src)
-		user.put_in_hands(new /obj/item/bot_assembly/firebot)
-	else
-		..()

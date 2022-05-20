@@ -152,9 +152,6 @@
 /obj/structure/ladder/attack_animal(mob/user)
 	return use(user)
 
-/obj/structure/ladder/attack_slime(mob/user)
-	return use(user)
-
 /obj/structure/ladder/attackby(obj/item/W, mob/user, params)
 	return use(user)
 

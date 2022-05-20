@@ -81,13 +81,6 @@
 				qdel(src)
 			return
 
-		for(var/obj/machinery/vending/darth_vendor in the_turf)
-			if(darth_vendor.tiltable)
-				to_chat(living_guy, SPAN_WARNING("A malevolent force tugs at the [darth_vendor]..."))
-				INVOKE_ASYNC(darth_vendor, /obj/machinery/vending.proc/tilt, living_guy)
-				if(!permanent)
-					qdel(src)
-				return
 
 /// If we get knocked down, see if we have a really bad slip and bash our head hard
 /datum/component/omen/proc/check_slip(mob/living/our_guy, amount)

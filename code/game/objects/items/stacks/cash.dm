@@ -20,11 +20,8 @@
 
 /obj/item/stack/spacecash/update_desc()
 	. = ..()
-	var/total_worth = get_item_credit_value()
+	var/total_worth = value
 	desc = "It's worth [total_worth] credit[(total_worth > 1) ? "s" : null] in total."
-
-/obj/item/stack/spacecash/get_item_credit_value()
-	return (amount*value)
 
 /obj/item/stack/spacecash/merge(obj/item/stack/S)
 	. = ..()

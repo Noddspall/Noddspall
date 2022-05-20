@@ -13,11 +13,7 @@
 	outfit = /datum/outfit/job/scientist
 	plasmaman_outfit = /datum/outfit/plasmaman/science
 
-	paycheck = PAYCHECK_MEDIUM
-	paycheck_department = ACCOUNT_SCI
-
 	display_order = JOB_DISPLAY_ORDER_SCIENTIST
-	bounty_types = CIV_JOB_SCI
 	departments_list = list(
 		/datum/job_department/science,
 		)
@@ -25,8 +21,6 @@
 	family_heirlooms = list(/obj/item/toy/plush/slimeplushie)
 
 	mail_goodies = list(
-		/obj/item/raw_anomaly_core/random = 10,
-		/obj/item/disk/tech_disk/spaceloot = 2,
 		/obj/item/camera_bug = 1
 	)
 

@@ -52,12 +52,7 @@
 	/// Experience type granted by playing in this job.
 	var/exp_granted_type = ""
 
-	var/paycheck = PAYCHECK_MINIMAL
-	var/paycheck_department = ACCOUNT_CIV
-
 	var/display_order = JOB_DISPLAY_ORDER_DEFAULT
-
-	var/bounty_types = CIV_JOB_BASIC
 
 	/// Goodies that can be received via the mail system.
 	// this is a weighted list.
@@ -150,10 +145,6 @@
 	return
 
 /mob/living/carbon/human/on_job_equipping(datum/job/equipping, apply_loadout = FALSE, player_client)
-	var/datum/bank_account/bank_account = new(real_name, equipping, dna.species.payday_modifier)
-	bank_account.payday(STARTING_PAYCHECKS, TRUE)
-	account_id = bank_account.account_id
-
 	dress_up_as_job(equipping, apply_loadout = apply_loadout, player_client = player_client)
 
 
@@ -274,10 +265,6 @@
 			C.registered_age = H.age
 		C.update_label()
 		C.update_icon()
-		var/datum/bank_account/B = SSeconomy.bank_accounts_by_id["[H.account_id]"]
-		if(B && B.account_id == H.account_id)
-			C.registered_account = B
-			B.bank_cards += C
 		H.sec_hud_set_ID()
 
 	var/obj/item/pda/PDA = H.get_item_by_slot(pda_slot)

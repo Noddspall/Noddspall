@@ -25,8 +25,6 @@
 
 // This proc gets run before the game starts when the holiday is activated. Do festive shit here.
 /datum/holiday/proc/celebrate()
-	if(mail_holiday)
-		SSeconomy.mail_blocked = TRUE
 	return
 
 // When the round starts, this proc is ran to get a text message to display to everyone to wish them a happy holiday

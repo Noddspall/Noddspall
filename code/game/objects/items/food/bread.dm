@@ -58,11 +58,6 @@
 	tastes = list("decaying fungus" = 1)
 	foodtypes = GROSS
 
-/obj/item/food/breadslice/moldy/Initialize()
-	. = ..()
-	AddElement(/datum/element/swabable, CELL_LINE_TABLE_MOLD, CELL_VIRUS_TABLE_GENERIC, rand(2,4), 25)
-
-
 /obj/item/food/bread/meat
 	name = "meatbread loaf"
 	desc = "The culinary base of every self-respecting eloquen/tg/entleman."

@@ -206,11 +206,9 @@
 		QDEL_NULL(malf_picker)
 	if(doomsday_device)
 		QDEL_NULL(doomsday_device)
-	QDEL_NULL(robot_control)
 	QDEL_NULL(aiMulti)
 	malfhack = null
 	current = null
-	Bot = null
 	controlled_mech = null
 	linked_core = null
 	apc_override = null
@@ -452,31 +450,6 @@
 		else
 			to_chat(src, "Target is not on or near any active cameras on the station.")
 		return
-	if (href_list["ai_take_control"]) //Mech domination
-		var/obj/vehicle/sealed/mecha/M = locate(href_list["ai_take_control"]) in GLOB.mechas_list
-		if (!M)
-			return
-
-		var/mech_has_controlbeacon = FALSE
-		for(var/obj/item/mecha_parts/mecha_tracking/ai_control/A in M.trackers)
-			mech_has_controlbeacon = TRUE
-			break
-		if(!can_dominate_mechs && !mech_has_controlbeacon)
-			message_admins("Warning: possible href exploit by [key_name(usr)] - attempted control of a mecha without can_dominate_mechs or a control beacon in the mech.")
-			log_game("Warning: possible href exploit by [key_name(usr)] - attempted control of a mecha without can_dominate_mechs or a control beacon in the mech.")
-			return
-
-		if(controlled_mech)
-			to_chat(src, SPAN_WARNING("You are already loaded into an onboard computer!"))
-			return
-		if(!GLOB.cameranet.checkCameraVis(M))
-			to_chat(src, SPAN_WARNING("Exosuit is no longer near active cameras."))
-			return
-		if(!isturf(loc))
-			to_chat(src, SPAN_WARNING("You aren't in your core!"))
-			return
-		if(M)
-			M.transfer_ai(AI_MECH_HACK, src, usr) //Called om the mech itself.
 
 
 /mob/living/silicon/ai/proc/switchCamera(obj/machinery/camera/C)
@@ -498,11 +471,6 @@
 	set name = "Access Robot Control"
 	set desc = "Wirelessly control various automatic robots."
 
-	if(!robot_control)
-		robot_control = new(src)
-
-	robot_control.ui_interact(src)
-
 /mob/living/silicon/ai/proc/set_waypoint(atom/A)
 	var/turf/turf_check = get_turf(A)
 		//The target must be in view of a camera or near the core.
@@ -514,17 +482,7 @@
 		to_chat(src, SPAN_DANGER("Selected location is not visible."))
 
 /mob/living/silicon/ai/proc/call_bot(turf/waypoint)
-
-	if(!Bot)
-		return
-
-	if(Bot.calling_ai && Bot.calling_ai != src) //Prevents an override if another AI is controlling this bot.
-		to_chat(src, SPAN_DANGER("Interface error. Unit is already in use."))
-		return
-	to_chat(src, SPAN_NOTICE("Sending command to bot..."))
-	call_bot_cooldown = world.time + CALL_BOT_COOLDOWN
-	Bot.call_bot(src, waypoint)
-	call_bot_cooldown = 0
+	return
 
 /mob/living/silicon/ai/triggerAlarm(class, area/home, cameras, obj/source)
 	if(source.z != z)

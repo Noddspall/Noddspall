@@ -327,16 +327,6 @@
 					W.req_access = list()
 			message_admins("[key_name_admin(holder)] activated Egalitarian Station mode")
 			priority_announce("CentCom airlock control override activated. Please take this time to get acquainted with your coworkers.", null, SSstation.announcer.get_rand_report_sound())
-		if("ancap")
-			if(!is_funmin)
-				return
-			SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Anarcho-capitalist Station"))
-			SSeconomy.full_ancap = !SSeconomy.full_ancap
-			message_admins("[key_name_admin(holder)] toggled Anarcho-capitalist mode")
-			if(SSeconomy.full_ancap)
-				priority_announce("The NAP is now in full effect.", null, SSstation.announcer.get_rand_report_sound())
-			else
-				priority_announce("The NAP has been revoked.", null, SSstation.announcer.get_rand_report_sound())
 		if("blackout")
 			if(!is_funmin)
 				return
@@ -547,32 +537,6 @@
 			message_admins("[key_name_admin(holder)] has Un-Fully Immersed \
 				everyone!")
 			log_admin("[key_name(holder)] has Un-Fully Immersed everyone.")
-		if("makeNerd")
-			var/spawnpoint = pick(GLOB.blobstart)
-			var/list/mob/dead/observer/candidates
-			var/mob/dead/observer/chosen_candidate
-			var/mob/living/simple_animal/drone/nerd
-			var/teamsize
-
-			teamsize = input(usr, "How many drones?", "N.E.R.D. team size", 2) as num|null
-
-			if(teamsize <= 0)
-				return FALSE
-
-			candidates = pollGhostCandidates("Do you wish to be considered for a Nanotrasen emergency response drone?", "Drone")
-
-			if(length(candidates) == 0)
-				return FALSE
-
-			while(length(candidates) && teamsize)
-				chosen_candidate = pick(candidates)
-				candidates -= chosen_candidate
-				nerd = new /mob/living/simple_animal/drone/classic(spawnpoint)
-				nerd.key = chosen_candidate.key
-				log_game("[key_name(nerd)] has been selected as a Nanotrasen emergency response drone")
-				teamsize--
-
-			return TRUE
 	if(E)
 		E.processing = FALSE
 		if(E.announceWhen>0)

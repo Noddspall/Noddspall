@@ -40,7 +40,6 @@
 	install_component(new /obj/item/computer_hardware/card_slot)
 	install_component(new /obj/item/computer_hardware/network_card)
 	install_component(new /obj/item/computer_hardware/printer/mini)
-	hard_drive.store_file(new /datum/computer_file/program/shipping)
 	var/datum/computer_file/program/chatclient/chatprogram
 	chatprogram = new
 	hard_drive.store_file(chatprogram)
@@ -58,33 +57,19 @@
 
 /obj/item/modular_computer/tablet/preset/advanced/engineering/Initialize()
 	. = ..()
-	var/obj/item/computer_hardware/hard_drive/small/hard_drive = find_hardware_by_name("solid state drive")
-	hard_drive.store_file(new /datum/computer_file/program/supermatter_monitor)
 
 /obj/item/modular_computer/tablet/preset/advanced/command/Initialize()
 	. = ..()
-	var/obj/item/computer_hardware/hard_drive/small/hard_drive = find_hardware_by_name("solid state drive")
 	install_component(new /obj/item/computer_hardware/sensorpackage)
 	install_component(new /obj/item/computer_hardware/card_slot/secondary)
-	hard_drive.store_file(new /datum/computer_file/program/budgetorders)
-	hard_drive.store_file(new /datum/computer_file/program/science)
 
 /obj/item/modular_computer/tablet/preset/advanced/command/engineering/Initialize()
 	. = ..()
-	var/obj/item/computer_hardware/hard_drive/small/hard_drive = find_hardware_by_name("solid state drive")
-	hard_drive.store_file(new /datum/computer_file/program/supermatter_monitor)
 
 /// Given by the syndicate as part of the contract uplink bundle - loads in the Contractor Uplink.
 /obj/item/modular_computer/tablet/syndicate_contract_uplink/preset/uplink/Initialize()
 	. = ..()
 	var/obj/item/computer_hardware/hard_drive/small/syndicate/hard_drive = new
-	var/datum/computer_file/program/contract_uplink/uplink = new
-
-	active_program = uplink
-	uplink.program_state = PROGRAM_STATE_ACTIVE
-	uplink.computer = src
-
-	hard_drive.store_file(uplink)
 
 	install_component(new /obj/item/computer_hardware/processor_unit/small)
 	install_component(new /obj/item/computer_hardware/battery(src, /obj/item/stock_parts/cell/computer))

@@ -137,8 +137,6 @@
 			message_say = "I HAVE NO IDEA WHAT THIS THING DOES!"
 		else if(our_guy.has_antag_datum(/datum/antagonist/ert))
 			message_say = "FOR NANOTRASEN!"
-		else if(our_guy.has_antag_datum(/datum/antagonist/pirate))
-			message_say = "FOR ME MATEYS!"
 		else if(our_guy.has_antag_datum(/datum/antagonist/wizard))
 			message_say = "FOR THE FEDERATION!"
 	player.say(message_say, forced="C4 suicide")

@@ -12,11 +12,7 @@
 	outfit = /datum/outfit/job/quartermaster
 	plasmaman_outfit = /datum/outfit/plasmaman/cargo
 
-	paycheck = PAYCHECK_MEDIUM
-	paycheck_department = ACCOUNT_CAR
-
 	display_order = JOB_DISPLAY_ORDER_QUARTERMASTER
-	bounty_types = CIV_JOB_RANDOM
 	departments_list = list(
 		/datum/job_department/cargo,
 		)

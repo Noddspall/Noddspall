@@ -45,18 +45,6 @@
 	spawn_text = "climbs out of"
 	faction = list("skeleton")
 
-/obj/structure/spawner/clown
-	name = "Laughing Larry"
-	desc = "A laughing, jovial figure. Something seems stuck in his throat."
-	icon_state = "clownbeacon"
-	icon = 'icons/obj/device.dmi'
-	max_integrity = 200
-	max_mobs = 15
-	spawn_time = 150
-	mob_types = list(/mob/living/simple_animal/hostile/retaliate/clown, /mob/living/simple_animal/hostile/retaliate/clown/fleshclown, /mob/living/simple_animal/hostile/retaliate/clown/clownhulk, /mob/living/simple_animal/hostile/retaliate/clown/longface, /mob/living/simple_animal/hostile/retaliate/clown/clownhulk/chlown, /mob/living/simple_animal/hostile/retaliate/clown/clownhulk/honcmunculus, /mob/living/simple_animal/hostile/retaliate/clown/mutant/glutton, /mob/living/simple_animal/hostile/retaliate/clown/banana, /mob/living/simple_animal/hostile/retaliate/clown/honkling, /mob/living/simple_animal/hostile/retaliate/clown/lube)
-	spawn_text = "climbs out of"
-	faction = list("clown")
-
 /obj/structure/spawner/mining
 	name = "monster den"
 	desc = "A hole dug into the ground, harboring all kinds of monsters found within most caves or mining asteroids."
@@ -65,7 +53,7 @@
 	max_mobs = 3
 	icon = 'icons/mob/nest.dmi'
 	spawn_text = "crawls out of"
-	mob_types = list(/mob/living/simple_animal/hostile/asteroid/goldgrub, /mob/living/simple_animal/hostile/asteroid/goliath, /mob/living/simple_animal/hostile/asteroid/hivelord, /mob/living/simple_animal/hostile/asteroid/basilisk, /mob/living/simple_animal/hostile/asteroid/fugu)
+	mob_types = list(/mob/living/simple_animal/hostile/asteroid/goldgrub, /mob/living/simple_animal/hostile/asteroid/goliath, /mob/living/simple_animal/hostile/asteroid/basilisk, /mob/living/simple_animal/hostile/asteroid/fugu)
 	faction = list("mining")
 
 /obj/structure/spawner/mining/goldgrub
@@ -77,11 +65,6 @@
 	name = "goliath den"
 	desc = "A den housing a nest of goliaths, oh god why?"
 	mob_types = list(/mob/living/simple_animal/hostile/asteroid/goliath)
-
-/obj/structure/spawner/mining/hivelord
-	name = "hivelord den"
-	desc = "A den housing a nest of hivelords."
-	mob_types = list(/mob/living/simple_animal/hostile/asteroid/hivelord)
 
 /obj/structure/spawner/mining/basilisk
 	name = "basilisk den"

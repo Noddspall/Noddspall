@@ -395,35 +395,10 @@
 		game.fuel -= 15
 		game.turns += 1
 		return ..()
-	if(prob(75))
-		game.encounter_event(/datum/orion_event/black_hole_death)
-		return
 	game.turns += 1
 	..()
 
 #define BUTTON_OH "Oh..."
-
-///You died to a black hole, have some fluff text
-/datum/orion_event/black_hole_death
-	name = "Event Horizon"
-	text = "As you jet the shuttle forward, you realize you underestimated the \
-	pull of the black hole. Try as you may, you cannot escape its stellar force. \
-	It isn't long before you pass the event horizon, and you close your eyes, readying \
-	to be torn apart as your ship begins to buckle under the pull."
-	event_responses = list(BUTTON_OH)
-
-/datum/orion_event/black_hole_death/response(obj/machinery/computer/arcade/orion_trail/game, choice)
-	game.set_game_over(usr, "You were swept away into the black hole.")
-	..()
-
-/datum/orion_event/black_hole_death/emag_effect(obj/machinery/computer/arcade/orion_trail/game, mob/living/carbon/gamer)
-	if(game.obj_flags & EMAGGED)
-		playsound(game.loc, 'sound/effects/supermatter.ogg', 100, TRUE)
-		game.say("A miniature black hole suddenly appears in front of [game], devouring [gamer] alive!")
-		gamer.Stun(200, ignore_canstun = TRUE) //you can't run :^)
-		var/black_hole = new /obj/singularity/academy(gamer.loc)
-		addtimer(CALLBACK(game, /atom/movable/proc/say, "[black_hole] winks out, just as suddenly as it appeared."), 50)
-		QDEL_IN(black_hole, 5 SECONDS)
 
 #define BUTTON_DOCK "Dock"
 

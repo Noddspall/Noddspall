@@ -110,8 +110,6 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning",
 	return TRUE
 
 /obj/item/storage/book/bible/proc/bless(mob/living/L, mob/living/user)
-	if(GLOB.religious_sect)
-		return GLOB.religious_sect.sect_bless(L,user)
 	if(!ishuman(L))
 		return
 	var/mob/living/carbon/human/H = L

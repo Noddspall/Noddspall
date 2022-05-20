@@ -55,9 +55,9 @@
 			if(F.id == id)
 				targets += F
 
-		for(var/obj/structure/closet/secure_closet/brig/C in urange(20, src))
-			if(C.id == id)
-				targets += C
+		//for(var/obj/structure/closet/secure_closet/brig/C in urange(20, src))
+		//	if(C.id == id)
+		//		targets += C
 
 	if(!targets.len)
 		obj_break()
@@ -90,6 +90,7 @@
 			continue
 		INVOKE_ASYNC(door, /obj/machinery/door/window/brigdoor.proc/close)
 
+	/*
 	for(var/obj/structure/closet/secure_closet/brig/C in targets)
 		if(C.broken)
 			continue
@@ -97,6 +98,7 @@
 			continue
 		C.locked = TRUE
 		C.update_appearance()
+	*/
 	return 1
 
 
@@ -119,6 +121,7 @@
 			continue
 		INVOKE_ASYNC(door, /obj/machinery/door/window/brigdoor.proc/open)
 
+	/*
 	for(var/obj/structure/closet/secure_closet/brig/C in targets)
 		if(C.broken)
 			continue
@@ -126,6 +129,7 @@
 			continue
 		C.locked = FALSE
 		C.update_appearance()
+	*/
 
 	return 1
 

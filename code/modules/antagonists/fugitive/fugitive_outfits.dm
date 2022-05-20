@@ -128,7 +128,7 @@
 	mask = /obj/item/clothing/mask/scarecrow
 	r_pocket = /obj/item/restraints/handcuffs/cable
 	id = /obj/item/card/id/advanced
-	r_hand = /obj/item/gun/ballistic/shotgun/hook
+	//r_hand = /obj/item/gun/ballistic/shotgun/hook
 
 	backpack_contents = list(
 		/obj/item/ammo_casing/shotgun/incapacitate = 6

@@ -42,8 +42,8 @@
 	icon_state = "gelmound"
 
 /obj/structure/alien/gelpod/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
-		new/obj/effect/mob_spawn/human/corpse/damaged(get_turf(src))
+	//if(!(flags_1 & NODECONSTRUCT_1))
+	//	new/obj/effect/mob_spawn/human/corpse/damaged(get_turf(src))
 	qdel(src)
 
 /*

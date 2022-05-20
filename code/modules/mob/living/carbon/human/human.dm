@@ -1200,18 +1200,6 @@
 /mob/living/carbon/human/species/golem/snow
 	race = /datum/species/golem/snow
 
-/mob/living/carbon/human/species/jelly
-	race = /datum/species/jelly
-
-/mob/living/carbon/human/species/jelly/slime
-	race = /datum/species/jelly/slime
-
-/mob/living/carbon/human/species/jelly/stargazer
-	race = /datum/species/jelly/stargazer
-
-/mob/living/carbon/human/species/jelly/luminescent
-	race = /datum/species/jelly/luminescent
-
 /mob/living/carbon/human/species/lizard
 	race = /datum/species/lizard
 
@@ -1283,9 +1271,6 @@
 
 /mob/living/carbon/human/species/xeno
 	race = /datum/species/xeno
-
-/mob/living/carbon/human/species/roundstartslime
-	race = /datum/species/jelly/roundstartslime
 
 /mob/living/carbon/human/verb/toggle_undies()
 	set category = "IC"

@@ -147,22 +147,7 @@
 	return TRUE
 
 /obj/item/robot_suit/attackby(obj/item/W, mob/user, params)
-
-	if(istype(W, /obj/item/stack/sheet/iron))
-		var/obj/item/stack/sheet/iron/M = W
-		if(!l_arm && !r_arm && !l_leg && !r_leg && !chest && !head)
-			if (M.use(1))
-				var/obj/item/bot_assembly/ed209/B = new
-				B.forceMove(drop_location())
-				to_chat(user, SPAN_NOTICE("You arm the robot frame."))
-				var/holding_this = user.get_inactive_held_item()==src
-				qdel(src)
-				if (holding_this)
-					user.put_in_inactive_hand(B)
-			else
-				to_chat(user, SPAN_WARNING("You need one sheet of iron to start building ED-209!"))
-				return
-	else if(istype(W, /obj/item/bodypart/l_leg/robot))
+	if(istype(W, /obj/item/bodypart/l_leg/robot))
 		if(l_leg)
 			return
 		if(!user.transferItemToLoc(W, src))

@@ -11,9 +11,6 @@
 	outfit = /datum/outfit/job/clown
 	plasmaman_outfit = /datum/outfit/plasmaman/clown
 
-	paycheck = PAYCHECK_MINIMAL
-	paycheck_department = ACCOUNT_SRV
-
 	display_order = JOB_DISPLAY_ORDER_CLOWN
 	departments_list = list(
 		/datum/job_department/service,

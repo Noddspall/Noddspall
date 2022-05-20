@@ -58,18 +58,12 @@
 	GLOB.jam_on_wardec -= src
 	return ..()
 
-/obj/effect/spawner/lootdrop/whiteship_cere_ripley
-	name = "25% mech 75% wreckage ripley spawner"
-	loot = list(/obj/vehicle/sealed/mecha/working/ripley/mining = 1,
-				/obj/structure/mecha_wreckage/ripley = 5)
-	lootdoubles = FALSE
-
 /obj/machinery/computer/shuttle/barrow
 	name = "The Barrows Ship Console"
 	desc = "Used to control The Barrows."
 	circuit = /obj/item/circuitboard/computer/barrow
 	shuttleId = "whiteship_the_barrows"
-	
+
 /obj/item/circuitboard/computer/barrow
 	name = "The Barrows Ship Console (Computer Board)"
 	greyscale_colors = CIRCUIT_COLOR_GENERIC

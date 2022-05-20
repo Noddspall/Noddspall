@@ -192,36 +192,7 @@
 			usr.log_talk(message, LOG_SAY, tag = "message to [associates]")
 			deadchat_broadcast(" has messaged [associates], \"[message]\" at [SPAN_NAME("[get_area_name(usr, TRUE)]")].", SPAN_NAME("[usr.real_name]"), usr, message_type = DEADCHAT_ANNOUNCEMENT)
 			COOLDOWN_START(src, important_action_cooldown, IMPORTANT_ACTION_COOLDOWN)
-		if ("purchaseShuttle")
-			var/can_buy_shuttles_or_fail_reason = can_buy_shuttles(usr)
-			if (can_buy_shuttles_or_fail_reason != TRUE)
-				if (can_buy_shuttles_or_fail_reason != FALSE)
-					to_chat(usr, SPAN_ALERT("[can_buy_shuttles_or_fail_reason]"))
-				return
-			var/list/shuttles = flatten_list(SSmapping.shuttle_templates)
-			var/datum/map_template/shuttle/shuttle = locate(params["shuttle"]) in shuttles
-			if (!istype(shuttle))
-				return
-			if (!can_purchase_this_shuttle(shuttle))
-				return
-			if (!shuttle.prerequisites_met())
-				to_chat(usr, SPAN_ALERT("You have not met the requirements for purchasing this shuttle."))
-				return
-			var/datum/bank_account/bank_account = SSeconomy.get_dep_account(ACCOUNT_CAR)
-			if (bank_account.account_balance < shuttle.credit_cost)
-				return
-			SSshuttle.shuttle_purchased = SHUTTLEPURCHASE_PURCHASED
-			for(var/datum/round_event_control/shuttle_insurance/insurance_event in SSgamemode.control)
-				insurance_event.weight *= 20
-			SSshuttle.unload_preview()
-			SSshuttle.existing_shuttle = SSshuttle.emergency
-			SSshuttle.action_load(shuttle, replace = TRUE)
-			bank_account.adjust_money(-shuttle.credit_cost)
-			minor_announce("[usr.real_name] has purchased [shuttle.name] for [shuttle.credit_cost] credits.[shuttle.extra_desc ? " [shuttle.extra_desc]" : ""]" , "Shuttle Purchase")
-			message_admins("[ADMIN_LOOKUPFLW(usr)] purchased [shuttle.name].")
-			log_shuttle("[key_name(usr)] has purchased [shuttle.name].")
-			SSblackbox.record_feedback("text", "shuttle_purchase", 1, shuttle.name)
-			state = STATE_MAIN
+
 		if ("recallShuttle")
 			// AIs cannot recall the shuttle
 			if (!authenticated(usr) || issilicon(usr))
@@ -460,39 +431,7 @@
 							"title" = message.title,
 							"possibleAnswers" = message.possible_answers,
 						))
-			if (STATE_BUYING_SHUTTLE)
-				var/datum/bank_account/bank_account = SSeconomy.get_dep_account(ACCOUNT_CAR)
-				var/list/shuttles = list()
 
-				for (var/shuttle_id in SSmapping.shuttle_templates)
-					var/datum/map_template/shuttle/shuttle_template = SSmapping.shuttle_templates[shuttle_id]
-
-					if (shuttle_template.credit_cost == INFINITY)
-						continue
-
-					if (!can_purchase_this_shuttle(shuttle_template))
-						continue
-
-					var/has_access = FALSE
-
-					for (var/purchase_access in shuttle_template.who_can_purchase)
-						if (purchase_access in authorize_access)
-							has_access = TRUE
-							break
-
-					if (!has_access)
-						continue
-
-					shuttles += list(list(
-						"name" = shuttle_template.name,
-						"description" = shuttle_template.description,
-						"creditCost" = shuttle_template.credit_cost,
-						"prerequisites" = shuttle_template.prerequisites,
-						"ref" = REF(shuttle_template),
-					))
-
-				data["budget"] = bank_account.account_balance
-				data["shuttles"] = shuttles
 			if (STATE_CHANGING_STATUS)
 				data["lineOne"] = last_status_display ? last_status_display[1] : ""
 				data["lineTwo"] = last_status_display ? last_status_display[2] : ""
@@ -548,18 +487,6 @@
 	if (SSshuttle.shuttle_purchased == SHUTTLEPURCHASE_FORCED)
 		return "Due to unforseen circumstances, shuttle purchasing is no longer available."
 	return TRUE
-
-/// Returns whether we are authorized to buy this specific shuttle.
-/// Does not handle prerequisite checks, as those should still *show*.
-/obj/machinery/computer/communications/proc/can_purchase_this_shuttle(datum/map_template/shuttle/shuttle_template)
-	if (isnull(shuttle_template.who_can_purchase))
-		return FALSE
-
-	for (var/access in authorize_access)
-		if (access in shuttle_template.who_can_purchase)
-			return TRUE
-
-	return FALSE
 
 /obj/machinery/computer/communications/proc/can_send_messages_to_other_sectors(mob/user)
 	if (!authenticated_as_non_silicon_captain(user))

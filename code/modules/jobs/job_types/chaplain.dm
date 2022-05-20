@@ -11,9 +11,6 @@
 	outfit = /datum/outfit/job/chaplain
 	plasmaman_outfit = /datum/outfit/plasmaman/chaplain
 
-	paycheck = PAYCHECK_EASY
-	paycheck_department = ACCOUNT_SRV
-
 	display_order = JOB_DISPLAY_ORDER_CHAPLAIN
 	departments_list = list(
 		/datum/job_department/service,
@@ -56,8 +53,6 @@
 		var/nrt = GLOB.holy_weapon_type || /obj/item/nullrod
 		var/obj/item/nullrod/N = new nrt(H)
 		H.put_in_hands(N)
-		if(GLOB.religious_sect)
-			GLOB.religious_sect.on_conversion(H)
 		return
 	if(H.mind)
 		H.mind.holy_role = HOLY_ROLE_HIGHPRIEST

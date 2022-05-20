@@ -189,7 +189,7 @@
 	var/mob/living/new_mob
 
 	if(!randomize)
-		randomize = pick("monkey","robot","slime","xeno","humanoid","animal")
+		randomize = pick("monkey","robot","xeno","humanoid","animal")
 	switch(randomize)
 		if("monkey")
 			new_mob = new /mob/living/carbon/human/species/monkey(M.loc)
@@ -198,8 +198,7 @@
 			var/robot = pick(200;/mob/living/silicon/robot,
 							/mob/living/silicon/robot/model/syndicate,
 							/mob/living/silicon/robot/model/syndicate/medical,
-							/mob/living/silicon/robot/model/syndicate/saboteur,
-							200;/mob/living/simple_animal/drone/polymorphed)
+							/mob/living/silicon/robot/model/syndicate/saboteur)
 			new_mob = new robot(M.loc)
 			if(issilicon(new_mob))
 				new_mob.gender = M.gender
@@ -211,9 +210,6 @@
 				Robot.mmi.transfer_identity(M) //Does not transfer key/client.
 				Robot.clear_inherent_laws(0)
 				Robot.clear_zeroth_law(0)
-
-		if("slime")
-			new_mob = new /mob/living/simple_animal/slime/random(M.loc)
 
 		if("xeno")
 			var/Xe
@@ -242,7 +238,6 @@
 							/mob/living/simple_animal/hostile/morph,
 							/mob/living/simple_animal/hostile/stickman,
 							/mob/living/simple_animal/hostile/stickman/dog,
-							/mob/living/simple_animal/hostile/megafauna/dragon/lesser,
 							/mob/living/simple_animal/hostile/gorilla,
 							/mob/living/simple_animal/parrot,
 							/mob/living/simple_animal/pet/dog/corgi,

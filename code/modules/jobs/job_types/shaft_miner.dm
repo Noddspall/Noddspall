@@ -11,11 +11,7 @@
 	outfit = /datum/outfit/job/miner
 	plasmaman_outfit = /datum/outfit/plasmaman/mining
 
-	paycheck = PAYCHECK_MEDIUM
-	paycheck_department = ACCOUNT_CAR
-
 	display_order = JOB_DISPLAY_ORDER_SHAFT_MINER
-	bounty_types = CIV_JOB_MINE
 	departments_list = list(
 		/datum/job_department/cargo,
 		)
@@ -39,7 +35,6 @@
 	backpack_contents = list(
 		/obj/item/flashlight/seclite=1,\
 		/obj/item/kitchen/knife/combat/survival=1,\
-		/obj/item/mining_voucher=1,\
 		/obj/item/stack/marker_beacon/ten=1)
 
 	backpack = /obj/item/storage/backpack/explorer
@@ -61,7 +56,6 @@
 	backpack_contents = list(
 		/obj/item/flashlight/seclite=1,\
 		/obj/item/kitchen/knife/combat/survival=1,
-		/obj/item/mining_voucher=1,
 		/obj/item/t_scanner/adv_mining_scanner/lesser=1,
 		/obj/item/gun/energy/kinetic_accelerator=1,\
 		/obj/item/stack/marker_beacon/ten=1)

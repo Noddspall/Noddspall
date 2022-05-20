@@ -73,7 +73,6 @@ GLOBAL_LIST_INIT(orion_events, generate_orion_events())
 		/datum/orion_event/space_port/tau_ceti,
 		/datum/orion_event/space_port_raid,
 		/datum/orion_event/black_hole,
-		/datum/orion_event/black_hole_death,
 	)
 	prize_override = list(/obj/item/paper/fluff/holodeck/trek_diploma = 1)
 	settlers = list("Kirk","Worf","Gene")
@@ -115,7 +114,6 @@ GLOBAL_LIST_INIT(orion_events, generate_orion_events())
 
 	if(gamers[gamer] == ORION_GAMER_PAMPHLET)
 		say("WARNING: Continued antisocial behavior detected: Dispensing self-help literature.")
-		new /obj/item/paper/pamphlet/violent_video_games(drop_location())
 		gamers[gamer]--
 		return
 

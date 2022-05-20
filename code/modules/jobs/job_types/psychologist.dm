@@ -11,9 +11,6 @@
 	outfit = /datum/outfit/job/psychologist
 	plasmaman_outfit = /datum/outfit/plasmaman/psychologist
 
-	paycheck = PAYCHECK_MEDIUM
-	paycheck_department = ACCOUNT_SRV
-
 	display_order = JOB_DISPLAY_ORDER_PSYCHOLOGIST
 	departments_list = list(
 		/datum/job_department/service,

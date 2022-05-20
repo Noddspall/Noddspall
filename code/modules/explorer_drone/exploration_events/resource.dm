@@ -175,31 +175,6 @@
 	action_text = "Open"
 	loot_type = /obj/item/fuel_pellet/exotic
 
-/datum/exploration_event/simple/resource/navigation
-	name = "navigation systems"
-	required_site_traits = list(EXPLORATION_SITE_SHIP)
-	required_tool = EXODRONE_TOOL_TRANSLATOR
-	discovery_log = "Discovered ship navigation systems."
-	description = "You find the ship navigation systems. With proper tools you can retrieve any data stored here."
-	success_log = "Retrieved shipping data from navigation systems."
-	no_tool_description = "You'll need a translator to decipher the data."
-	delay_message = "Retrieving data..."
-	action_text = "Retrieve data"
-	loot_type = /datum/adventure_loot_generator/cargo
-
-// EXPLORATION_SITE_HABITABLE 2/2
-/datum/exploration_event/simple/resource/unknown_microbiome
-	name = "unknown microbiome"
-	required_site_traits = list(EXPLORATION_SITE_HABITABLE)
-	required_tool = EXODRONE_TOOL_TRANSLATOR
-	discovery_log = "Discovered a isolated microbiome."
-	description = "You discover a giant fungus colony."
-	success_log = "Retrieved samples of the fungus for future study."
-	no_tool_description = "With a laser tool you could slice off a sample for study."
-	delay_message = "Taking samples..."
-	action_text = "Take sample"
-	loot_type = /obj/item/petri_dish/random
-
 /datum/exploration_event/simple/resource/tcg_nerd
 	name = "creepy stranger"
 	required_site_traits = list(EXPLORATION_SITE_HABITABLE)

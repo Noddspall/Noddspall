@@ -67,12 +67,6 @@
 	var/datum/objective/hijack = new /datum/objective/cyborg_hijack()
 	objectives += hijack
 
-	//Research stealing
-	var/datum/objective/download/research = new /datum/objective/download()
-	research.owner = owner
-	research.gen_amount_goal()
-	objectives += research
-
 	//Door jacks, flag will be set to complete on when the last door is hijacked
 	var/datum/objective/door_jack/doorobjective = new /datum/objective/door_jack()
 	doorobjective.doors_required = rand(15,40)

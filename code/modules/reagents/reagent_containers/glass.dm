@@ -267,11 +267,6 @@
 			reagents.trans_to(O, 5, transfered_by = user)
 			to_chat(user, SPAN_NOTICE("You wet [O] in [src]."))
 			playsound(loc, 'sound/effects/slosh.ogg', 25, TRUE)
-	else if(isprox(O)) //This works with wooden buckets for now. Somewhat unintended, but maybe someone will add sprites for it soon(TM)
-		to_chat(user, SPAN_NOTICE("You add [O] to [src]."))
-		qdel(O)
-		qdel(src)
-		user.put_in_hands(new /obj/item/bot_assembly/cleanbot)
 	else
 		..()
 
