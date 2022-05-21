@@ -90,9 +90,6 @@
 	explosion(src, heavy_impact_range = 1, light_impact_range = 5, flame_range = 5)
 	qdel(src)
 
-/obj/structure/reagent_dispensers/fueltank/blob_act(obj/structure/blob/B)
-	boom()
-
 /obj/structure/reagent_dispensers/fueltank/ex_act()
 	boom()
 
@@ -206,12 +203,6 @@
 	desc = "Beer is liquid bread, it's good for you..."
 	icon_state = "beer"
 	reagent_id = /datum/reagent/consumable/ethanol/beer
-
-/obj/structure/reagent_dispensers/beerkeg/blob_act(obj/structure/blob/B)
-	explosion(src, heavy_impact_range = 3, light_impact_range = 5, flame_range = 10, flash_range = 7)
-	if(!QDELETED(src))
-		qdel(src)
-
 
 /obj/structure/reagent_dispensers/virusfood
 	name = "virus food dispenser"

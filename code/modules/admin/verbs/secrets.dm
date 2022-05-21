@@ -268,56 +268,6 @@
 				return
 			holder.triple_ai()
 			SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Triple AI"))
-		if("onlyone")
-			if(!is_funmin)
-				return
-			var/response = tgui_alert(usr,"Delay by 40 seconds?", "There can, in fact, only be one", list("Instant!", "40 seconds (crush the hope of a normal shift)"))
-			if(response == "Instant!")
-				holder.only_one()
-			else
-				holder.only_one_delayed()
-			SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("There Can Be Only One"))
-		if("guns")
-			if(!is_funmin)
-				return
-			SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Summon Guns"))
-			var/survivor_probability = 0
-			switch(tgui_alert(usr,"Do you want this to create survivors antagonists?",,list("No Antags","Some Antags","All Antags!")))
-				if("Some Antags")
-					survivor_probability = 25
-				if("All Antags!")
-					survivor_probability = 100
-
-			rightandwrong(SUMMON_GUNS, holder, survivor_probability)
-		if("magic")
-			if(!is_funmin)
-				return
-			SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Summon Magic"))
-			var/survivor_probability = 0
-			switch(tgui_alert(usr,"Do you want this to create magician antagonists?",,list("No Antags","Some Antags","All Antags!")))
-				if("Some Antags")
-					survivor_probability = 25
-				if("All Antags!")
-					survivor_probability = 100
-
-			rightandwrong(SUMMON_MAGIC, holder, survivor_probability)
-		if("events")
-			if(!is_funmin)
-				return
-			if(!SSgamemode.wizardmode)
-				if(tgui_alert(usr,"Do you want to toggle summon events on?",,list("Yes","No")) == "Yes")
-					summonevents()
-					SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Summon Events", "Activate"))
-
-			else
-				switch(tgui_alert(usr,"What would you like to do?",,list("Intensify Summon Events","Turn Off Summon Events","Nothing")))
-					if("Intensify Summon Events")
-						summonevents()
-						SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Summon Events", "Intensify"))
-					if("Turn Off Summon Events")
-						SSgamemode.toggleWizardmode()
-						SSgamemode.resetFrequency()
-						SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Summon Events", "Disable"))
 		if("eagles")
 			if(!is_funmin)
 				return
@@ -432,32 +382,6 @@
 			for(var/i in GLOB.human_list)
 				var/mob/living/carbon/human/H = i
 				INVOKE_ASYNC(H, /mob/living/carbon.proc/monkeyize)
-		if("traitor_all")
-			if(!is_funmin)
-				return
-			if(!SSticker.HasRoundStarted())
-				tgui_alert(usr,"The game hasn't started yet!")
-				return
-			var/objective = stripped_input(holder, "Enter an objective")
-			if(!objective)
-				return
-			SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Traitor All", "[objective]"))
-			for(var/mob/living/player in GLOB.player_list)
-				if(!(ishuman(player)||istype(player, /mob/living/silicon/)))
-					continue
-				if(player.stat == DEAD || !player.mind || ispAI(player))
-					continue
-				if(is_special_character(player))
-					continue
-				var/datum/antagonist/traitor/traitor_datum = new()
-				traitor_datum.give_objectives = FALSE
-				var/datum/objective/new_objective = new
-				new_objective.owner = player
-				new_objective.explanation_text = objective
-				traitor_datum.objectives += new_objective
-				player.mind.add_antag_datum(traitor_datum)
-			message_admins(SPAN_ADMINNOTICE("[key_name_admin(holder)] used everyone is a traitor secret. Objective is [objective]"))
-			log_admin("[key_name(holder)] used everyone is a traitor secret. Objective is [objective]")
 		if("massbraindamage")
 			if(!is_funmin)
 				return

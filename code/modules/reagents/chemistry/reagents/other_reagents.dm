@@ -249,46 +249,6 @@
 	REMOVE_TRAIT(L, TRAIT_HOLY, type)
 	..()
 
-/datum/reagent/water/holywater/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
-	. = ..()
-	if(IS_CULTIST(exposed_mob))
-		to_chat(exposed_mob, SPAN_USERDANGER("A vile holiness begins to spread its shining tendrils through your mind, purging the Geometer of Blood's influence!"))
-
-/datum/reagent/water/holywater/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	if(M.blood_volume)
-		M.blood_volume += 0.1 * REM * delta_time // water is good for you!
-	if(!data)
-		data = list("misc" = 0)
-
-	data["misc"] += delta_time SECONDS * REM
-	M.jitteriness = min(M.jitteriness + (2 * delta_time), 10)
-	if(IS_CULTIST(M))
-		for(var/datum/action/innate/cult/blood_magic/BM in M.actions)
-			to_chat(M, SPAN_CULTLARGE("Your blood rites falter as holy water scours your body!"))
-			for(var/datum/action/innate/cult/blood_spell/BS in BM.spells)
-				qdel(BS)
-	if(data["misc"] >= (25 SECONDS)) // 10 units
-		if(!M.stuttering)
-			M.stuttering = 1
-		M.stuttering = min(M.stuttering + (2 * delta_time), 10)
-		M.Dizzy(5)
-		if(IS_CULTIST(M) && DT_PROB(10, delta_time))
-			M.say(pick("Av'te Nar'Sie","Pa'lid Mors","INO INO ORA ANA","SAT ANA!","Daim'niodeis Arc'iai Le'eones","R'ge Na'sie","Diabo us Vo'iscum","Eld' Mon Nobis"), forced = "holy water")
-			if(prob(10))
-				M.visible_message(SPAN_DANGER("[M] starts having a seizure!"), SPAN_USERDANGER("You have a seizure!"))
-				M.Unconscious(12 SECONDS)
-				to_chat(M, "<span class='cultlarge'>[pick("Your blood is your bond - you are nothing without it", "Do not forget your place", \
-				"All that power, and you still fail?", "If you cannot scour this poison, I shall scour your meager life!")].</span>")
-	if(data["misc"] >= (1 MINUTES)) // 24 units
-		if(IS_CULTIST(M))
-			M.mind.remove_antag_datum(/datum/antagonist/cult)
-			M.Unconscious(100)
-		M.jitteriness = 0
-		M.stuttering = 0
-		holder.remove_reagent(type, volume) // maybe this is a little too perfect and a max() cap on the statuses would be better??
-		return
-	holder.remove_reagent(type, 1 * REAGENTS_METABOLISM * delta_time) //fixed consumption to prevent balancing going out of whack
-
 /datum/reagent/water/holywater/expose_turf(turf/exposed_turf, reac_volume)
 	. = ..()
 	if(!istype(exposed_turf))
@@ -347,22 +307,11 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/fuel/unholywater/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	if(IS_CULTIST(M))
-		M.drowsyness = max(M.drowsyness - (5* REM * delta_time), 0)
-		M.AdjustAllImmobility(-40 *REM* REM * delta_time)
-		M.adjustStaminaLoss(-10 * REM * delta_time, 0)
-		M.adjustToxLoss(-2 * REM * delta_time, 0)
-		M.adjustOxyLoss(-2 * REM * delta_time, 0)
-		M.adjustBruteLoss(-2 * REM * delta_time, 0)
-		M.adjustFireLoss(-2 * REM * delta_time, 0)
-		if(ishuman(M) && M.blood_volume < BLOOD_VOLUME_NORMAL)
-			M.blood_volume += 3 * REM * delta_time
-	else  // Will deal about 90 damage when 50 units are thrown
-		M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 3 * REM * delta_time, 150)
-		M.adjustToxLoss(1 * REM * delta_time, 0)
-		M.adjustFireLoss(1 * REM * delta_time, 0)
-		M.adjustOxyLoss(1 * REM * delta_time, 0)
-		M.adjustBruteLoss(1 * REM * delta_time, 0)
+	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 3 * REM * delta_time, 150)
+	M.adjustToxLoss(1 * REM * delta_time, 0)
+	M.adjustFireLoss(1 * REM * delta_time, 0)
+	M.adjustOxyLoss(1 * REM * delta_time, 0)
+	M.adjustBruteLoss(1 * REM * delta_time, 0)
 	..()
 
 /datum/reagent/hellwater //if someone has this in their system they've really pissed off an eldrich god
@@ -682,18 +631,6 @@
 	to_chat(H, SPAN_WARNING("<b>You grit your teeth in pain as your body rapidly mutates!</b>"))
 	H.visible_message("<b>[H]</b> suddenly transforms!")
 	randomize_human(H)
-
-/datum/reagent/gluttonytoxin
-	name = "Gluttony's Blessing"
-	description = "An advanced corruptive toxin produced by something terrible."
-	color = "#5EFF3B" //RGB: 94, 255, 59
-	taste_description = "decay"
-	penetrates_skin = NONE
-
-/datum/reagent/gluttonytoxin/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message=TRUE, touch_protection=0)
-	. = ..()
-	if(reac_volume >= 1)//This prevents microdosing from infecting masses of people
-		exposed_mob.ForceContractDisease(new /datum/disease/transformation/morph(), FALSE, TRUE)
 
 /datum/reagent/serotrotium
 	name = "Serotrotium"
@@ -2378,13 +2315,6 @@
 	..()
 	REMOVE_TRAIT(L, CHANGELING_HIVEMIND_MUTE, type)
 
-/datum/reagent/bz_metabolites/on_mob_life(mob/living/L, delta_time, times_fired)
-	if(L.mind)
-		var/datum/antagonist/changeling/changeling = L.mind.has_antag_datum(/datum/antagonist/changeling)
-		if(changeling)
-			changeling.chem_charges = max(changeling.chem_charges - (2 * REM * delta_time), 0)
-	return ..()
-
 /datum/reagent/pax/peaceborg
 	name = "synthpax"
 	description = "A colorless liquid that suppresses violence in its subjects. Cheaper to synthesize than normal Pax, but wears off faster."
@@ -2625,33 +2555,6 @@
 		if(wounded_part)
 			wounded_part.heal_damage(0.25 * REM * delta_time, 0.25 * REM * delta_time)
 		M.adjustStaminaLoss(-0.25 * REM * delta_time) // the more wounds, the more stamina regen
-	..()
-
-/datum/reagent/eldritch //unholy water, but for eldritch cultists. why couldn't they have both just used the same reagent? who knows. maybe nar'sie is considered to be too "mainstream" of a god to worship in the cultist community.
-	name = "Eldritch Essence"
-	description = "A strange liquid that defies the laws of physics. It re-energizes and heals those who can see beyond this fragile reality, but is incredibly harmful to the closed-minded. It metabolizes very quickly."
-	taste_description = "Ag'hsj'saje'sh"
-	color = "#1f8016"
-	metabolization_rate = 2.5 * REAGENTS_METABOLISM  //0.5u/second
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-
-/datum/reagent/eldritch/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	if(IS_HERETIC(M))
-		M.drowsyness = max(M.drowsyness - (5 * REM * delta_time), 0)
-		M.AdjustAllImmobility(-40 * REM * delta_time)
-		M.adjustStaminaLoss(-10 * REM * delta_time, FALSE)
-		M.adjustToxLoss(-2 * REM * delta_time, FALSE, forced = TRUE)
-		M.adjustOxyLoss(-2 * REM * delta_time, FALSE)
-		M.adjustBruteLoss(-2 * REM * delta_time, FALSE)
-		M.adjustFireLoss(-2 * REM * delta_time, FALSE)
-		if(ishuman(M) && M.blood_volume < BLOOD_VOLUME_NORMAL)
-			M.blood_volume += 3 * REM * delta_time
-	else
-		M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 3 * REM * delta_time, 150)
-		M.adjustToxLoss(2 * REM * delta_time, FALSE)
-		M.adjustFireLoss(2 * REM * delta_time, FALSE)
-		M.adjustOxyLoss(2 * REM * delta_time, FALSE)
-		M.adjustBruteLoss(2 * REM * delta_time, FALSE)
 	..()
 
 /datum/reagent/universal_indicator

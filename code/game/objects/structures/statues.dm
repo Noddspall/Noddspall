@@ -272,12 +272,6 @@
 	custom_materials = list(/datum/material/bronze=MINERAL_MATERIAL_AMOUNT*5)
 	abstract_type = /obj/structure/statue/bronze
 
-/obj/structure/statue/bronze/marx
-	name = "\improper Karl Marx bust"
-	desc = "A bust depicting a certain 19th century economist. You get the feeling a specter is haunting the station."
-	icon_state = "marx"
-	art_type = /datum/element/art/rev
-
 ///////////Elder Atmosian///////////////////////////////////////////
 
 /obj/structure/statue/elder_atmosian

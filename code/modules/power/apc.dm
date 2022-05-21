@@ -252,16 +252,12 @@
 /obj/machinery/power/apc/Destroy()
 	GLOB.apcs_list -= src
 
-	if(malfai && operating)
-		malfai.malf_picker.processing_time = clamp(malfai.malf_picker.processing_time - 10,0,1000)
 	if(area)
 		area.power_light = FALSE
 		area.power_equip = FALSE
 		area.power_environ = FALSE
 		area.power_change()
 		area.poweralert(FALSE, src)
-	if(occupier)
-		malfvacate(1)
 	if(wires)
 		QDEL_NULL(wires)
 	if(cell)
@@ -929,7 +925,6 @@
 		"totalLoad" = DisplayPower(lastused_total),
 		"coverLocked" = coverlocked,
 		"siliconUser" = user.has_unlimited_silicon_privilege || user.using_power_flow_console(),
-		"malfStatus" = get_malf_status(user),
 		"emergencyLights" = !emergency_lights,
 		"nightshiftLights" = nightshift_lights,
 
@@ -967,21 +962,6 @@
 		)
 	)
 	return data
-
-
-/obj/machinery/power/apc/proc/get_malf_status(mob/living/silicon/ai/malf)
-	if(istype(malf) && malf.malf_picker)
-		if(malfai == (malf.parent || malf))
-			if(occupier == malf)
-				return 3 // 3 = User is shunted in this APC
-			else if(istype(malf.loc, /obj/machinery/power/apc))
-				return 4 // 4 = User is shunted in another APC
-			else
-				return 2 // 2 = APC hacked by user, and user is in its core.
-		else
-			return 1 // 1 = APC not hacked.
-	else
-		return 0 // 0 = User is not a Malf AI
 
 /obj/machinery/power/apc/proc/report()
 	return "[area.name] : [equipment]/[lighting]/[environ] ([lastused_total]) : [cell? cell.percent() : "N/C"] ([charging])"
@@ -1073,15 +1053,6 @@
 			if(usr.has_unlimited_silicon_privilege)
 				overload_lighting()
 				. = TRUE
-		if("hack")
-			if(get_malf_status(usr))
-				malfhack(usr)
-		if("occupy")
-			if(get_malf_status(usr))
-				malfoccupy(usr)
-		if("deoccupy")
-			if(get_malf_status(usr))
-				malfvacate()
 		if("reboot")
 			failure_timer = 0
 			update_appearance()
@@ -1103,69 +1074,6 @@
 	log_game("[key_name(user)] turned [operating ? "on" : "off"] the [src] in [AREACOORD(src)]")
 	update()
 	update_appearance()
-
-/obj/machinery/power/apc/proc/malfhack(mob/living/silicon/ai/malf)
-	if(!istype(malf))
-		return
-	if(get_malf_status(malf) != 1)
-		return
-	if(malf.malfhacking)
-		to_chat(malf, SPAN_WARNING("You are already hacking an APC!"))
-		return
-	to_chat(malf, SPAN_NOTICE("Beginning override of APC systems. This takes some time, and you cannot perform other actions during the process."))
-	malf.malfhack = src
-	malf.malfhacking = addtimer(CALLBACK(malf, /mob/living/silicon/ai/.proc/malfhacked, src), 600, TIMER_STOPPABLE)
-
-	var/atom/movable/screen/alert/hackingapc/A
-	A = malf.throw_alert("hackingapc", /atom/movable/screen/alert/hackingapc)
-	A.target = src
-
-/obj/machinery/power/apc/proc/malfoccupy(mob/living/silicon/ai/malf)
-	if(!istype(malf))
-		return
-	if(istype(malf.loc, /obj/machinery/power/apc)) // Already in an APC
-		to_chat(malf, SPAN_WARNING("You must evacuate your current APC first!"))
-		return
-	if(!malf.can_shunt)
-		to_chat(malf, SPAN_WARNING("You cannot shunt!"))
-		return
-	if(!is_station_level(src))
-		return
-	malf.ShutOffDoomsdayDevice()
-	occupier = new /mob/living/silicon/ai(src, malf.laws, malf) //DEAR GOD WHY? //IKR????
-	occupier.adjustOxyLoss(malf.getOxyLoss())
-	if(!findtext(occupier.name, "APC Copy"))
-		occupier.name = "[malf.name] APC Copy"
-	if(malf.parent)
-		occupier.parent = malf.parent
-	else
-		occupier.parent = malf
-	malf.shunted = 1
-	occupier.eyeobj.name = "[occupier.name] (AI Eye)"
-	if(malf.parent)
-		qdel(malf)
-	var/datum/action/innate/core_return/CR = new
-	CR.Grant(occupier)
-	occupier.cancel_camera()
-
-/obj/machinery/power/apc/proc/malfvacate(forced)
-	if(!occupier)
-		return
-	if(occupier.parent && occupier.parent.stat != DEAD)
-		occupier.mind.transfer_to(occupier.parent)
-		occupier.parent.shunted = 0
-		occupier.parent.setOxyLoss(occupier.getOxyLoss())
-		occupier.parent.cancel_camera()
-		qdel(occupier)
-	else
-		to_chat(occupier, SPAN_DANGER("Primary core damaged, unable to return core processes."))
-		if(forced)
-			occupier.forceMove(drop_location())
-			occupier.death()
-			occupier.gib()
-			for(var/obj/item/pinpointer/nuke/P in GLOB.pinpointer_list)
-				P.switch_mode_to(TRACK_NUKE_DISK) //Pinpointers go back to tracking the nuke disk
-				P.alert = FALSE
 
 /obj/machinery/power/apc/transfer_ai(interaction, mob/user, mob/living/silicon/ai/AI, obj/item/aicard/card)
 	if(card.AI)
@@ -1462,21 +1370,14 @@
 	update()
 	addtimer(CALLBACK(src, .proc/reset, APC_RESET_EMP), 600)
 
-/obj/machinery/power/apc/blob_act(obj/structure/blob/B)
-	set_broken()
-
 /obj/machinery/power/apc/disconnect_terminal()
 	if(terminal)
 		terminal.master = null
 		terminal = null
 
 /obj/machinery/power/apc/proc/set_broken()
-	if(malfai && operating)
-		malfai.malf_picker.processing_time = clamp(malfai.malf_picker.processing_time - 10,0,1000)
 	operating = FALSE
 	obj_break()
-	if(occupier)
-		malfvacate(1)
 	update()
 
 // overload all the lights in this APC area

@@ -92,9 +92,6 @@
 /turf/open/floor/mineral/titanium/setup_broken_states()
 	return list("titanium_dam1","titanium_dam2","titanium_dam3","titanium_dam4","titanium_dam5")
 
-/turf/open/floor/mineral/titanium/rust_heretic_act()
-	return // titanium does not rust
-
 /turf/open/floor/mineral/titanium/airless
 	initial_gas_mix = AIRLESS_ATMOS
 
@@ -175,9 +172,6 @@
 
 /turf/open/floor/mineral/plastitanium/setup_broken_states()
 	return list("plastitanium_dam1","plastitanium_dam2","plastitanium_dam3","plastitanium_dam4","plastitanium_dam5")
-
-/turf/open/floor/mineral/plastitanium/rust_heretic_act()
-	return // plastitanium does not rust
 
 /turf/open/floor/mineral/plastitanium/airless
 	initial_gas_mix = AIRLESS_ATMOS
@@ -290,22 +284,3 @@
 			last_event = world.time
 			active = FALSE
 			return
-
-// ALIEN ALLOY
-/turf/open/floor/mineral/abductor
-	name = "alien floor"
-	icon_state = "alienpod1"
-	floor_tile = /obj/item/stack/tile/mineral/abductor
-	icons = list("alienpod1", "alienpod2", "alienpod3", "alienpod4", "alienpod5", "alienpod6", "alienpod7", "alienpod8", "alienpod9")
-	baseturfs = /turf/open/floor/plating/abductor2
-	custom_materials = list(/datum/material/alloy/alien = 500)
-
-/turf/open/floor/mineral/abductor/Initialize(mapload, inherited_virtual_z)
-	. = ..()
-	icon_state = "alienpod[rand(1,9)]"
-
-/turf/open/floor/mineral/abductor/break_tile()
-	return //unbreakable
-
-/turf/open/floor/mineral/abductor/burn_tile()
-	return //unburnable

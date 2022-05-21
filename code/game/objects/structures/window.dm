@@ -94,9 +94,6 @@
 			return TRUE
 	return FALSE
 
-/obj/structure/window/narsie_act()
-	add_atom_colour(NARSIE_WINDOW_COLOUR, FIXED_COLOUR_PRIORITY)
-
 /obj/structure/window/singularity_pull(S, current_size)
 	..()
 	if(anchored && current_size >= STAGE_TWO)
@@ -735,9 +732,6 @@
 	glass_amount = 2
 	receive_ricochet_chance_mod = 1.2
 	damage_deflection = 11
-
-/obj/structure/window/shuttle/narsie_act()
-	add_atom_colour("#3C3434", FIXED_COLOUR_PRIORITY)
 
 /obj/structure/window/shuttle/tinted
 	opacity = TRUE

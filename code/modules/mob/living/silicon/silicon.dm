@@ -447,9 +447,6 @@
 /mob/living/silicon/handle_high_gravity(gravity, delta_time, times_fired)
 	return
 
-/mob/living/silicon/rust_heretic_act()
-	adjustBruteLoss(500)
-
 /mob/living/silicon/on_floored_start()
 	return // Silicons are always standing by default.
 

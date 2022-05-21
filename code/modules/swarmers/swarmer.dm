@@ -235,13 +235,6 @@
 	// If we're getting rid of a human, slap some energy cuffs on
 	// them to keep them away from us a little longer
 
-	if(ishuman(target))
-		var/mob/living/carbon/human/victim = target
-		if(!victim.handcuffed)
-			victim.set_handcuffed(new /obj/item/restraints/handcuffs/energy/used(victim))
-			victim.update_handcuffed()
-			log_combat(src, victim, "handcuffed")
-
 	var/datum/effect_system/spark_spread/sparks = new
 	sparks.set_up(4,0,get_turf(target))
 	sparks.start()

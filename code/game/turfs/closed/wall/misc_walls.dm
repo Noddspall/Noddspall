@@ -1,35 +1,3 @@
-/turf/closed/wall/mineral/cult
-	name = "runed metal wall"
-	desc = "A cold metal wall engraved with indecipherable symbols. Studying them causes your head to pound."
-	icon = 'icons/turf/walls/cult_wall.dmi'
-	plating_material = /datum/material/runedmetal
-	color = "#3C3434" //To display in mapping softwares
-
-/turf/closed/wall/mineral/cult/Initialize(mapload, inherited_virtual_z)
-	new /obj/effect/temp_visual/cult/turf(src)
-	. = ..()
-
-/turf/closed/wall/mineral/cult/Exited(atom/movable/gone, direction)
-	. = ..()
-	if(istype(gone, /mob/living/simple_animal/hostile/construct/harvester)) //harvesters can go through cult walls, dragging something with
-		var/mob/living/simple_animal/hostile/construct/harvester/H = gone
-		var/atom/movable/stored_pulling = H.pulling
-		if(stored_pulling)
-			stored_pulling.setDir(direction)
-			stored_pulling.forceMove(src)
-			H.start_pulling(stored_pulling, supress_message = TRUE)
-
-/turf/closed/wall/mineral/cult/artificer
-	name = "runed stone wall"
-	desc = "A cold stone wall engraved with indecipherable symbols. Studying them causes your head to pound."
-
-/turf/closed/wall/mineral/cult/artificer/break_wall()
-	new /obj/effect/temp_visual/cult/turf(get_turf(src))
-	return null //excuse me we want no runed metal here
-
-/turf/closed/wall/mineral/cult/artificer/devastate_wall()
-	new /obj/effect/temp_visual/cult/turf(get_turf(src))
-
 /turf/closed/wall/vault
 	name = "strange wall"
 	smoothing_flags = NONE

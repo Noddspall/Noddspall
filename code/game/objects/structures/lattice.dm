@@ -33,9 +33,6 @@
 		return INITIALIZE_HINT_QDEL
 	AddElement(/datum/element/footstep_override, FOOTSTEP_LATTICE, FOOTSTEP_HARD_BAREFOOT, FOOTSTEP_LATTICE, FOOTSTEP_LATTICE)
 
-/obj/structure/lattice/blob_act(obj/structure/blob/B)
-	return
-
 /obj/structure/lattice/attackby(obj/item/C, mob/user, params)
 	if(resistance_flags & INDESTRUCTIBLE)
 		return

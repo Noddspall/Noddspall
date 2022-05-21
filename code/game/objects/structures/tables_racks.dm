@@ -55,11 +55,6 @@
 		QUEUE_SMOOTH(src)
 		QUEUE_SMOOTH_NEIGHBORS(src)
 
-/obj/structure/table/narsie_act()
-	var/atom/A = loc
-	qdel(src)
-	new /obj/structure/table/wood(A)
-
 /obj/structure/table/attack_paw(mob/user, list/modifiers)
 	return attack_hand(user, modifiers)
 
@@ -378,11 +373,6 @@
 				debris -= AM
 	qdel(src)
 
-/obj/structure/table/glass/narsie_act()
-	color = NARSIE_WINDOW_COLOUR
-	for(var/obj/item/shard/S in debris)
-		S.color = NARSIE_WINDOW_COLOUR
-
 /obj/structure/table/glass/plasmaglass
 	name = "plasma glass table"
 	desc = "Someone thought this was a good idea."
@@ -411,10 +401,6 @@
 	smoothing_groups = list(SMOOTH_GROUP_WOOD_TABLES) //Don't smooth with SMOOTH_GROUP_TABLES
 	canSmoothWith = list(SMOOTH_GROUP_WOOD_TABLES)
 
-/obj/structure/table/wood/narsie_act(total_override = TRUE)
-	if(!total_override)
-		..()
-
 /obj/structure/table/wood/poker //No specialties, Just a mapping object.
 	name = "gambling table"
 	desc = "A seedy table for seedy dealings in seedy places."
@@ -422,9 +408,6 @@
 	icon_state = "poker_table-0"
 	base_icon_state = "poker_table"
 	buildstack = /obj/item/stack/tile/carpet
-
-/obj/structure/table/wood/poker/narsie_act()
-	..(FALSE)
 
 /obj/structure/table/wood/fancy
 	name = "fancy table"

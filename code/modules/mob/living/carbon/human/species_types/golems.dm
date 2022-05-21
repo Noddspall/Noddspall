@@ -278,26 +278,6 @@
 	LAZYREMOVE(C.weather_immunities, "ash")
 	LAZYREMOVE(C.weather_immunities, "lava")
 
-//Fast and regenerates... but can only speak like an abductor
-/datum/species/golem/alloy
-	name = "Alien Alloy Golem"
-	id = "alloy golem"
-	fixed_mut_color = "333"
-	meat = /obj/item/stack/sheet/mineral/abductor
-	mutanttongue = /obj/item/organ/tongue/abductor
-	speedmod = 1 //faster
-	info_text = "As an <span class='danger'>Alloy Golem</span>, you are made of advanced alien materials: you are faster and regenerate over time. You are, however, only able to be heard by other alloy golems."
-	prefix = "Alien"
-	special_names = list("Outsider", "Technology", "Watcher", "Stranger") //ominous and unknown
-
-//Regenerates because self-repairing super-advanced alien tech
-/datum/species/golem/alloy/spec_life(mob/living/carbon/human/H, delta_time, times_fired)
-	if(H.stat == DEAD)
-		return
-	H.heal_overall_damage(1 * delta_time, 1 * delta_time, 0, BODYPART_ORGANIC)
-	H.adjustToxLoss(-1 * delta_time)
-	H.adjustOxyLoss(-1 * delta_time)
-
 //Since this will usually be created from a collaboration between podpeople and free golems, wood golems are a mix between the two races
 /datum/species/golem/wood
 	name = "Wood Golem"
@@ -666,75 +646,6 @@
 /datum/species/golem/bananium/proc/handle_speech(datum/source, list/speech_args)
 	SIGNAL_HANDLER
 	speech_args[SPEECH_SPANS] |= SPEECH_SPAN_CLOWN
-
-/datum/species/golem/runic
-	name = "Runic Golem"
-	id = "runic golem"
-	limbs_id = "cultgolem"
-	sexes = FALSE
-	info_text = "As a <span class='danger'>Runic Golem</span>, you possess eldritch powers granted by the Elder Goddess Nar'Sie."
-	species_traits = list(NOBLOOD,NO_UNDERWEAR,NOEYESPRITES) //no mutcolors
-	inherent_traits = list(
-		TRAIT_ADVANCEDTOOLUSER,
-		TRAIT_CAN_STRIP,
-		TRAIT_NOFLASH,
-		TRAIT_RESISTHEAT,
-		TRAIT_NOBREATH,
-		TRAIT_RESISTCOLD,
-		TRAIT_RESISTHIGHPRESSURE,
-		TRAIT_RESISTLOWPRESSURE,
-		TRAIT_NOFIRE,
-		TRAIT_CHUNKYFINGERS,
-		TRAIT_RADIMMUNE,
-		TRAIT_GENELESS,
-		TRAIT_PIERCEIMMUNE,
-		TRAIT_NODISMEMBER,
-	)
-	inherent_biotypes = MOB_HUMANOID|MOB_MINERAL
-	prefix = "Runic"
-	special_names = null
-	inherent_factions = list("cult")
-	species_language_holder = /datum/language_holder/golem/runic
-	var/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift/golem/phase_shift
-	var/obj/effect/proc_holder/spell/pointed/abyssal_gaze/abyssal_gaze
-	var/obj/effect/proc_holder/spell/pointed/dominate/dominate
-
-/datum/species/golem/runic/random_name(gender,unique,lastname)
-	var/edgy_first_name = pick("Razor","Blood","Dark","Evil","Cold","Pale","Black","Silent","Chaos","Deadly","Coldsteel")
-	var/edgy_last_name = pick("Edge","Night","Death","Razor","Blade","Steel","Calamity","Twilight","Shadow","Nightmare") //dammit Razor Razor
-	var/golem_name = "[edgy_first_name] [edgy_last_name]"
-	return golem_name
-
-/datum/species/golem/runic/on_species_gain(mob/living/carbon/C, datum/species/old_species)
-	. = ..()
-	phase_shift = new
-	phase_shift.charge_counter = 0
-	C.AddSpell(phase_shift)
-	abyssal_gaze = new
-	abyssal_gaze.charge_counter = 0
-	C.AddSpell(abyssal_gaze)
-	dominate = new
-	dominate.charge_counter = 0
-	C.AddSpell(dominate)
-
-/datum/species/golem/runic/on_species_loss(mob/living/carbon/C)
-	. = ..()
-	if(phase_shift)
-		C.RemoveSpell(phase_shift)
-	if(abyssal_gaze)
-		C.RemoveSpell(abyssal_gaze)
-	if(dominate)
-		C.RemoveSpell(dominate)
-
-/datum/species/golem/runic/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H, delta_time, times_fired)
-	if(istype(chem, /datum/reagent/water/holywater))
-		H.adjustFireLoss(4 * REAGENTS_EFFECT_MULTIPLIER * delta_time)
-		H.reagents.remove_reagent(chem.type, REAGENTS_METABOLISM * delta_time)
-
-	if(chem.type == /datum/reagent/fuel/unholywater)
-		H.adjustBruteLoss(-4 * REAGENTS_EFFECT_MULTIPLIER * delta_time)
-		H.adjustFireLoss(-4 * REAGENTS_EFFECT_MULTIPLIER * delta_time)
-		H.reagents.remove_reagent(chem.type, REAGENTS_METABOLISM * delta_time)
 
 /datum/species/golem/cloth
 	name = "Cloth Golem"

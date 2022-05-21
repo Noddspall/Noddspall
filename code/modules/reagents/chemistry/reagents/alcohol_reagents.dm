@@ -567,15 +567,6 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_desc = "A classic mix of rum, cola, and lime. A favorite of revolutionaries everywhere!"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/consumable/ethanol/cuba_libre/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	if(M.mind && M.mind.has_antag_datum(/datum/antagonist/rev)) //Cuba Libre, the traditional drink of revolutions! Heals revolutionaries.
-		M.adjustBruteLoss(-1 * REM * delta_time, 0)
-		M.adjustFireLoss(-1 * REM * delta_time, 0)
-		M.adjustToxLoss(-1 * REM * delta_time, 0)
-		M.adjustOxyLoss(-5 * REM * delta_time, 0)
-		. = TRUE
-	return ..() || .
-
 /datum/reagent/consumable/ethanol/whiskey_cola
 	name = "Whiskey Cola"
 	description = "Whiskey, mixed with cola. Surprisingly refreshing."
@@ -767,9 +758,6 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	if(beepsky_trauma)
 		QDEL_NULL(beepsky_trauma)
 	return ..()
-
-/datum/reagent/consumable/ethanol/beepsky_smash/overdose_start(mob/living/carbon/M)
-	M.gain_trauma(/datum/brain_trauma/mild/phobia/security, TRAUMA_RESILIENCE_BASIC)
 
 /datum/reagent/consumable/ethanol/irish_cream
 	name = "Irish Cream"
@@ -1191,14 +1179,6 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_name = "Changeling Sting"
 	glass_desc = "A stingy drink."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-
-/datum/reagent/consumable/ethanol/changelingsting/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	if(M.mind) //Changeling Sting assists in the recharging of changeling chemicals.
-		var/datum/antagonist/changeling/changeling = M.mind.has_antag_datum(/datum/antagonist/changeling)
-		if(changeling)
-			changeling.chem_charges += metabolization_rate * REM * delta_time
-			changeling.chem_charges = clamp(changeling.chem_charges, 0, changeling.chem_storage)
-	return ..()
 
 /datum/reagent/consumable/ethanol/irishcarbomb
 	name = "Irish Car Bomb"
@@ -2145,14 +2125,6 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_name = "Wizz Fizz"
 	glass_desc = "The glass bubbles and froths with an almost magical intensity."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-
-/datum/reagent/consumable/ethanol/wizz_fizz/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	//A healing drink similar to Quadruple Sec, Ling Stings, and Screwdrivers for the Wizznerds; the check is consistent with the changeling sting
-	if(M?.mind?.has_antag_datum(/datum/antagonist/wizard))
-		M.heal_bodypart_damage(1 * REM * delta_time, 1 * REM * delta_time, 1 * REM * delta_time)
-		M.adjustOxyLoss(-1 * REM * delta_time, 0)
-		M.adjustToxLoss(-1 * REM * delta_time, 0)
-	return ..()
 
 /datum/reagent/consumable/ethanol/bug_spray
 	name = "Bug Spray"

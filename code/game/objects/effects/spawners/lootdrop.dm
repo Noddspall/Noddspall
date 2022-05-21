@@ -68,7 +68,6 @@
 	loot = list(/obj/item/gun/ballistic/automatic/pistol = 5,
 				/obj/item/gun/ballistic/shotgun/automatic/combat = 5,
 				/obj/item/gun/ballistic/automatic/pistol/deagle,
-				/obj/item/storage/box/syndie_kit/throwing_weapons = 3,
 				/obj/item/gun/ballistic/revolver/mateba)
 
 /obj/effect/spawner/lootdrop/armory_contraband/donutstation
@@ -76,7 +75,6 @@
 				/obj/item/gun/ballistic/shotgun/automatic/combat = 5,
 				/obj/item/bikehorn/golden,
 				/obj/item/grenade/clusterbuster,
-				/obj/item/storage/box/syndie_kit/throwing_weapons = 3,
 				/obj/item/gun/ballistic/revolver/mateba)
 
 /obj/effect/spawner/lootdrop/prison_contraband
@@ -126,7 +124,6 @@
 	loot = list(
 				/obj/item/gun/ballistic/revolver/russian = 5,
 				/obj/item/clothing/head/ushanka = 3,
-				/obj/item/storage/box/syndie_kit/throwing_weapons,
 				/obj/item/coin/gold,
 				/obj/item/reagent_containers/food/drinks/bottle/vodka/badminka,
 				)
@@ -289,23 +286,6 @@
 				/obj/structure/closet/crate/secure/loot = 20,
 				"" = 80
 				)
-
-/obj/effect/spawner/lootdrop/organ_spawner
-	name = "ayylien organ spawner"
-	loot = list(
-		/obj/item/organ/heart/gland/electric = 3,
-		/obj/item/organ/heart/gland/trauma = 4,
-		/obj/item/organ/heart/gland/egg = 7,
-		/obj/item/organ/heart/gland/chem = 5,
-		/obj/item/organ/heart/gland/mindshock = 5,
-		/obj/item/organ/heart/gland/plasma = 7,
-		/obj/item/organ/heart/gland/transform = 5,
-		/obj/item/organ/heart/gland/slime = 4,
-		/obj/item/organ/heart/gland/spiderman = 5,
-		/obj/item/organ/heart/gland/ventcrawling = 1,
-		/obj/item/organ/body_egg/alien_embryo = 1,
-		/obj/item/organ/regenerative_core = 2)
-	lootcount = 3
 
 /obj/effect/spawner/lootdrop/memeorgans
 	name = "meme organ spawner"
@@ -497,17 +477,6 @@
 		/obj/item/cautery/advanced = 1
 	)
 
-/// Mail loot spawner. Some sort of random and rare surgical tool. Alien tech found here.
-/obj/effect/spawner/lootdrop/space/fancytool/raremedicalonly
-	loot = list(
-		/obj/item/scalpel/alien = 1,
-		/obj/item/hemostat/alien = 1,
-		/obj/item/retractor/alien = 1,
-		/obj/item/circular_saw/alien = 1,
-		/obj/item/surgicaldrill/alien = 1,
-		/obj/item/cautery/alien = 1
-	)
-
 /// Space loot spawner. A bunch of rarer seeds. /obj/item/seeds/random is not a random seed, but an exotic seed.
 /obj/effect/spawner/lootdrop/space/rareseed
 	lootcount = 5
@@ -542,8 +511,6 @@
 	lootcount = 3
 	loot = list(
 		/obj/item/stack/sheet/plastic/fifty = 5,
-		/obj/item/stack/sheet/runed_metal/ten = 20,
-		/obj/item/stack/sheet/runed_metal/fifty = 5,
 		/obj/item/stack/sheet/mineral/diamond{amount = 15} = 15,
 		/obj/item/stack/sheet/mineral/uranium{amount = 15} = 15,
 		/obj/item/stack/sheet/mineral/plasma{amount = 15} = 15,

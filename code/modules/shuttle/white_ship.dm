@@ -50,14 +50,6 @@
 	y_offset = 0
 	designate_time = 0
 
-/obj/machinery/computer/camera_advanced/shuttle_docker/whiteship/Initialize()
-	. = ..()
-	GLOB.jam_on_wardec += src
-
-/obj/machinery/computer/camera_advanced/shuttle_docker/whiteship/Destroy()
-	GLOB.jam_on_wardec -= src
-	return ..()
-
 /obj/machinery/computer/shuttle/barrow
 	name = "The Barrows Ship Console"
 	desc = "Used to control The Barrows."

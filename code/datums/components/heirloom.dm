@@ -18,7 +18,3 @@
 		examine_list += SPAN_NOTICE("It is your precious [family_name] family heirloom. Keep it safe!")
 	else if(isobserver(user))
 		examine_list += SPAN_NOTICE("It is the [family_name] family heirloom, belonging to [owner].")
-	else
-		var/datum/antagonist/obsessed/creeper = user.mind.has_antag_datum(/datum/antagonist/obsessed)
-		if(creeper && creeper.trauma.obsession == owner)
-			examine_list += SPAN_NICEGREEN("This must be [owner]'s family heirloom! It smells just like them...")

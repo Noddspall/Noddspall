@@ -780,17 +780,6 @@
 	contents_explosion(severity, target)
 	SEND_SIGNAL(src, COMSIG_ATOM_EX_ACT, severity, target)
 
-/**
- * React to a hit by a blob objecd
- *
- * default behaviour is to send the [COMSIG_ATOM_BLOB_ACT] signal
- */
-/atom/proc/blob_act(obj/structure/blob/B)
-	var/blob_act_result = SEND_SIGNAL(src, COMSIG_ATOM_BLOB_ACT, B)
-	if (blob_act_result & COMPONENT_CANCEL_BLOB_ACT)
-		return FALSE
-	return TRUE
-
 /atom/proc/fire_act(exposed_temperature, exposed_volume)
 	SEND_SIGNAL(src, COMSIG_ATOM_FIRE_ACT, exposed_temperature, exposed_volume)
 	return
@@ -913,14 +902,6 @@
  */
 /atom/proc/rad_act(strength)
 	SEND_SIGNAL(src, COMSIG_ATOM_RAD_ACT, strength)
-
-/**
- * Respond to narsie eating our atom
- *
- * Default behaviour is to send [COMSIG_ATOM_NARSIE_ACT] and return
- */
-/atom/proc/narsie_act()
-	SEND_SIGNAL(src, COMSIG_ATOM_NARSIE_ACT)
 
 
 ///Return the values you get when an RCD eats you?
@@ -1932,13 +1913,6 @@
 			return max_grav
 	return T.virtual_level_trait(ZTRAIT_GRAVITY)
 
-/**
- * Causes effects when the atom gets hit by a rust effect from heretics
- *
- * Override this if you want custom behaviour in whatever gets hit by the rust
- */
-/atom/proc/rust_heretic_act()
-	return
 
 /**
  * Used to set something as 'open' if it's being used as a supplypod

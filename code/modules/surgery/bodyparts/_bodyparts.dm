@@ -152,10 +152,6 @@
 	if(locate(/datum/wound/burn) in wounds)
 		. += SPAN_WARNING("The flesh on this limb appears badly cooked.")
 
-/obj/item/bodypart/blob_act()
-	take_damage(max_damage)
-
-
 /obj/item/bodypart/attack(mob/living/carbon/victim, mob/user)
 	if(ishuman(victim))
 		var/mob/living/carbon/human/human_victim = victim

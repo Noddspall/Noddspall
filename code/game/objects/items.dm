@@ -270,10 +270,6 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 	else
 		return 1
 
-/obj/item/blob_act(obj/structure/blob/B)
-	if(B && B.loc == loc)
-		obj_destruction(MELEE)
-
 /obj/item/ComponentInitialize()
 	. = ..()
 

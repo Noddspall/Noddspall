@@ -194,23 +194,6 @@
 		if("monkey")
 			new_mob = new /mob/living/carbon/human/species/monkey(M.loc)
 
-		if("robot")
-			var/robot = pick(200;/mob/living/silicon/robot,
-							/mob/living/silicon/robot/model/syndicate,
-							/mob/living/silicon/robot/model/syndicate/medical,
-							/mob/living/silicon/robot/model/syndicate/saboteur)
-			new_mob = new robot(M.loc)
-			if(issilicon(new_mob))
-				new_mob.gender = M.gender
-				new_mob.invisibility = 0
-				new_mob.job = "Cyborg"
-				var/mob/living/silicon/robot/Robot = new_mob
-				Robot.lawupdate = FALSE
-				Robot.connected_ai = null
-				Robot.mmi.transfer_identity(M) //Does not transfer key/client.
-				Robot.clear_inherent_laws(0)
-				Robot.clear_zeroth_law(0)
-
 		if("xeno")
 			var/Xe
 			if(M.ckey)
@@ -229,13 +212,8 @@
 							/mob/living/simple_animal/hostile/killertomato,
 							/mob/living/simple_animal/hostile/giant_spider,
 							/mob/living/simple_animal/hostile/giant_spider/hunter,
-							/mob/living/simple_animal/hostile/blob/blobbernaut/independent,
-							/mob/living/simple_animal/hostile/carp/ranged,
-							/mob/living/simple_animal/hostile/carp/ranged/chaos,
 							/mob/living/simple_animal/hostile/asteroid/basilisk/watcher,
 							/mob/living/simple_animal/hostile/asteroid/goliath/beast,
-							/mob/living/simple_animal/hostile/headcrab,
-							/mob/living/simple_animal/hostile/morph,
 							/mob/living/simple_animal/hostile/stickman,
 							/mob/living/simple_animal/hostile/stickman/dog,
 							/mob/living/simple_animal/hostile/gorilla,

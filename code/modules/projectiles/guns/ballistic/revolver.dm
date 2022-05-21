@@ -212,18 +212,6 @@
 	user.apply_damage(300, BRUTE, affecting)
 	user.visible_message(SPAN_DANGER("[user.name] fires [src] at [user.p_their()] head!"), SPAN_USERDANGER("You fire [src] at your head!"), SPAN_HEAR("You hear a gunshot!"))
 
-/obj/item/gun/ballistic/revolver/russian/soul
-	name = "cursed Russian revolver"
-	desc = "To play with this revolver requires wagering your very soul."
-
-/obj/item/gun/ballistic/revolver/russian/soul/shoot_self(mob/living/user)
-	..()
-	var/obj/item/soulstone/anybody/revolver/SS = new /obj/item/soulstone/anybody/revolver(get_turf(src))
-	if(!SS.transfer_soul("FORCE", user)) //Something went wrong
-		qdel(SS)
-		return
-	user.visible_message(SPAN_DANGER("[user.name]'s soul is captured by \the [src]!"), SPAN_USERDANGER("You've lost the gamble! Your soul is forfeit!"))
-
 /obj/item/gun/ballistic/revolver/reverse //Fires directly at its user... unless the user is a clown, of course.
 	clumsy_check = FALSE
 

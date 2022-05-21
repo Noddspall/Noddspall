@@ -193,9 +193,6 @@
 /turf/open/floor/plating/rust/plasma
 	initial_gas_mix = "plasma=104;TEMP=293.15"
 
-/turf/open/floor/plating/rust/rust_heretic_act()
-	return
-
 /turf/open/floor/stone
 	name = "stone brick floor"
 	desc = "Odd, really, how it looks exactly like the iron walls yet is stone instead of iron. Now, if that's really more of a complaint about\
@@ -225,17 +222,3 @@
 	icon_state = "sandstonevault"
 	base_icon_state = "sandstonevault"
 
-/turf/open/floor/cult
-	name = "engraved floor"
-	icon_state = "cult"
-	base_icon_state = "cult"
-	floor_tile = /obj/item/stack/tile/cult
-
-/turf/open/floor/cult/setup_broken_states()
-	return list("cultdamage","cultdamage2","cultdamage3","cultdamage4","cultdamage5","cultdamage6","cultdamage7")
-
-/turf/open/floor/cult/narsie_act()
-	return
-
-/turf/open/floor/cult/airless
-	initial_gas_mix = AIRLESS_ATMOS

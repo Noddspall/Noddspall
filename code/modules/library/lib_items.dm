@@ -105,7 +105,7 @@
 				update_appearance()
 			else if(STR)
 				for(var/obj/item/T in I.contents)
-					if(istype(T, /obj/item/book) || istype(T, /obj/item/spellbook))
+					if(istype(T, /obj/item/book))
 						STR.remove_from_storage(T, src)
 				to_chat(user, SPAN_NOTICE("You empty \the [I] into \the [src]."))
 				update_appearance()

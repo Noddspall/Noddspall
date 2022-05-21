@@ -526,9 +526,6 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	if(guardians.len && !allowmultiple)
 		to_chat(user, SPAN_HOLOPARASITE("You already have a [mob_name]!"))
 		return
-	if(user.mind && user.mind.has_antag_datum(/datum/antagonist/changeling) && !allowling)
-		to_chat(user, "[ling_failure]")
-		return
 	if(used == TRUE)
 		to_chat(user, "[used_message]")
 		return

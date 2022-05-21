@@ -150,18 +150,12 @@
 #define COMSIG_ATOM_CHECKPARTS "atom_checkparts"
 ///from base of atom/CheckParts(): (atom/movable/new_craft) - The atom has just been used in a crafting recipe and has been moved inside new_craft.
 #define COMSIG_ATOM_USED_IN_CRAFT "atom_used_in_craft"
-///from base of atom/blob_act(): (/obj/structure/blob)
-#define COMSIG_ATOM_BLOB_ACT "atom_blob_act"
-	/// if returned, forces nothing to happen when the atom is attacked by a blob
-	#define COMPONENT_CANCEL_BLOB_ACT (1<<0)
 ///from base of atom/acid_act(): (acidpwr, acid_volume)
 #define COMSIG_ATOM_ACID_ACT "atom_acid_act"
 ///from base of atom/emag_act(): (/mob/user)
 #define COMSIG_ATOM_EMAG_ACT "atom_emag_act"
 ///from base of atom/rad_act(intensity)
 #define COMSIG_ATOM_RAD_ACT "atom_rad_act"
-///from base of atom/narsie_act(): ()
-#define COMSIG_ATOM_NARSIE_ACT "atom_narsie_act"
 ///from base of atom/rcd_act(): (/mob, /obj/item/construction/rcd, passed_mode)
 #define COMSIG_ATOM_RCD_ACT "atom_rcd_act"
 ///from base of atom/singularity_pull(): (/datum/component/singularity, current_size)

@@ -78,7 +78,6 @@
 	begin_month = DECEMBER
 	end_day = 2
 	end_month = JANUARY
-	drone_hat = /obj/item/clothing/head/festive
 	mail_holiday = TRUE
 
 /datum/holiday/new_year/getStationPrefix()
@@ -116,7 +115,6 @@
 	name = "Birthday of Space Station 13"
 	begin_day = 16
 	begin_month = FEBRUARY
-	drone_hat = /obj/item/clothing/head/festive
 
 /datum/holiday/birthday/greet()
 	var/game_age = text2num(time2text(world.timeofday, "YYYY")) - 2003
@@ -496,7 +494,6 @@
 	SSticker.OnRoundstart(CALLBACK(src, .proc/roundstart_celebrate))
 	GLOB.maintenance_loot += list(
 		list(
-			/obj/item/toy/xmas_cracker = 3,
 			/obj/item/clothing/head/santa = 1,
 			/obj/item/a_gift/anything = 1
 		) = maint_holiday_weight,

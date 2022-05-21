@@ -1,15 +1,3 @@
-/datum/mutation/human/telepathy
-	name = "Telepathy"
-	desc = "A rare mutation that allows the user to telepathically communicate to others."
-	quality = POSITIVE
-	text_gain_indication = SPAN_NOTICE("You can hear your own voice echoing in your mind!")
-	text_lose_indication = SPAN_NOTICE("You don't hear your mind echo anymore.")
-	difficulty = 12
-	power = /obj/effect/proc_holder/spell/targeted/telepathy
-	instability = 10
-	energy_coeff = 1
-
-
 /datum/mutation/human/olfaction
 	name = "Transcendent Olfaction"
 	desc = "Your sense of smell is comparable to that of a canine."

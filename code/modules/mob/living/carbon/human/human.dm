@@ -83,12 +83,6 @@
 		var/obj/item/clothing/suit/space/S = wear_suit
 		. += "Thermal Regulator: [S.thermal_on ? "on" : "off"]"
 		. += "Cell Charge: [S.cell ? "[round(S.cell.percent(), 0.1)]%" : "!invalid!"]"
-	if(mind)
-		var/datum/antagonist/changeling/changeling = mind.has_antag_datum(/datum/antagonist/changeling)
-		if(changeling)
-			. += ""
-			. += "Chemical Storage: [changeling.chem_charges]/[changeling.chem_storage]"
-			. += "Absorbed DNA: [changeling.absorbedcount]"
 
 // called when something steps onto a human
 /mob/living/carbon/human/proc/on_entered(datum/source, atom/movable/AM)
@@ -1152,9 +1146,6 @@
 /mob/living/carbon/human/species/golem/plastitanium
 	race = /datum/species/golem/plastitanium
 
-/mob/living/carbon/human/species/golem/alien_alloy
-	race = /datum/species/golem/alloy
-
 /mob/living/carbon/human/species/golem/wood
 	race = /datum/species/golem/wood
 
@@ -1172,9 +1163,6 @@
 
 /mob/living/carbon/human/species/golem/bananium
 	race = /datum/species/golem/bananium
-
-/mob/living/carbon/human/species/golem/blood_cult
-	race = /datum/species/golem/runic
 
 /mob/living/carbon/human/species/golem/cloth
 	race = /datum/species/golem/cloth
@@ -1226,9 +1214,6 @@
 
 /mob/living/carbon/human/species/shadow
 	race = /datum/species/shadow
-
-/mob/living/carbon/human/species/shadow/nightmare
-	race = /datum/species/shadow/nightmare
 
 /mob/living/carbon/human/species/skeleton
 	race = /datum/species/skeleton

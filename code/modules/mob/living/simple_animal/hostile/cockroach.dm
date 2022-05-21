@@ -65,11 +65,6 @@
 	ranged = TRUE
 	faction = list("hostile")
 
-/mob/living/simple_animal/hostile/cockroach/death(gibbed)
-	if(GLOB.station_was_nuked) //If the nuke is going off, then cockroaches are invincible. Keeps the nuke from killing them, cause cockroaches are immune to nukes.
-		return
-	..()
-
 /mob/living/simple_animal/hostile/cockroach/ex_act() //Explosions are a terrible way to handle a cockroach.
 	return FALSE
 

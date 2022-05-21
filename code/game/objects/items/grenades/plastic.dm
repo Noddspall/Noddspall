@@ -117,28 +117,6 @@
 	if(!player)
 		return
 	var/message_say = "FOR NO RAISIN!"
-	if(player.mind)
-		var/datum/mind/our_guy = player.mind
-		if(our_guy.has_antag_datum(/datum/antagonist/nukeop) || our_guy.has_antag_datum(/datum/antagonist/traitor))
-			message_say = "FOR THE SYNDICATE!"
-		else if(our_guy.has_antag_datum(/datum/antagonist/changeling))
-			message_say = "FOR THE HIVE!"
-		else if(our_guy.has_antag_datum(/datum/antagonist/cult))
-			message_say = "FOR NAR'SIE!"
-		else if(our_guy.has_antag_datum(/datum/antagonist/rev))
-			message_say = "VIVA LA REVOLUTION!"
-		else if(our_guy.has_antag_datum(/datum/antagonist/brother))
-			message_say = "FOR MY BROTHER!"
-		else if(our_guy.has_antag_datum(/datum/antagonist/ninja))
-			message_say = "FOR THE SPIDER CLAN!"
-		else if(our_guy.has_antag_datum(/datum/antagonist/fugitive))
-			message_say = "FOR FREEDOM!"
-		else if(our_guy.has_antag_datum(/datum/antagonist/ashwalker))
-			message_say = "I HAVE NO IDEA WHAT THIS THING DOES!"
-		else if(our_guy.has_antag_datum(/datum/antagonist/ert))
-			message_say = "FOR NANOTRASEN!"
-		else if(our_guy.has_antag_datum(/datum/antagonist/wizard))
-			message_say = "FOR THE FEDERATION!"
 	player.say(message_say, forced="C4 suicide")
 
 /obj/item/grenade/c4/suicide_act(mob/living/user)

@@ -14,12 +14,6 @@
 	. += SPAN_NOTICE("There's a <b>small crack</b> on the edge of it.")
 
 
-/turf/open/floor/iron/rust_heretic_act()
-	if(prob(70))
-		new /obj/effect/temp_visual/glowing_rune(src)
-	ChangeTurf(/turf/open/floor/plating/rust)
-
-
 /turf/open/floor/iron/update_icon_state()
 	if(broken || burnt)
 		return ..()

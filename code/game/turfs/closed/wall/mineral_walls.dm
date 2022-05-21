@@ -158,14 +158,6 @@
 /turf/closed/wall/mineral/snow/hulk_recoil(obj/item/bodypart/arm, mob/living/carbon/human/hulkman, damage = 0)
 	return ..() //No recoil damage, snow is weak
 
-/turf/closed/wall/mineral/abductor
-	name = "alien wall"
-	desc = "A wall with alien alloy plating."
-	slicing_duration = 200   //alien wall takes twice as much time to slice
-	explosion_block = 3
-	plating_material = /datum/material/alloy/alien
-	color = "#6041aa" //To display in mapping softwares
-
 /////////////////////Titanium walls/////////////////////
 
 /turf/closed/wall/mineral/titanium //has to use this path due to how building walls works
@@ -179,9 +171,6 @@
 	canSmoothWith = list(SMOOTH_GROUP_SHUTTERS_BLASTDOORS, SMOOTH_GROUP_WALLS, SMOOTH_GROUP_AIRLOCK, SMOOTH_GROUP_WINDOW_FULLTILE, SMOOTH_GROUP_SHUTTLE_PARTS, SMOOTH_GROUP_LOW_WALL)
 	plating_material = /datum/material/titanium
 	color = "#b3c0c7" //To display in mapping softwares
-
-/turf/closed/wall/mineral/titanium/rust_heretic_act()
-	return // titanium does not rust
 
 /turf/closed/wall/mineral/titanium/nodiagonal
 
@@ -215,9 +204,6 @@
 	canSmoothWith = list(SMOOTH_GROUP_SHUTTERS_BLASTDOORS, SMOOTH_GROUP_WALLS, SMOOTH_GROUP_AIRLOCK, SMOOTH_GROUP_WINDOW_FULLTILE, SMOOTH_GROUP_SHUTTLE_PARTS, SMOOTH_GROUP_LOW_WALL)
 	plating_material = /datum/material/alloy/plastitanium
 	color = "#3a313a" //To display in mapping softwares
-
-/turf/closed/wall/mineral/plastitanium/rust_heretic_act()
-	return // plastitanium does not rust
 
 /turf/closed/wall/mineral/plastitanium/nodiagonal
 

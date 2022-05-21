@@ -10,12 +10,6 @@
 
 		handle_traits(delta_time, times_fired)
 
-		if(malfhack?.aidisabled)
-			deltimer(malfhacking)
-			// This proc handles cleanup of screen notifications and
-			// messenging the client
-			malfhacked(malfhack)
-
 		if(isturf(loc) && (QDELETED(eyeobj) || !eyeobj.loc))
 			view_core()
 

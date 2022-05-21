@@ -1094,8 +1094,7 @@
 		/obj/item/stack/sheet/bluespace_crystal=50,\
 		/obj/item/stack/sheet/mineral/bananium=50,\
 		/obj/item/stack/sheet/mineral/wood=50,\
-		/obj/item/stack/sheet/plastic/fifty=1,\
-		/obj/item/stack/sheet/runed_metal/fifty=1
+		/obj/item/stack/sheet/plastic/fifty=1
 		)
 	generate_items_inside(items_inside,src)
 
@@ -1114,8 +1113,6 @@
 		/obj/item/card/emag=1,\
 		/obj/item/stack/spacecash/c1000=50,\
 		/obj/item/healthanalyzer/advanced=1,\
-		/obj/item/uplink/debug=1,\
-		/obj/item/uplink/nuclear/debug=1,\
 		/obj/item/storage/box/beakers/bluespace=1,\
 		/obj/item/storage/box/beakers/variety=1,\
 		/obj/item/storage/box/material=1

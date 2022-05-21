@@ -125,10 +125,7 @@
 	for(var/obj/effect/proc_holder/spell/knownspell in user.mind.spell_list)
 		if(knownspell.type == spell)
 			if(user.mind)
-				if(IS_WIZARD(user))
-					to_chat(user,SPAN_WARNING("You're already far more versed in this spell than this flimsy how-to book can provide!"))
-				else
-					to_chat(user,SPAN_WARNING("You've already read this one!"))
+				to_chat(user,SPAN_WARNING("You've already read this one!"))
 			return TRUE
 	return FALSE
 
@@ -162,31 +159,6 @@
 	explosion(user, devastation_range = 1, light_impact_range = 2, flame_range = 2, flash_range = 3, adminlog = FALSE)
 	qdel(src)
 
-/obj/item/book/granter/spell/sacredflame
-	spell = /obj/effect/proc_holder/spell/targeted/sacred_flame
-	spellname = "sacred flame"
-	icon_state ="booksacredflame"
-	desc = "Become one with the flames that burn within... and invite others to do so as well."
-	remarks = list("Well, it's one way to stop an attacker...", "I'm gonna need some good gear to stop myself from burning to death...", "Keep a fire extinguisher handy, got it...", "I think I just burned my hand...", "Apply flame directly to chest for proper ignition...", "No pain, no gain...", "One with the flame...")
-
-/obj/item/book/granter/spell/smoke
-	spell = /obj/effect/proc_holder/spell/targeted/smoke
-	spellname = "smoke"
-	icon_state ="booksmoke"
-	desc = "This book is overflowing with the dank arts."
-	remarks = list("Smoke Bomb! Heh...", "Smoke bomb would do just fine too...", "Wait, there's a machine that does the same thing in chemistry?", "This book smells awful...", "Why all these weed jokes? Just tell me how to cast it...", "Wind will ruin the whole spell, good thing we're in space... Right?", "So this is how the spider clan does it...")
-
-/obj/item/book/granter/spell/smoke/lesser //Chaplain smoke book
-	spell = /obj/effect/proc_holder/spell/targeted/smoke/lesser
-
-/obj/item/book/granter/spell/smoke/recoil(mob/user)
-	..()
-	to_chat(user,SPAN_WARNING("Your stomach rumbles..."))
-	if(user.nutrition)
-		user.set_nutrition(200)
-		if(user.nutrition <= 0)
-			user.set_nutrition(0)
-
 /obj/item/book/granter/spell/blind
 	spell = /obj/effect/proc_holder/spell/pointed/trigger/blind
 	spellname = "blind"
@@ -198,41 +170,6 @@
 	..()
 	to_chat(user,SPAN_WARNING("You go blind!"))
 	user.blind_eyes(10)
-
-/obj/item/book/granter/spell/mindswap
-	spell = /obj/effect/proc_holder/spell/pointed/mind_transfer
-	spellname = "mindswap"
-	icon_state ="bookmindswap"
-	desc = "This book's cover is pristine, though its pages look ragged and torn."
-	remarks = list("If you mindswap from a mouse, they will be helpless when you recover...", "Wait, where am I...?", "This book is giving me a horrible headache...", "This page is blank, but I feel words popping into my head...", "GYNU... GYRO... Ugh...", "The voices in my head need to stop, I'm trying to read here...", "I don't think anyone will be happy when I cast this spell...")
-	/// Mob used in book recoils to store an identity for mindswaps
-	var/mob/living/stored_swap
-
-/obj/item/book/granter/spell/mindswap/onlearned()
-	spellname = pick("fireball","smoke","blind","forcewall","knock","barnyard","charge")
-	icon_state = "book[spellname]"
-	name = "spellbook of [spellname]" //Note, desc doesn't change by design
-	..()
-
-/obj/item/book/granter/spell/mindswap/recoil(mob/user)
-	..()
-	if(stored_swap in GLOB.dead_mob_list)
-		stored_swap = null
-	if(!stored_swap)
-		stored_swap = user
-		to_chat(user,SPAN_WARNING("For a moment you feel like you don't even know who you are anymore."))
-		return
-	if(stored_swap == user)
-		to_chat(user,SPAN_NOTICE("You stare at the book some more, but there doesn't seem to be anything else to learn..."))
-		return
-	var/obj/effect/proc_holder/spell/pointed/mind_transfer/swapper = new
-	if(swapper.cast(list(stored_swap), user, TRUE))
-		to_chat(user,SPAN_WARNING("You're suddenly somewhere else... and someone else?!"))
-		to_chat(stored_swap,SPAN_WARNING("Suddenly you're staring at [src] again... where are you, who are you?!"))
-	else
-		user.visible_message(SPAN_WARNING("[src] fizzles slightly as it stops glowing!")) //if the mind_transfer failed to transfer mobs, likely due to the target being catatonic.
-
-	stored_swap = null
 
 /obj/item/book/granter/spell/forcewall
 	spell = /obj/effect/proc_holder/spell/targeted/forcewall
@@ -276,18 +213,6 @@
 		qdel(src)
 	else
 		to_chat(user,SPAN_NOTICE("I say thee neigh")) //It still lives here
-
-/obj/item/book/granter/spell/charge
-	spell = /obj/effect/proc_holder/spell/targeted/charge
-	spellname = "charge"
-	icon_state ="bookcharge"
-	desc = "This book is made of 100% postconsumer wizard."
-	remarks = list("I feel ALIVE!", "I CAN TASTE THE MANA!", "What a RUSH!", "I'm FLYING through these pages!", "THIS GENIUS IS MAKING IT!", "This book is ACTION PAcKED!", "HE'S DONE IT", "LETS GOOOOOOOOOOOO")
-
-/obj/item/book/granter/spell/charge/recoil(mob/user)
-	..()
-	to_chat(user,SPAN_WARNING("[src] suddenly feels very warm!"))
-	empulse(src, 1, 1)
 
 /obj/item/book/granter/spell/summonitem
 	spell = /obj/effect/proc_holder/spell/targeted/summonitem
@@ -379,27 +304,6 @@
 		desc = "It's completely blank."
 		name = "empty scroll"
 		icon_state = "blankscroll"
-
-/obj/item/book/granter/martial/plasma_fist
-	martial = /datum/martial_art/plasma_fist
-	name = "frayed scroll"
-	martialname = "plasma fist"
-	desc = "An aged and frayed scrap of paper written in shifting runes. There are hand-drawn illustrations of pugilism."
-	greet = "<span class='boldannounce'>You have learned the ancient martial art of Plasma Fist. Your combos are extremely hard to pull off, but include some of the most deadly moves ever seen including \
-	the plasma fist, which when pulled off will make someone violently explode.</span>"
-	icon = 'icons/obj/wizard.dmi'
-	icon_state ="scroll2"
-	remarks = list("Balance...", "Power...", "Control...", "Mastery...", "Vigilance...", "Skill...")
-
-/obj/item/book/granter/martial/plasma_fist/onlearned(mob/living/carbon/user)
-	..()
-	if(oneuse == TRUE)
-		desc = "It's completely blank."
-		name = "empty scroll"
-		icon_state = "blankscroll"
-
-/obj/item/book/granter/martial/plasma_fist/nobomb
-	martial = /datum/martial_art/plasma_fist/nobomb
 
 // I did not include mushpunch's grant, it is not a book and the item does it just fine.
 

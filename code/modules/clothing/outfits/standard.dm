@@ -295,58 +295,6 @@
 	W.update_icon()
 	..()
 
-/datum/outfit/ghost_cultist
-	name = "Cultist Ghost"
-
-	uniform = /obj/item/clothing/under/color/black/ghost
-	suit = /obj/item/clothing/suit/hooded/cultrobes/alt/ghost
-	shoes = /obj/item/clothing/shoes/cult/alt/ghost
-	l_hand = /obj/item/melee/cultblade/ghost
-
-/datum/outfit/wizard
-	name = "Blue Wizard"
-
-	uniform = /obj/item/clothing/under/color/lightpurple
-	suit = /obj/item/clothing/suit/wizrobe
-	back = /obj/item/storage/backpack
-	backpack_contents = list(
-		/obj/item/storage/box/survival = 1,
-)
-	ears = /obj/item/radio/headset
-	head = /obj/item/clothing/head/wizard
-	shoes = /obj/item/clothing/shoes/sandal/magic
-	r_pocket = /obj/item/teleportation_scroll
-	l_hand = /obj/item/staff
-	r_hand = /obj/item/spellbook
-
-/datum/outfit/wizard/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	if(visualsOnly)
-		return
-
-	var/obj/item/spellbook/S = locate() in H.held_items
-	if(S)
-		S.owner = H
-
-/datum/outfit/wizard/apprentice
-	name = "Wizard Apprentice"
-
-	r_pocket = /obj/item/teleportation_scroll/apprentice
-	r_hand = null
-	l_hand = null
-
-/datum/outfit/wizard/red
-	name = "Red Wizard"
-
-	suit = /obj/item/clothing/suit/wizrobe/red
-	head = /obj/item/clothing/head/wizard/red
-
-/datum/outfit/wizard/weeb
-	name = "Marisa Wizard"
-
-	suit = /obj/item/clothing/suit/wizrobe/marisa
-	head = /obj/item/clothing/head/wizard/marisa
-	shoes = /obj/item/clothing/shoes/sneakers/marisa
-
 /datum/outfit/centcom/soviet
 	name = "Soviet Admiral"
 

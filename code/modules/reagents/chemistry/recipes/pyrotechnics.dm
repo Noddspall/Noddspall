@@ -125,12 +125,6 @@
 		///special size for anti cult effect
 		var/effective_size = round(created_volume/48)
 		playsound(T, 'sound/effects/pray.ogg', 80, FALSE, effective_size)
-		for(var/mob/living/carbon/C in get_hearers_in_view(effective_size,T))
-			if(IS_CULTIST(C))
-				to_chat(C, SPAN_USERDANGER("The divine explosion sears you!"))
-				C.Paralyze(40)
-				C.adjust_fire_stacks(5)
-				C.IgniteMob()
 	..()
 
 /datum/chemical_reaction/gunpowder

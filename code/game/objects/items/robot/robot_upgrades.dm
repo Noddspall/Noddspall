@@ -524,7 +524,6 @@
 		out procedures"
 	icon_state = "cyborg_upgrade3"
 	require_model = TRUE
-	model_type = list(/obj/item/robot_model/medical, /obj/item/robot_model/syndicate_medical)
 	model_flags = BORG_MODEL_MEDICAL
 
 /obj/item/borg/upgrade/processor/action(mob/living/silicon/robot/R, user = usr)
@@ -610,7 +609,6 @@
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "borgrped"
 	require_model = TRUE
-	model_type = list(/obj/item/robot_model/engineering, /obj/item/robot_model/saboteur)
 	model_flags = BORG_MODEL_ENGINEERING
 
 /obj/item/borg/upgrade/rped/action(mob/living/silicon/robot/R, user = usr)
@@ -639,7 +637,6 @@
 	icon = 'icons/obj/device.dmi'
 	icon_state = "pinpointer_crew"
 	require_model = TRUE
-	model_type = list(/obj/item/robot_model/medical, /obj/item/robot_model/syndicate_medical)
 	model_flags = BORG_MODEL_MEDICAL
 	var/datum/action/crew_monitor
 
@@ -698,7 +695,6 @@
 	desc = "An engineering cyborg upgrade allowing for manipulation of circuit boards."
 	icon_state = "cyborg_upgrade3"
 	require_model = TRUE
-	model_type = list(/obj/item/robot_model/engineering, /obj/item/robot_model/saboteur)
 	model_flags = BORG_MODEL_ENGINEERING
 
 /obj/item/borg/upgrade/circuit_app/action(mob/living/silicon/robot/R, user = usr)

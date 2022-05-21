@@ -227,9 +227,6 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 		return
 
 	if(istype(W, /obj/item/computer_hardware/hard_drive/portable)) //Allows borgs to install new programs with human help
-		if(!modularInterface)
-			stack_trace("Cyborg [src] ( [type] ) was somehow missing their integrated tablet. Please make a bug report.")
-			create_modularInterface()
 		var/obj/item/computer_hardware/hard_drive/portable/floppy = W
 		if(modularInterface.install_component(floppy, user))
 			return
@@ -317,13 +314,6 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 	to_chat(user, SPAN_NOTICE("You emag [src]'s interface."))
 	emag_cooldown = world.time + 100
 
-	if(connected_ai && connected_ai.mind && connected_ai.mind.has_antag_datum(/datum/antagonist/traitor))
-		to_chat(src, SPAN_DANGER("ALERT: Foreign software execution prevented."))
-		logevent("ALERT: Foreign software execution prevented.")
-		to_chat(connected_ai, SPAN_DANGER("ALERT: Cyborg unit \[[src]\] successfully defended against subversion."))
-		log_game("[key_name(user)] attempted to emag cyborg [key_name(src)], but they were slaved to traitor AI [connected_ai].")
-		return
-
 	if(shell) //AI shells cannot be emagged, so we try to make it look like a standard reset. Smart players may see through this, however.
 		to_chat(user, SPAN_DANGER("[src] is remotely controlled! Your emag attempt has triggered a system reset instead!"))
 		log_game("[key_name(user)] attempted to emag an AI shell belonging to [key_name(src) ? key_name(src) : connected_ai]. The shell has been reset as a result.")
@@ -364,14 +354,6 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 		set_zeroth_law("Only [user.real_name] and people [user.p_they()] designate[user.p_s()] as being such are Syndicate Agents.")
 	laws.associate(src)
 	update_icons()
-
-
-/mob/living/silicon/robot/blob_act(obj/structure/blob/B)
-	if(stat != DEAD)
-		adjustBruteLoss(30)
-	else
-		gib()
-	return TRUE
 
 /mob/living/silicon/robot/ex_act(severity, target)
 	switch(severity)

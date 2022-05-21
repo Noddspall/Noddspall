@@ -258,10 +258,6 @@
 		new remains(loc)
 	qdel(src)
 
-/obj/structure/girder/narsie_act()
-	new /obj/structure/girder/cult(loc)
-	qdel(src)
-
 /obj/structure/girder/displaced
 	name = "displaced girder"
 	anchored = FALSE
@@ -272,61 +268,6 @@
 	state = GIRDER_REINF
 	reinforced_material = /datum/material/iron
 	girderpasschance = GIRDER_PASSCHANCE_REINFORCED
-
-
-
-//////////////////////////////////////////// cult girder //////////////////////////////////////////////
-
-/obj/structure/girder/cult
-	name = "runed girder"
-	desc = "Framework made of a strange and shockingly cold metal. It doesn't seem to have any bolts."
-	icon = 'icons/obj/cult.dmi'
-	icon_state= "cultgirder"
-	can_displace = FALSE
-
-/obj/structure/girder/cult/attackby(obj/item/W, mob/user, params)
-	add_fingerprint(user)
-	if(istype(W, /obj/item/melee/cultblade/dagger) && IS_CULTIST(user)) //Cultists can demolish cult girders instantly with their tomes
-		user.visible_message(SPAN_WARNING("[user] strikes [src] with [W]!"), SPAN_NOTICE("You demolish [src]."))
-		new /obj/item/stack/sheet/runed_metal(drop_location(), 1)
-		qdel(src)
-
-	else if(W.tool_behaviour == TOOL_WELDER)
-		if(!W.tool_start_check(user, amount=0))
-			return
-
-		to_chat(user, SPAN_NOTICE("You start slicing apart the girder..."))
-		if(W.use_tool(src, user, 40, volume=50))
-			to_chat(user, SPAN_NOTICE("You slice apart the girder."))
-			var/obj/item/stack/sheet/runed_metal/R = new(drop_location(), 1)
-			transfer_fingerprints_to(R)
-			qdel(src)
-
-	else if(istype(W, /obj/item/stack/sheet/runed_metal))
-		var/obj/item/stack/sheet/runed_metal/R = W
-		if(R.get_amount() < 1)
-			to_chat(user, SPAN_WARNING("You need at least one sheet of runed metal to construct a runed wall!"))
-			return
-		user.visible_message(SPAN_NOTICE("[user] begins laying runed metal on [src]..."), SPAN_NOTICE("You begin constructing a runed wall..."))
-		if(do_after(user, 50, target = src))
-			if(R.get_amount() < 1)
-				return
-			user.visible_message(SPAN_NOTICE("[user] plates [src] with runed metal."), SPAN_NOTICE("You construct a runed wall."))
-			R.use(1)
-			var/turf/T = get_turf(src)
-			T.PlaceOnTop(/turf/closed/wall/mineral/cult)
-			qdel(src)
-
-	else
-		return ..()
-
-/obj/structure/girder/cult/narsie_act()
-	return
-
-/obj/structure/girder/cult/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
-		new /obj/item/stack/sheet/runed_metal(drop_location(), 1)
-	qdel(src)
 
 /obj/structure/girder/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	switch(the_rcd.mode)

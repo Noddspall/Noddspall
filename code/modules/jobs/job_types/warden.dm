@@ -58,6 +58,4 @@
 	duffelbag = /obj/item/storage/backpack/duffelbag/sec
 	box = /obj/item/storage/box/survival/security
 
-	implants = list(/obj/item/implant/mindshield)
-
 	id_trim = /datum/id_trim/job/warden

@@ -18,9 +18,6 @@
 /obj/effect/acid_act()
 	return FALSE
 
-/obj/effect/blob_act(obj/structure/blob/B)
-	return
-
 /obj/effect/attack_hulk(mob/living/carbon/human/user)
 	return FALSE
 

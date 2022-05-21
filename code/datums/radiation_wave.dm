@@ -121,8 +121,7 @@
 			/obj/item/ammo_casing,
 			/obj/item/implant,
 			/obj/singularity,
-			/obj/energy_ball,
-			/obj/narsie,
+			/obj/energy_ball
 			))
 		if(!can_contaminate || !can_contam || blacklisted[thing.type])
 			continue

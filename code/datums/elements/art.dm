@@ -51,16 +51,3 @@
 		mult = art_piece.get_integrity() / art_piece.max_integrity
 
 	apply_moodlet(source, user, impressiveness * mult)
-
-/datum/element/art/rev
-
-/datum/element/art/rev/apply_moodlet(atom/source, mob/user, impress)
-	var/msg
-	if(user.mind?.has_antag_datum(/datum/antagonist/rev))
-		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "artgreat", /datum/mood_event/artgreat)
-		msg = "What \a [pick("masterpiece", "chef-d'oeuvre")] [source.p_theyre()]. So [pick("subversive", "revolutionary", "unitizing", "egalitarian")]!"
-		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "artbad", /datum/mood_event/artbad)
-		msg = "Wow, [source.p_they()] sucks."
-
-	user.visible_message(SPAN_NOTICE("[user] stops to inspect [source]."), \
-		SPAN_NOTICE("You appraise [source], inspecting the fine craftsmanship of the proletariat... [msg]"))

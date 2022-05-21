@@ -57,8 +57,6 @@
 		/obj/item/melee/classic_baton=1)
 	mask = /obj/item/clothing/mask/cigarette
 
-	implants = list(/obj/item/implant/mindshield)
-
 	chameleon_extras = list(/obj/item/gun/ballistic/revolver/detective, /obj/item/clothing/glasses/sunglasses)
 
 	id_trim = /datum/id_trim/job/detective

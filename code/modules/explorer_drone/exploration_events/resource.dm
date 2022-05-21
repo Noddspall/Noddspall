@@ -132,21 +132,6 @@
 	delay_message = "Translating manifest..."
 	loot_type = /datum/adventure_loot_generator/simple/drugs
 
-// EXPLORATION_SITE_ALIEN 2/2
-/datum/exploration_event/simple/resource/alien_tools
-	name = "alien sarcophagus"
-	required_site_traits = list(EXPLORATION_SITE_ALIEN)
-	band_values = list(EXOSCANNER_BAND_TECH=1,EXOSCANNER_BAND_RADIATION=1)
-	required_tool = EXODRONE_TOOL_TRANSLATOR
-	discovery_log = "Discovered a alien sarcophagus covered in unknown glyphs"
-	success_log = "Retrieved contents of alien sarcophagus"
-	description = "You find an giant sarcophagus of alien origin covered in unknown script."
-	no_tool_description = "You see no way to open the sarcophagus or translate the glyphs without a tool."
-	has_tool_description = "You translate the glyphs and find a description of a hidden mechanism for unlocking the tomb."
-	delay_message = "Opening..."
-	action_text = "Open"
-	loot_type = /obj/item/scalpel/alien
-
 /datum/exploration_event/simple/resource/pod
 	name = "alien biopod"
 	required_site_traits = list(EXPLORATION_SITE_ALIEN)

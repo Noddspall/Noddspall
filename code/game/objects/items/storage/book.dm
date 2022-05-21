@@ -208,55 +208,12 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning",
 			B.name = name
 			B.icon_state = icon_state
 			B.inhand_icon_state = inhand_icon_state
-	if(istype(A, /obj/item/cult_bastard) && !IS_CULTIST(user))
-		var/obj/item/cult_bastard/sword = A
-		to_chat(user, SPAN_NOTICE("You begin to exorcise [sword]."))
-		playsound(src,'sound/hallucinations/veryfar_noise.ogg',40,TRUE)
-		if(do_after(user, 40, target = sword))
-			playsound(src,'sound/effects/pray_chaplain.ogg',60,TRUE)
-			for(var/obj/item/soulstone/SS in sword.contents)
-				SS.required_role = null
-				for(var/mob/living/simple_animal/shade/EX in SS)
-					var/datum/antagonist/cult/cultist = EX.mind.has_antag_datum(/datum/antagonist/cult)
-					if (cultist)
-						cultist.silent = TRUE
-						cultist.on_removal()
-
-					EX.icon_state = "shade_holy"
-					EX.name = "Purified [EX.name]"
-				SS.release_shades(user)
-				qdel(SS)
-			new /obj/item/nullrod/claymore(get_turf(sword))
-			user.visible_message(SPAN_NOTICE("[user] purifies [sword]!"))
-			qdel(sword)
-	else if(istype(A, /obj/item/soulstone) && !IS_CULTIST(user))
-		var/obj/item/soulstone/SS = A
-		if(SS.theme == THEME_HOLY)
-			return
-		to_chat(user, SPAN_NOTICE("You begin to exorcise [SS]."))
-		playsound(src,'sound/hallucinations/veryfar_noise.ogg',40,TRUE)
-		if(do_after(user, 40, target = SS))
-			playsound(src,'sound/effects/pray_chaplain.ogg',60,TRUE)
-			SS.required_role = null
-			SS.theme = THEME_HOLY
-			SS.icon_state = "purified_soulstone"
-			for(var/mob/M in SS.contents)
-				if(M.mind)
-					SS.icon_state = "purified_soulstone2"
-					M.mind?.remove_antag_datum(/datum/antagonist/cult)
-			for(var/mob/living/simple_animal/shade/EX in SS)
-				EX.icon_state = "ghost1"
-				EX.name = "Purified [initial(EX.name)]"
-			user.visible_message(SPAN_NOTICE("[user] purifies [SS]!"))
 	else if(istype(A, /obj/item/nullrod/scythe/talking))
 		var/obj/item/nullrod/scythe/talking/sword = A
 		to_chat(user, SPAN_NOTICE("You begin to exorcise [sword]..."))
 		playsound(src,'sound/hallucinations/veryfar_noise.ogg',40,TRUE)
 		if(do_after(user, 40, target = sword))
 			playsound(src,'sound/effects/pray_chaplain.ogg',60,TRUE)
-			for(var/mob/living/simple_animal/shade/S in sword.contents)
-				to_chat(S, SPAN_USERDANGER("You were destroyed by the exorcism!"))
-				qdel(S)
 			sword.possessed = FALSE //allows the chaplain (or someone else) to reroll a new spirit for their sword
 			sword.name = initial(sword.name)
 			REMOVE_TRAIT(sword, TRAIT_NODROP, HAND_REPLACEMENT_TRAIT) //in case the "sword" is a possessed dummy

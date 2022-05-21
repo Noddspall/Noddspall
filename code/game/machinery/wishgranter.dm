@@ -36,8 +36,6 @@
 		charges--
 		insisting = 0
 
-		user.mind.add_antag_datum(/datum/antagonist/wishgranter)
-
 		to_chat(user, SPAN_WARNING("You have a very bad feeling about this."))
 
 	return

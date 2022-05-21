@@ -530,8 +530,6 @@ SUBSYSTEM_DEF(gamemode)
 		return FALSE
 	if(SSshuttle.emergency && (SSshuttle.emergency.mode == SHUTTLE_ENDGAME))
 		return TRUE
-	if(GLOB.station_was_nuked)
-		return TRUE
 	if(force_ending)
 		return TRUE
 
@@ -662,12 +660,8 @@ SUBSYSTEM_DEF(gamemode)
 //Set result and news report here
 /datum/controller/subsystem/gamemode/proc/set_round_result()
 	SSticker.mode_result = "undefined"
-	if(GLOB.station_was_nuked)
-		SSticker.news_report = STATION_DESTROYED_NUKE
 	if(EMERGENCY_ESCAPED_OR_ENDGAMED)
 		SSticker.news_report = STATION_EVACUATED
-		if(SSshuttle.emergency.is_hijacked())
-			SSticker.news_report = SHUTTLE_HIJACK
 
 /// Loads json event config values from events.txt
 /datum/controller/subsystem/gamemode/proc/load_event_config_vars()

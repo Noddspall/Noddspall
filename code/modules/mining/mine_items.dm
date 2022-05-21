@@ -77,14 +77,6 @@
 	no_destination_swap = TRUE
 	var/static/list/dumb_rev_heads = list()
 
-//ATTACK HAND IGNORING PARENT RETURN VALUE
-/obj/machinery/computer/shuttle/mining/attack_hand(mob/user, list/modifiers)
-	if(is_station_level(user) && user.mind && IS_HEAD_REVOLUTIONARY(user) && !(user.mind in dumb_rev_heads))
-		to_chat(user, SPAN_WARNING("You get a feeling that leaving the station might be a REALLY dumb idea..."))
-		dumb_rev_heads += user.mind
-		return
-	. = ..()
-
 /obj/machinery/computer/shuttle/mining/common
 	name = "lavaland shuttle console"
 	desc = "Used to call and send the lavaland shuttle."

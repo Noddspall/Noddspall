@@ -159,10 +159,8 @@
 
 	var/deviation = calculate_deviation(M, user ? user : src)
 
-	var/datum/antagonist/rev/head/converter = user?.mind?.has_antag_datum(/datum/antagonist/rev/head)
-
 	//If you face away from someone they shouldnt notice any effects.
-	if(deviation == DEVIATION_FULL && !converter)
+	if(deviation == DEVIATION_FULL)
 		return
 
 	if(targeted)
@@ -170,16 +168,6 @@
 			if(M.get_confusion() < power)
 				var/diff = power * CONFUSION_STACK_MAX_MULTIPLIER - M.get_confusion()
 				M.add_confusion(min(power, diff))
-			// Special check for if we're a revhead. Special cases to attempt conversion.
-			if(converter)
-				// Did we try to flash them from behind?
-				if(deviation == DEVIATION_FULL)
-					// Headrevs can use a tacticool leaning technique so that they don't have to worry about facing for their conversions.
-					to_chat(user, SPAN_NOTICE("You use the tacticool tier, lean over the shoulder technique to blind [M] with a flash!"))
-					deviation = DEVIATION_PARTIAL
-				// Convert them. Terribly.
-				terrible_conversion_proc(M, user)
-				visible_message(SPAN_DANGER("[user] blinds [M] with the flash!"),SPAN_USERDANGER("[user] blinds you with the flash!"))
 			//easy way to make sure that you can only long stun someone who is facing in your direction
 			M.adjustStaminaLoss(rand(80,120)*(1-(deviation*0.5)))
 			M.Paralyze(rand(25,50)*(1-(deviation*0.5)))
@@ -283,34 +271,6 @@
 	if(!..())
 		return
 	AOE_flash()
-
-/**
- * Converts the victim to revs
- *
- * Arguments:
- * * victim - Victim
- * * aggressor - Attacker
- */
-/obj/item/assembly/flash/proc/terrible_conversion_proc(mob/living/carbon/victim, mob/aggressor)
-	if(!istype(victim) || victim.stat == DEAD)
-		return
-	if(!aggressor.mind)
-		return
-	if(!victim.client)
-		to_chat(aggressor, SPAN_WARNING("This mind is so vacant that it is not susceptible to influence!"))
-		return
-	if(victim.stat != CONSCIOUS)
-		to_chat(aggressor, SPAN_WARNING("They must be conscious before you can convert [victim.p_them()]!"))
-		return
-	//If this proc fires the mob must be a revhead
-	var/datum/antagonist/rev/head/converter = aggressor.mind.has_antag_datum(/datum/antagonist/rev/head)
-	if(converter.add_revolutionary(victim.mind))
-		if(prob(1) || SSgamemode.holidays && SSgamemode.holidays[APRIL_FOOLS])
-			victim.say("You son of a bitch! I'm in.", forced = "That son of a bitch! They're in.")
-		times_used -- //Flashes less likely to burn out for headrevs when used for conversion
-	else
-		to_chat(aggressor, SPAN_WARNING("This mind seems resistant to the flash!"))
-
 
 /obj/item/assembly/flash/cyborg
 

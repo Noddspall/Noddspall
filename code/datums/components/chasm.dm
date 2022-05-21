@@ -8,7 +8,6 @@
 	var/static/list/forbidden_types = typecacheof(list(
 		/obj/singularity,
 		/obj/energy_ball,
-		/obj/narsie,
 		/obj/docking_port,
 		/obj/structure/lattice,
 		/obj/projectile,

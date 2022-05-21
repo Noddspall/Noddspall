@@ -187,10 +187,6 @@
 				to_chat(H, SPAN_WARNING("You can't receive charge from [src]!"))
 		return
 
-
-/obj/item/stock_parts/cell/blob_act(obj/structure/blob/B)
-	SSexplosions.high_mov_atom += src
-
 /obj/item/stock_parts/cell/proc/get_electrocute_damage()
 	if(charge >= 1000)
 		return clamp(20 + round(charge/25000), 20, 195) + rand(-5,5)

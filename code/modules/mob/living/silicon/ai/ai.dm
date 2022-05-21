@@ -76,7 +76,6 @@
 	var/call_bot_cooldown = 0 //time of next call bot command
 	var/obj/machinery/power/apc/apc_override //Ref of the AI's APC, used when the AI has no power in order to access their APC.
 	var/nuking = FALSE
-	var/obj/machinery/doomsday_device/doomsday_device
 
 	var/mob/camera/ai_eye/eyeobj
 	var/sprint = 10
@@ -202,10 +201,6 @@
 		QDEL_NULL(eyeobj) // No AI, no Eye
 	if(spark_system)
 		QDEL_NULL(spark_system)
-	if(malf_picker)
-		QDEL_NULL(malf_picker)
-	if(doomsday_device)
-		QDEL_NULL(doomsday_device)
 	QDEL_NULL(aiMulti)
 	malfhack = null
 	current = null
@@ -213,14 +208,6 @@
 	linked_core = null
 	apc_override = null
 	return ..()
-
-/// Removes all malfunction-related abilities from the AI
-/mob/living/silicon/ai/proc/remove_malf_abilities()
-	QDEL_NULL(modules_action)
-	for(var/datum/ai_module/AM in current_modules)
-		for(var/datum/action/A in actions)
-			if(istype(A, initial(AM.power_type)))
-				qdel(A)
 
 /mob/living/silicon/ai/IgniteMob()
 	fire_stacks = 0
@@ -685,7 +672,6 @@
 	if(!istype(apc))
 		to_chat(owner, SPAN_NOTICE("You are already in your Main Core."))
 		return
-	apc.malfvacate()
 	qdel(src)
 
 /mob/living/silicon/ai/proc/toggle_camera_light()
@@ -762,7 +748,6 @@
 		if(!mind)
 			to_chat(user, SPAN_WARNING("No intelligence patterns detected."))
 			return
-		ShutOffDoomsdayDevice()
 		var/obj/structure/ai_core/new_core = new /obj/structure/ai_core/deactivated(loc)//Spawns a deactivated terminal at AI location.
 		new_core.circuit.battery = battery
 		ai_restore_power()//So the AI initially has power.
@@ -822,31 +807,6 @@
 		aiPDA.owner = newname
 		aiPDA.name = newname + " (" + aiPDA.ownjob + ")"
 
-/datum/action/innate/choose_modules
-	name = "Malfunction Modules"
-	desc = "Choose from a variety of insidious modules to aid you."
-	icon_icon = 'icons/mob/actions/actions_AI.dmi'
-	button_icon_state = "modules_menu"
-	var/datum/module_picker/module_picker
-
-/datum/action/innate/choose_modules/New(picker)
-	. = ..()
-	if(istype(picker, /datum/module_picker))
-		module_picker = picker
-	else
-		CRASH("choose_modules action created with non module picker")
-
-/datum/action/innate/choose_modules/Activate()
-	module_picker.ui_interact(owner)
-
-/mob/living/silicon/ai/proc/add_malf_picker()
-	to_chat(src, "In the top left corner of the screen you will find the Malfunction Modules button, where you can purchase various abilities, from upgraded surveillance to station ending doomsday devices.")
-	to_chat(src, "You are also capable of hacking APCs, which grants you more points to spend on your Malfunction powers. The drawback is that a hacked APC will give you away if spotted by the crew. Hacking an APC takes 60 seconds.")
-	view_core() //A BYOND bug requires you to be viewing your core before your verbs update
-	malf_picker = new /datum/module_picker
-	modules_action = new(malf_picker)
-	modules_action.Grant(src)
-
 /mob/living/silicon/ai/reset_perspective(atom/A)
 	if(camera_light_on)
 		light_cameras()
@@ -882,29 +842,6 @@
 	if(.) //successfully ressuscitated from death
 		set_core_display_icon(display_icon_override)
 		set_eyeobj_visible(TRUE)
-
-/mob/living/silicon/ai/proc/malfhacked(obj/machinery/power/apc/apc)
-	malfhack = null
-	malfhacking = 0
-	clear_alert("hackingapc")
-
-	if(!istype(apc) || QDELETED(apc) || apc.machine_stat & BROKEN)
-		to_chat(src, SPAN_DANGER("Hack aborted. The designated APC no longer exists on the power network."))
-		playsound(get_turf(src), 'sound/machines/buzz-two.ogg', 50, TRUE, ignore_walls = FALSE)
-	else if(apc.aidisabled)
-		to_chat(src, SPAN_DANGER("Hack aborted. [apc] is no longer responding to our systems."))
-		playsound(get_turf(src), 'sound/machines/buzz-sigh.ogg', 50, TRUE, ignore_walls = FALSE)
-	else
-		malf_picker.processing_time += 10
-
-		apc.malfai = parent || src
-		apc.malfhack = TRUE
-		apc.locked = TRUE
-		apc.coverlocked = TRUE
-
-		playsound(get_turf(src), 'sound/machines/ding.ogg', 50, TRUE, ignore_walls = FALSE)
-		to_chat(src, "Hack complete. [apc] is now under your exclusive control.")
-		apc.update_appearance()
 
 /mob/living/silicon/ai/verb/deploy_to_shell(mob/living/silicon/robot/target)
 	set category = "AI Commands"

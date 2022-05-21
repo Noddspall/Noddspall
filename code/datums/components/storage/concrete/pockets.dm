@@ -26,7 +26,7 @@
 	. = ..()
 	var/static/list/exception_cache = typecacheof(list(
 		/obj/item/katana, /obj/item/toy/katana, /obj/item/nullrod/claymore/katana,
-		/obj/item/energy_katana, /obj/item/gun/ballistic/automatic/tommygun
+		/obj/item/gun/ballistic/automatic/tommygun
 		))
 	exception_hold = exception_cache
 
@@ -111,13 +111,3 @@
 					  /obj/item/reagent_containers/food/drinks/bottle/molotov,
 					  /obj/item/reagent_containers/food/drinks/drinkingglass,
 					  /obj/item/ammo_box/a762))
-
-
-/datum/component/storage/concrete/pockets/void_cloak
-	quickdraw = TRUE
-	max_items = 3
-
-/datum/component/storage/concrete/pockets/void_cloak/Initialize()
-	. = ..()
-	var/static/list/exception_cache = typecacheof(list(/obj/item/living_heart,/obj/item/forbidden_book))
-	exception_hold = exception_cache

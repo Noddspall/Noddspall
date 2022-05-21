@@ -103,18 +103,6 @@
 	mats_per_unit = list(/datum/material/bananium=MINERAL_MATERIAL_AMOUNT*0.25)
 	merge_type = /obj/item/stack/tile/mineral/bananium
 
-/obj/item/stack/tile/mineral/abductor
-	name = "alien floor tile"
-	singular_name = "alien floor tile"
-	desc = "A tile made out of alien alloy."
-	icon = 'icons/obj/abductor.dmi'
-	icon_state = "tile_abductor"
-	inhand_icon_state = "tile-abductor"
-	mats_per_unit = list(/datum/material/alloy/alien=MINERAL_MATERIAL_AMOUNT*0.25)
-	turf_type = /turf/open/floor/mineral/abductor
-	mineralType = "abductor"
-	merge_type = /obj/item/stack/tile/mineral/abductor
-
 /obj/item/stack/tile/mineral/titanium
 	name = "titanium tile"
 	singular_name = "titanium floor tile"

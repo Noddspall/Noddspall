@@ -34,3 +34,7 @@ GLOBAL_VAR_INIT(glowshrooms, 0)
 
 /// If drones are blacklisted from certain sensitive machines
 GLOBAL_VAR_INIT(drone_machine_blacklist_enabled, TRUE)
+
+GLOBAL_LIST_EMPTY(possible_items)
+GLOBAL_LIST_EMPTY(possible_items_special)
+GLOBAL_VAR_INIT(deaths_during_shift, 0)

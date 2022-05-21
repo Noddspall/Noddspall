@@ -341,11 +341,6 @@
 	desc = "A wall with rough metal plating."
 	base_icon_state = "iron_wall"
 
-/obj/structure/falsewall/abductor
-	name = "alien wall"
-	desc = "A wall with alien alloy plating."
-	plating_material = /datum/material/alloy/alien
-
 /obj/structure/falsewall/titanium
 	name = "wall"
 	desc = "A light-weight titanium wall used in shuttles."

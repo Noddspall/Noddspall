@@ -30,8 +30,6 @@
 	GLOB.shuttle_caller_list -= src
 	SSshuttle.autoEvac()
 
-	ShutOffDoomsdayDevice()
-
 	if(explosive)
 		addtimer(CALLBACK(GLOBAL_PROC, .proc/explosion, loc, 3, 6, 12, null, 15), 1 SECONDS)
 
@@ -42,8 +40,3 @@
 	else if(istype(loc, /obj/item/aicard))
 		loc.icon_state = "aicard-404"
 
-/mob/living/silicon/ai/proc/ShutOffDoomsdayDevice()
-	if(nuking)
-		nuking = FALSE
-	if(doomsday_device)
-		qdel(doomsday_device)

@@ -17,13 +17,6 @@
 		return
 	..()
 
-/mob/living/silicon/ai/blob_act(obj/structure/blob/B)
-	if (stat != DEAD)
-		adjustBruteLoss(60)
-		updatehealth()
-		return TRUE
-	return FALSE
-
 /mob/living/silicon/ai/emp_act(severity)
 	. = ..()
 	if(. & EMP_PROTECT_SELF)

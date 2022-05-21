@@ -101,9 +101,6 @@
 	if(!(obscured & ITEM_SLOT_EYES) )
 		if(glasses  && !(glasses.item_flags & EXAMINE_SKIP))
 			. += "[t_He] [t_has] [glasses.get_examine_string(user)] covering [t_his] eyes."
-		else if(eye_color == BLOODCULT_EYE && IS_CULTIST(src) && HAS_TRAIT(src, CULT_EYES))
-			. += SPAN_WARNING("<B>[t_His] eyes are glowing an unnatural red!</B>")
-
 	//ears
 	if(ears && !(obscured & ITEM_SLOT_EARS) && !(ears.item_flags & EXAMINE_SKIP))
 		. += "[t_He] [t_has] [ears.get_examine_string(user)] on [t_his] ears."

@@ -157,12 +157,6 @@ no power level overlay is currently in the overlays list.
 	if(!anchored)
 		step(src, get_dir(user, src))
 
-/obj/machinery/field/generator/blob_act(obj/structure/blob/B)
-	if(active)
-		return FALSE
-	else
-		return ..()
-
 /obj/machinery/field/generator/bullet_act(obj/projectile/Proj)
 	if(Proj.flag != BULLET)
 		power = min(power + Proj.damage, field_generator_max_power)

@@ -135,13 +135,6 @@ GLOBAL_LIST_INIT(marker_beacon_colors, sortList(list(
 			playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
 			qdel(src)
 			return
-	if(istype(I, /obj/item/light_eater))
-		var/obj/effect/decal/cleanable/ash/A = new /obj/effect/decal/cleanable/ash(drop_location())
-		A.desc += "\nLooks like this used to be \a [src] some time ago."
-		visible_message(SPAN_DANGER("[src] is disintegrated by [I]!"))
-		playsound(src, 'sound/items/welder.ogg', 50, TRUE)
-		qdel(src)
-		return
 	return ..()
 
 /obj/structure/marker_beacon/AltClick(mob/living/user)

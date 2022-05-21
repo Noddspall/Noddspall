@@ -26,8 +26,6 @@
 	if(ispath(cell))
 		cell = new cell(src)
 
-	create_modularInterface()
-
 	model = new /obj/item/robot_model(src)
 	model.rebuild_modules()
 
@@ -68,22 +66,6 @@
 	toner = tonermax
 	diag_hud_set_borgcell()
 	logevent("System brought online.")
-
-/mob/living/silicon/robot/model/syndicate/Initialize()
-	. = ..()
-	laws = new /datum/ai_laws/syndicate_override()
-	addtimer(CALLBACK(src, .proc/show_playstyle), 5)
-
-/mob/living/silicon/robot/proc/create_modularInterface()
-	if(!modularInterface)
-		modularInterface = new /obj/item/modular_computer/tablet/integrated(src)
-	modularInterface.layer = ABOVE_HUD_PLANE
-	modularInterface.plane = ABOVE_HUD_PLANE
-
-/mob/living/silicon/robot/model/syndicate/create_modularInterface()
-	if(!modularInterface)
-		modularInterface = new /obj/item/modular_computer/tablet/integrated/syndicate(src)
-	return ..()
 
 //If there's an MMI in the robot, have it ejected when the mob goes away. --NEO
 /mob/living/silicon/robot/Destroy()
@@ -971,7 +953,6 @@
 	lamp_doom = FALSE
 	if(connected_ai)
 		connected_ai.connected_robots |= src
-		lamp_doom = connected_ai.doomsday_device ? TRUE : FALSE
 	toggle_headlamp(FALSE, TRUE)
 
 /**
@@ -989,13 +970,7 @@
 		return
 	if(stat == DEAD) //Dead borgs log no longer
 		return
-	if(!modularInterface)
-		stack_trace("Cyborg [src] ( [type] ) was somehow missing their integrated tablet. Please make a bug report.")
-		create_modularInterface()
 	modularInterface.borglog += "[station_time_timestamp()] - [string]"
-	var/datum/computer_file/program/robotact/program = modularInterface.get_robotact()
-	if(program)
-		program.force_full_update()
 
 /mob/living/silicon/robot/get_exp_list(minutes)
 	. = ..()

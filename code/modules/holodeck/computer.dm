@@ -393,9 +393,5 @@ and clear when youre done! if you dont i will use :newspaper2: on you
 		linked.power_usage = list(AREA_USAGE_LEN)
 	return ..()
 
-/obj/machinery/computer/holodeck/blob_act(obj/structure/blob/B)
-	emergency_shutdown()
-	return ..()
-
 #undef HOLODECK_CD
 #undef HOLODECK_DMG_CD

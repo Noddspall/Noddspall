@@ -211,11 +211,6 @@
 				return
 	return ..()
 
-/obj/structure/light_construct/blob_act(obj/structure/blob/B)
-	if(B && B.loc == loc)
-		qdel(src)
-
-
 /obj/structure/light_construct/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
 		new /obj/item/stack/sheet/iron(loc, sheets_refunded)

@@ -216,70 +216,14 @@
 	gold_core_spawnable = NO_SPAWN
 	faction = list(ROLE_SYNDICATE)
 	rarechance = 10
-	/// Keeping track of the nuke disk for the functionality of storing it.
-	var/obj/item/disk/nuclear/disky
-	/// Location of the file storing disk overlays
-	var/icon/disk_overlay_file = 'icons/mob/carp.dmi'
-	/// Colored disk mouth appearance for adding it as a mouth overlay
-	var/mutable_appearance/colored_disk_mouth
 
 /mob/living/simple_animal/hostile/carp/cayenne/Initialize()
 	. = ..()
 	AddElement(/datum/element/pet_bonus, "bloops happily!")
-	colored_disk_mouth = mutable_appearance(SSgreyscale.GetColoredIconByType(/datum/greyscale_config/carp/disk_mouth, greyscale_colors), "disk_mouth")
 	ADD_TRAIT(src, TRAIT_DISK_VERIFIER, INNATE_TRAIT) //carp can verify disky
 	ADD_TRAIT(src, TRAIT_ADVANCEDTOOLUSER, INNATE_TRAIT) //carp SMART
 
 /mob/living/simple_animal/hostile/carp/cayenne/make_tameable()
 	return
-
-/mob/living/simple_animal/hostile/carp/cayenne/death(gibbed)
-	if(disky)
-		disky.forceMove(drop_location())
-		disky = null
-	return ..()
-
-/mob/living/simple_animal/hostile/carp/cayenne/Destroy(force)
-	QDEL_NULL(disky)
-	return ..()
-
-/mob/living/simple_animal/hostile/carp/cayenne/examine(mob/user)
-	. = ..()
-	if(disky)
-		. += SPAN_NOTICE("Wait... is that [disky] in [p_their()] mouth?")
-
-/mob/living/simple_animal/hostile/carp/cayenne/AttackingTarget(atom/attacked_target)
-	if(istype(attacked_target, /obj/item/disk/nuclear))
-		var/obj/item/disk/nuclear/potential_disky = attacked_target
-		if(potential_disky.anchored)
-			return
-		potential_disky.forceMove(src)
-		disky = potential_disky
-		to_chat(src, SPAN_NICEGREEN("YES!! You manage to pick up [disky]. (Click anywhere to place it back down.)"))
-		update_icon()
-		return
-	if(disky)
-		if(isopenturf(attacked_target))
-			to_chat(src, SPAN_NOTICE("You place [disky] on [attacked_target]"))
-			disky.forceMove(attacked_target.drop_location())
-			disky = null
-			update_icon()
-		else
-			disky.melee_attack_chain(src, attacked_target)
-		return
-	return ..()
-
-/mob/living/simple_animal/hostile/carp/cayenne/Exited(atom/movable/gone, direction)
-	. = ..()
-	if(disky == gone)
-		disky = null
-		update_icon()
-
-/mob/living/simple_animal/hostile/carp/cayenne/update_overlays()
-	. = ..()
-	if(!disky || stat == DEAD)
-		return
-	. += colored_disk_mouth
-	. += mutable_appearance(disk_overlay_file, "disk_overlay")
 
 #undef REGENERATION_DELAY

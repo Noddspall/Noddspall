@@ -90,7 +90,7 @@
 			SendToStation()
 		return
 
-	var/found_awake = PersonCheck() || NukeDiskCheck()
+	var/found_awake = PersonCheck()
 	if(mode == SHUTTLE_CALL)
 		if(found_awake)
 			SendToStation()
@@ -123,12 +123,6 @@
 				return TRUE
 	return FALSE
 
-/obj/docking_port/mobile/arrivals/proc/NukeDiskCheck()
-	for (var/obj/item/disk/nuclear/N in GLOB.poi_list)
-		if (get_area(N) in areas)
-			return TRUE
-	return FALSE
-
 /obj/docking_port/mobile/arrivals/proc/SendToStation()
 	if(!destination)
 		WARNING("Attempted to send arrivals shuttle without a destination set. Possible badminry.")
@@ -148,8 +142,6 @@
 			var/cancel_reason
 			if(PersonCheck())
 				cancel_reason = "lifeform dectected on board"
-			else if(NukeDiskCheck())
-				cancel_reason = "critical station device detected on board"
 			if(cancel_reason)
 				mode = SHUTTLE_IDLE
 				if(console)

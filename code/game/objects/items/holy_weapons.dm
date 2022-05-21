@@ -527,8 +527,9 @@
 
 	possessed = TRUE
 
-	var/list/mob/dead/observer/candidates = pollGhostCandidates("Do you want to play as the spirit of [user.real_name]'s blade?", ROLE_PAI, FALSE, 100, POLL_IGNORE_POSSESSED_BLADE)
+	//var/list/mob/dead/observer/candidates = pollGhostCandidates("Do you want to play as the spirit of [user.real_name]'s blade?", ROLE_PAI, FALSE, 100, POLL_IGNORE_POSSESSED_BLADE)
 
+	/*
 	if(LAZYLEN(candidates))
 		var/mob/dead/observer/C = pick(candidates)
 		var/mob/living/simple_animal/shade/S = new(src)
@@ -546,12 +547,7 @@
 	else
 		to_chat(user, SPAN_WARNING("The blade is dormant. Maybe you can try again later."))
 		possessed = FALSE
-
-/obj/item/nullrod/scythe/talking/Destroy()
-	for(var/mob/living/simple_animal/shade/S in contents)
-		to_chat(S, SPAN_USERDANGER("You were destroyed!"))
-		qdel(S)
-	return ..()
+	*/
 
 /obj/item/nullrod/scythe/talking/chainsword
 	icon_state = "chainswordon"

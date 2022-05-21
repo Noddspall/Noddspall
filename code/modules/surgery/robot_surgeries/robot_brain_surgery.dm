@@ -32,8 +32,6 @@
 	display_results(user, target, SPAN_NOTICE("You succeed in fixing [target]'s posibrain."),
 		"[user] successfully fixes [target]'s posibrain!",
 		"[user] completes the surgery on [target]'s posibrain.")
-	if(target.mind && target.mind.has_antag_datum(/datum/antagonist/brainwashed))
-		target.mind.remove_antag_datum(/datum/antagonist/brainwashed)
 	target.setOrganLoss(ORGAN_SLOT_BRAIN, target.getOrganLoss(ORGAN_SLOT_BRAIN) - 60)	//we set damage in this case in order to clear the "failing" flag
 	target.cure_all_traumas(TRAUMA_RESILIENCE_LOBOTOMY) //Lobotomy tier fix cause you can't clone this!
 	return TRUE

@@ -625,7 +625,6 @@ Basically, we fill the time between now and 2s from now with hands based off the
 		return
 	var/traumalist = subtypesof(/datum/brain_trauma)
 	traumalist -= /datum/brain_trauma/severe/split_personality //Uses a ghost, I don't want to use a ghost for a temp thing.
-	traumalist -= /datum/brain_trauma/special/obsessed //Sets the owner as an antag - I presume this will lead to problems, so we'll remove it
 	var/obj/item/organ/brain/brain = owner.getorganslot(ORGAN_SLOT_BRAIN)
 	traumalist = shuffle(traumalist)
 	for(var/trauma in traumalist)

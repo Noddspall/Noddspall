@@ -115,12 +115,6 @@
 		new /obj/item/stack/sheet/iron(loc, 2)
 	qdel(src)
 
-/obj/structure/fireaxecabinet/blob_act(obj/structure/blob/B)
-	if(fireaxe)
-		fireaxe.forceMove(loc)
-		fireaxe = null
-	qdel(src)
-
 /obj/structure/fireaxecabinet/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(.)

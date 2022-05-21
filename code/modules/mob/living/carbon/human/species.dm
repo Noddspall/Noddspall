@@ -1193,7 +1193,7 @@ GLOBAL_LIST_EMPTY(customizable_races)
 		if(ITEM_SLOT_BELT)
 			if(!(I.item_flags & NO_STRAPS_NEEDED))
 				var/obj/item/bodypart/O = H.get_bodypart(BODY_ZONE_CHEST)
-	
+
 				if(!H.w_uniform && !nojumpsuit && (!O || O.status != BODYPART_ROBOTIC))
 					if(!disable_warning)
 						to_chat(H, SPAN_WARNING("You need a jumpsuit before you can attach this [I.name]!"))
@@ -1682,11 +1682,6 @@ GLOBAL_LIST_EMPTY(customizable_races)
 							H.gain_trauma(/datum/brain_trauma/mild/concussion)
 					else
 						H.adjustOrganLoss(ORGAN_SLOT_BRAIN, I.force * 0.2)
-
-					if(H.mind && H.stat == CONSCIOUS && H != user && prob(I.force + ((100 - H.health) * 0.5))) // rev deconversion through blunt trauma.
-						var/datum/antagonist/rev/rev = H.mind.has_antag_datum(/datum/antagonist/rev)
-						if(rev)
-							rev.remove_revolutionary(FALSE, user)
 
 				if(bloody) //Apply blood
 					if(H.wear_mask)

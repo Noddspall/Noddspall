@@ -69,11 +69,6 @@
 /obj/structure/chair/attack_paw(mob/user, list/modifiers)
 	return attack_hand(user, modifiers)
 
-/obj/structure/chair/narsie_act()
-	var/obj/structure/chair/wood/W = new/obj/structure/chair/wood(get_turf(src))
-	W.setDir(dir)
-	qdel(src)
-
 /obj/structure/chair/attackby(obj/item/W, mob/user, params)
 	if(flags_1 & NODECONSTRUCT_1)
 		return . = ..()
@@ -156,9 +151,6 @@
 	buildstacktype = /obj/item/stack/sheet/mineral/wood
 	buildstackamount = 3
 	item_chair = /obj/item/chair/wood
-
-/obj/structure/chair/wood/narsie_act()
-	return
 
 /obj/structure/chair/wood/wings
 	icon_state = "wooden_chair_wings"
@@ -274,9 +266,6 @@
 /obj/structure/chair/stool/directional/west
 	dir = EAST
 
-/obj/structure/chair/stool/narsie_act()
-	return
-
 /obj/structure/chair/MouseDrop(over_object, src_location, over_location)
 	. = ..()
 	if(over_object == usr && Adjacent(usr))
@@ -334,11 +323,6 @@
 	user.visible_message(SPAN_SUICIDE("[user] begins hitting [user.p_them()]self with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	playsound(src,hitsound,50,TRUE)
 	return BRUTELOSS
-
-/obj/item/chair/narsie_act()
-	var/obj/item/chair/wood/W = new/obj/item/chair/wood(get_turf(src))
-	W.setDir(dir)
-	qdel(src)
 
 /obj/item/chair/attack_self(mob/user)
 	plant(user)
@@ -414,9 +398,6 @@
 	inhand_icon_state = "stool_bar"
 	origin_type = /obj/structure/chair/stool/bar
 
-/obj/item/chair/stool/narsie_act()
-	return //sturdy enough to ignore a god
-
 /obj/item/chair/wood
 	name = "wooden chair"
 	icon_state = "wooden_chair_toppled"
@@ -427,9 +408,6 @@
 	origin_type = /obj/structure/chair/wood
 	custom_materials = null
 	break_chance = 50
-
-/obj/item/chair/wood/narsie_act()
-	return
 
 /obj/item/chair/wood/wings
 	icon_state = "wooden_chair_wings_toppled"

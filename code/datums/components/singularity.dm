@@ -7,7 +7,7 @@
 /// Things that maybe move around and does stuff to things around them
 /// Used for the singularity (duh) and Nar'Sie
 /datum/component/singularity
-	/// Callback for consuming objects (for example, Nar'Sie replaces this to call narsie_act)
+	/// Callback for consuming objects
 	var/datum/callback/consume_callback
 
 	/// The range to pull in stuff around it
@@ -71,8 +71,6 @@
 	parent.AddElement(/datum/element/bsa_blocker)
 	RegisterSignal(parent, COMSIG_ATOM_BSA_BEAM, .proc/bluespace_reaction)
 
-	RegisterSignal(parent, COMSIG_ATOM_BLOB_ACT, .proc/block_blob)
-
 	RegisterSignal(parent, list(
 		COMSIG_ATOM_ATTACK_ANIMAL,
 		COMSIG_ATOM_ATTACK_HAND,
@@ -111,7 +109,6 @@
 		COMSIG_ATOM_ATTACK_ANIMAL,
 		COMSIG_ATOM_ATTACK_HAND,
 		COMSIG_ATOM_ATTACK_PAW,
-		COMSIG_ATOM_BLOB_ACT,
 		COMSIG_ATOM_BSA_BEAM,
 		COMSIG_ATOM_BULLET_ACT,
 		COMSIG_ATOM_BUMPED,
@@ -123,11 +120,6 @@
 	if (roaming)
 		move()
 	eat()
-
-/datum/component/singularity/proc/block_blob()
-	SIGNAL_HANDLER
-
-	return COMPONENT_CANCEL_BLOB_ACT
 
 /// Triggered when something enters the component's parent.
 /datum/component/singularity/proc/on_entered(datum/source, atom/movable/arrived, direction)
