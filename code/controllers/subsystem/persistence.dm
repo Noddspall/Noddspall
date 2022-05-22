@@ -28,8 +28,6 @@ SUBSYSTEM_DEF(persistence)
 	LoadRandomizedRecipes()
 	LoadPaintings()
 	load_custom_outfits()
-
-	load_adventures()
 	return ..()
 
 /datum/controller/subsystem/persistence/proc/LoadPoly()
