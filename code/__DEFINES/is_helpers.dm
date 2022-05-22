@@ -86,22 +86,6 @@ GLOBAL_LIST_INIT(turfs_without_ground, typecacheof(list(
 #define isxenohybrid(A) (is_species(A,/datum/species/xeno))
 #define isroundstartslime(A) (is_species(A,/datum/species/jelly/roundstartslime))
 
-//more carbon mobs
-
-#define isalien(A) (istype(A, /mob/living/carbon/alien))
-
-#define islarva(A) (istype(A, /mob/living/carbon/alien/larva))
-
-#define isalienadult(A) (istype(A, /mob/living/carbon/alien/humanoid) || istype(A, /mob/living/simple_animal/hostile/alien))
-
-#define isalienhunter(A) (istype(A, /mob/living/carbon/alien/humanoid/hunter))
-
-#define isaliensentinel(A) (istype(A, /mob/living/carbon/alien/humanoid/sentinel))
-
-#define isalienroyal(A) (istype(A, /mob/living/carbon/alien/humanoid/royal))
-
-#define isalienqueen(A) (istype(A, /mob/living/carbon/alien/humanoid/royal/queen))
-
 //Silicon mobs
 #define issilicon(A) (istype(A, /mob/living/silicon))
 

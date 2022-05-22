@@ -139,10 +139,6 @@
 		to_chat(user, SPAN_DANGER("[attack_message_attacker]"))
 	return TRUE
 
-
-/mob/living/carbon/attack_drone(mob/living/simple_animal/drone/user)
-	return //so we don't call the carbon's attack_hand().
-
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /mob/living/carbon/attack_hand(mob/living/carbon/human/user, list/modifiers)
 

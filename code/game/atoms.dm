@@ -829,9 +829,6 @@
 		blood_dna["UNKNOWN DNA"] = "X*"
 	return blood_dna
 
-/mob/living/carbon/alien/get_blood_dna_list()
-	return list("UNKNOWN DNA" = "X*")
-
 /mob/living/silicon/get_blood_dna_list()
 	return
 

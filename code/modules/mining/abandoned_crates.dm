@@ -183,8 +183,6 @@
 			new /obj/item/toy/plush/beeplushie(src)
 		if(85 to 86)
 			new /obj/item/defibrillator/compact(src)
-		if(87) //1% chance
-			new /obj/item/weed_extract(src)
 		if(88)
 			new /obj/item/reagent_containers/food/drinks/bottle/lizardwine(src)
 		if(90)

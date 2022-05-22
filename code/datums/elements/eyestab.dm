@@ -46,10 +46,6 @@
 		to_chat(user, SPAN_WARNING("You failed to stab [target.p_their()] eyes, you need to remove [target.p_their()] eye protection first!"))
 		return
 
-	if (isalien(target))
-		to_chat(user, SPAN_WARNING("You cannot locate any eyes on this creature!"))
-		return
-
 	if (isbrain(target))
 		to_chat(user, SPAN_WARNING("You cannot locate any organic eyes on this brain!"))
 		return

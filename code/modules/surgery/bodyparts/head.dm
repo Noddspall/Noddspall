@@ -257,20 +257,3 @@
 	icon_state = "default_monkey_head"
 	animal_origin = MONKEY_BODYPART
 
-/obj/item/bodypart/head/alien
-	icon = 'icons/mob/animal_parts.dmi'
-	icon_state = "alien_head"
-	px_x = 0
-	px_y = 0
-	dismemberable = 0
-	max_damage = 500
-	animal_origin = ALIEN_BODYPART
-
-/obj/item/bodypart/head/larva
-	icon = 'icons/mob/animal_parts.dmi'
-	icon_state = "larva_head"
-	px_x = 0
-	px_y = 0
-	dismemberable = 0
-	max_damage = 50
-	animal_origin = LARVA_BODYPART

@@ -99,7 +99,6 @@
 		holder.remove_reagent(/datum/reagent/medicine/epinephrine, 2 * REM * delta_time)
 	if(C.mob_biotypes & MOB_ROBOTIC)
 		C.nutrition = min(C.nutrition + 5, NUTRITION_LEVEL_FULL - 1)
-	C.adjustPlasma(20 * REM * delta_time)
 	return ..()
 
 /// Handles plasma boiling.
@@ -142,7 +141,6 @@
 /datum/reagent/toxin/hot_ice/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	if(holder.has_reagent(/datum/reagent/medicine/epinephrine))
 		holder.remove_reagent(/datum/reagent/medicine/epinephrine, 2 * REM * delta_time)
-	M.adjustPlasma(20 * REM * delta_time)
 	M.adjust_bodytemperature(-7 * TEMPERATURE_DAMAGE_COEFFICIENT * REM * delta_time, M.get_body_temp_normal())
 	if(ishuman(M))
 		var/mob/living/carbon/human/humi = M
@@ -332,10 +330,7 @@
 
 /datum/reagent/toxin/plantbgone/expose_obj(obj/exposed_obj, reac_volume)
 	. = ..()
-	if(istype(exposed_obj, /obj/structure/alien/weeds))
-		var/obj/structure/alien/weeds/alien_weeds = exposed_obj
-		alien_weeds.take_damage(rand(15,35), BRUTE, 0) // Kills alien weeds pretty fast
-	else if(istype(exposed_obj, /obj/structure/glowshroom)) //even a small amount is enough to kill it
+	if(istype(exposed_obj, /obj/structure/glowshroom)) //even a small amount is enough to kill it
 		qdel(exposed_obj)
 	else if(istype(exposed_obj, /obj/structure/spacevine))
 		var/obj/structure/spacevine/SV = exposed_obj

@@ -298,7 +298,6 @@
 		/obj/item/organ/tongue/fly,
 		/obj/item/organ/tongue/snail,
 		/obj/item/organ/tongue/lizard,
-		/obj/item/organ/tongue/alien,
 		/obj/item/organ/tongue/ethereal,
 		/obj/item/organ/tongue/robot,
 		/obj/item/organ/tongue/zombie,
@@ -308,12 +307,6 @@
 		/obj/item/organ/tail/cat,
 		/obj/item/organ/tail/lizard)
 	lootcount = 5
-
-/obj/effect/spawner/lootdrop/two_percent_xeno_egg_spawner
-	name = "2% chance xeno egg spawner"
-	loot = list(
-		/obj/effect/decal/remains/xeno = 49,
-		/obj/effect/spawner/xeno_egg_delivery = 1)
 
 /obj/effect/spawner/lootdrop/costume
 	name = "random costume spawner"

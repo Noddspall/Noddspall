@@ -177,13 +177,6 @@
 	if(user)
 		user.balloon_alert_to_viewers("released [src]", "released [src]")
 
-/obj/machinery/door/firedoor/attack_alien(mob/user, list/modifiers)
-	add_fingerprint(user)
-	if(welded)
-		to_chat(user, SPAN_WARNING("[src] refuses to budge!"))
-		return
-	open()
-
 /obj/machinery/door/firedoor/do_animate(animation)
 	switch(animation)
 		if("opening")

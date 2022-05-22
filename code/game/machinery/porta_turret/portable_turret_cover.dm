@@ -66,9 +66,6 @@
 /obj/machinery/porta_turret_cover/attacked_by(obj/item/I, mob/user)
 	parent_turret.attacked_by(I, user)
 
-/obj/machinery/porta_turret_cover/attack_alien(mob/living/carbon/alien/humanoid/user, list/modifiers)
-	parent_turret.attack_alien(user, modifiers)
-
 /obj/machinery/porta_turret_cover/attack_animal(mob/living/simple_animal/user, list/modifiers)
 	parent_turret.attack_animal(user, modifiers)
 

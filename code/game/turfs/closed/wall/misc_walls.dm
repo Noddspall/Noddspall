@@ -9,11 +9,6 @@
 	name = "rocky wall"
 	desc = "You feel a strange nostalgia from looking at this..."
 
-/turf/closed/wall/vault/alien
-	name = "alien wall"
-	icon_state = "alienvault"
-	base_icon_state = "alienvault"
-
 /turf/closed/wall/vault/sandstone
 	name = "sandstone wall"
 	icon_state = "sandstonevault"

@@ -135,12 +135,6 @@
 /obj/structure/mold/wall/classic
 	name = "mold wall"
 	desc = "Looks like some kind of thick resin."
-	icon = 'icons/obj/smooth_structures/alien/resin_wall.dmi'
-	icon_state = "resin_wall-0"
-	base_icon_state = "resin_wall"
-	smoothing_flags = SMOOTH_BITMASK
-	smoothing_groups = list(SMOOTH_GROUP_ALIEN_RESIN)
-	canSmoothWith = list(SMOOTH_GROUP_ALIEN_RESIN)
 
 /mob/living/simple_animal/hostile/mold
 	icon = 'icons/mold/classic/mold_mobs.dmi'

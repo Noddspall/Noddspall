@@ -620,16 +620,6 @@
 	for(var/i in 1 to 7)
 		new /obj/item/restraints/handcuffs/cable/zipties(src)
 
-/obj/item/storage/box/alienhandcuffs
-	name = "box of spare handcuffs"
-	desc = "A box full of handcuffs."
-	icon_state = "alienbox"
-	illustration = "handcuff"
-
-/obj/item/storage/box/alienhandcuffs/PopulateContents()
-	for(var/i in 1 to 7)
-		new /obj/item/restraints/handcuffs/alien(src)
-
 /obj/item/storage/box/fakesyndiesuit
 	name = "boxed space suit and helmet"
 	desc = "A sleek, sturdy box used to hold replica spacesuits."

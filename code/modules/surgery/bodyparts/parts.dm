@@ -35,20 +35,6 @@
 	animal_origin = MONKEY_BODYPART
 	wound_resistance = -10
 
-/obj/item/bodypart/chest/alien
-	icon = 'icons/mob/animal_parts.dmi'
-	icon_state = "alien_chest"
-	dismemberable = 0
-	max_damage = 500
-	animal_origin = ALIEN_BODYPART
-
-/obj/item/bodypart/chest/larva
-	icon = 'icons/mob/animal_parts.dmi'
-	icon_state = "larva_chest"
-	dismemberable = 0
-	max_damage = 50
-	animal_origin = LARVA_BODYPART
-
 /obj/item/bodypart/l_arm
 	name = "left arm"
 	desc = "Did you know that the word 'sinister' stems originally from the \
@@ -136,16 +122,6 @@
 	px_x = -5
 	px_y = -3
 
-/obj/item/bodypart/l_arm/alien
-	icon = 'icons/mob/animal_parts.dmi'
-	icon_state = "alien_l_arm"
-	px_x = 0
-	px_y = 0
-	dismemberable = FALSE
-	can_be_disabled = FALSE
-	max_damage = 100
-	animal_origin = ALIEN_BODYPART
-
 /obj/item/bodypart/r_arm
 	name = "right arm"
 	desc = "Over 87% of humans are right handed. That figure is much lower \
@@ -231,16 +207,6 @@
 	px_x = 5
 	px_y = -3
 
-/obj/item/bodypart/r_arm/alien
-	icon = 'icons/mob/animal_parts.dmi'
-	icon_state = "alien_r_arm"
-	px_x = 0
-	px_y = 0
-	dismemberable = FALSE
-	can_be_disabled = FALSE
-	max_damage = 100
-	animal_origin = ALIEN_BODYPART
-
 /obj/item/bodypart/l_leg
 	name = "left leg"
 	desc = "Some athletes prefer to tie their left shoelaces first for good \
@@ -319,16 +285,6 @@
 	animal_origin = MONKEY_BODYPART
 	wound_resistance = -10
 	px_y = 4
-
-/obj/item/bodypart/l_leg/alien
-	icon = 'icons/mob/animal_parts.dmi'
-	icon_state = "alien_l_leg"
-	px_x = 0
-	px_y = 0
-	dismemberable = FALSE
-	can_be_disabled = FALSE
-	max_damage = 100
-	animal_origin = ALIEN_BODYPART
 
 /obj/item/bodypart/r_leg
 	name = "right leg"
@@ -410,13 +366,3 @@
 	animal_origin = MONKEY_BODYPART
 	wound_resistance = -10
 	px_y = 4
-
-/obj/item/bodypart/r_leg/alien
-	icon = 'icons/mob/animal_parts.dmi'
-	icon_state = "alien_r_leg"
-	px_x = 0
-	px_y = 0
-	dismemberable = FALSE
-	can_be_disabled = FALSE
-	max_damage = 100
-	animal_origin = ALIEN_BODYPART

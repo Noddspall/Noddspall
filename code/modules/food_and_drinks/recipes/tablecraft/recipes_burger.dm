@@ -54,15 +54,6 @@
 	result = /obj/item/food/burger/brain
 	subcategory = CAT_BURGER
 
-/datum/crafting_recipe/food/xenoburger
-	name = "Xeno burger"
-	reqs = list(
-		/obj/item/food/patty/xeno = 1,
-		/obj/item/food/bun = 1
-	)
-	result = /obj/item/food/burger/xeno
-	subcategory = CAT_BURGER
-
 /datum/crafting_recipe/food/bearger
 	name = "Bearger"
 	reqs = list(

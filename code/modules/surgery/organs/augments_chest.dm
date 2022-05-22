@@ -208,13 +208,6 @@
 		ion_trail.generate_effect()
 		return TRUE
 
-	// Priority 2: use plasma from internal plasma storage.
-	// (just in case someone would ever use this implant system to make cyber-alien ops with jetpacks and taser arms)
-	if(owner.getPlasma() >= num*100)
-		owner.adjustPlasma(-num*100)
-		ion_trail.generate_effect()
-		return TRUE
-
 	// Priority 3: use internals tank.
 	var/datum/gas_mixture/internal_mix = owner.internal.return_air()
 	if(internal_mix && internal_mix.total_moles() > num)

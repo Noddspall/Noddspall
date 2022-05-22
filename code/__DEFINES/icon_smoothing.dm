@@ -129,22 +129,17 @@ DEFINE_BITFIELD(smoothing_flags, list(
 #define SMOOTH_GROUP_ABDUCTOR_TABLES S_OBJ(54) ///obj/structure/table/abductor
 #define SMOOTH_GROUP_GLASS_TABLES S_OBJ(55) ///obj/structure/table/glass
 
-#define SMOOTH_GROUP_ALIEN_NEST S_OBJ(59) ///obj/structure/bed/nest
-#define SMOOTH_GROUP_ALIEN_RESIN S_OBJ(60) ///obj/structure/alien/resin
-#define SMOOTH_GROUP_ALIEN_WALLS S_OBJ(61) ///obj/structure/alien/resin/wall, /obj/structure/alien/resin/membrane
-#define SMOOTH_GROUP_ALIEN_WEEDS S_OBJ(62) ///obj/structure/alien/weeds
-
-#define SMOOTH_GROUP_SECURITY_BARRICADE S_OBJ(63) ///obj/structure/barricade/security
+#define SMOOTH_GROUP_SECURITY_BARRICADE S_OBJ(56) ///obj/structure/barricade/security
 #define SMOOTH_GROUP_SANDBAGS S_OBJ(64) ///obj/structure/barricade/sandbags
 
-#define SMOOTH_GROUP_HEDGE_FLUFF S_OBJ(65) ///obj/structure/fluff/hedge
+#define SMOOTH_GROUP_HEDGE_FLUFF S_OBJ(57) ///obj/structure/fluff/hedge
 
-#define SMOOTH_GROUP_SHUTTLE_PARTS S_OBJ(66) ///obj/structure/window/shuttle, /obj/structure/window/plasma/reinforced/plastitanium, /turf/closed/indestructible/opsglass, /obj/structure/shuttle
+#define SMOOTH_GROUP_SHUTTLE_PARTS S_OBJ(58) ///obj/structure/window/shuttle, /obj/structure/window/plasma/reinforced/plastitanium, /turf/closed/indestructible/opsglass, /obj/structure/shuttle
 
-#define SMOOTH_GROUP_CLEANABLE_DIRT S_OBJ(67) ///obj/effect/decal/cleanable/dirt
+#define SMOOTH_GROUP_CLEANABLE_DIRT S_OBJ(59) ///obj/effect/decal/cleanable/dirt
 
-#define SMOOTH_GROUP_INDUSTRIAL_LIFT S_OBJ(70) ///obj/structure/industrial_lift
+#define SMOOTH_GROUP_INDUSTRIAL_LIFT S_OBJ(60) ///obj/structure/industrial_lift
 
-#define SMOOTH_GROUP_PLATED_CATWALK  S_OBJ(71) ///obj/structure/lattice/catwalk/plated
+#define SMOOTH_GROUP_PLATED_CATWALK  S_OBJ(61) ///obj/structure/lattice/catwalk/plated
 
 #define MAX_S_OBJ SMOOTH_GROUP_PLATED_CATWALK //Always match this value with the one above it.

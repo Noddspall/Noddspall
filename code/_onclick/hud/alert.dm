@@ -390,27 +390,6 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 
 	living_owner.succumb(whispered = length(last_whisper) > 0)
 
-//ALIENS
-
-/atom/movable/screen/alert/alien_tox
-	name = "Plasma"
-	desc = "There's flammable plasma in the air. If it lights up, you'll be toast."
-	icon_state = "alien_tox"
-	alerttooltipstyle = "alien"
-
-/atom/movable/screen/alert/alien_fire
-// This alert is temporarily gonna be thrown for all hot air but one day it will be used for literally being on fire
-	name = "Too Hot"
-	desc = "It's too hot! Flee to space or at least away from the flames. Standing on weeds will heal you."
-	icon_state = "alien_fire"
-	alerttooltipstyle = "alien"
-
-/atom/movable/screen/alert/alien_vulnerable
-	name = "Severed Matriarchy"
-	desc = "Your queen has been killed, you will suffer movement penalties and loss of hivemind. A new queen cannot be made until you recover."
-	icon_state = "alien_noqueen"
-	alerttooltipstyle = "alien"
-
 //BLOBS
 
 /atom/movable/screen/alert/nofactory

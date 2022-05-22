@@ -212,11 +212,6 @@
 /turf/open/floor/vault/rock
 	name = "rocky floor"
 
-/turf/open/floor/vault/alien
-	name = "alien floor"
-	icon_state = "alienvault"
-	base_icon_state = "alienvault"
-
 /turf/open/floor/vault/sandstone
 	name = "sandstone floor"
 	icon_state = "sandstonevault"

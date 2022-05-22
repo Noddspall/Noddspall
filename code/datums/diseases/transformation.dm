@@ -5,7 +5,7 @@
 	spread_flags = DISEASE_SPREAD_SPECIAL
 	cure_text = "A coder's love (theoretical)."
 	agent = "Shenanigans"
-	viable_mobtypes = list(/mob/living/carbon/human, /mob/living/carbon/alien)
+	viable_mobtypes = list(/mob/living/carbon/human)
 	severity = DISEASE_SEVERITY_BIOHAZARD
 	stage_prob = 5
 	visibility_flags = HIDDEN_SCANNER|HIDDEN_PANDEMIC
@@ -132,40 +132,6 @@
 		if(4)
 			if (DT_PROB(10, delta_time))
 				affected_mob.say(pick("beep, beep!", "Boop bop boop beep.", "kkkiiiill mmme", "I wwwaaannntt tttoo dddiiieeee..."), forced = "robotic transformation")
-
-
-/datum/disease/transformation/xeno
-
-	name = "Xenomorph Transformation"
-	cure_text = "Spaceacillin & Glycerol"
-	cures = list(/datum/reagent/medicine/spaceacillin, /datum/reagent/glycerol)
-	cure_chance = 2.5
-	agent = "Rip-LEY Alien Microbes"
-	desc = "This disease changes the victim into a xenomorph."
-	severity = DISEASE_SEVERITY_BIOHAZARD
-	visibility_flags = NONE
-	stage1 = list()
-	stage2 = list("Your throat feels scratchy.", SPAN_DANGER("Kill..."))
-	stage3 = list(SPAN_DANGER("Your throat feels very scratchy."), "Your skin feels tight.", SPAN_DANGER("You can feel something move...inside."))
-	stage4 = list(SPAN_DANGER("Your skin feels very tight."), SPAN_DANGER("Your blood boils!"), SPAN_DANGER("You can feel... something...inside you."))
-	stage5 = list(SPAN_DANGER("Your skin feels as if it's about to burst off!"))
-	new_form = /mob/living/carbon/alien/humanoid/hunter
-	bantype = ROLE_ALIEN
-
-
-/datum/disease/transformation/xeno/stage_act(delta_time, times_fired)
-	. = ..()
-	if(!.)
-		return
-
-	switch(stage)
-		if(3)
-			if(DT_PROB(2, delta_time))
-				to_chat(affected_mob, SPAN_DANGER("You feel a stabbing pain in your head."))
-				affected_mob.Unconscious(40)
-		if(4)
-			if(DT_PROB(10, delta_time))
-				affected_mob.say(pick("You look delicious.", "Going to... devour you...", "Hsssshhhhh!"), forced = "xenomorph transformation")
 
 /datum/disease/transformation/corgi
 	name = "The Barkening"

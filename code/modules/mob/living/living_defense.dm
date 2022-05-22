@@ -257,47 +257,6 @@
 
 	return FALSE
 
-/mob/living/attack_larva(mob/living/carbon/alien/larva/L)
-	if(L.combat_mode)
-		if(HAS_TRAIT(L, TRAIT_PACIFISM))
-			to_chat(L, SPAN_WARNING("You don't want to hurt anyone!"))
-			return
-
-		L.do_attack_animation(src)
-		if(prob(90))
-			log_combat(L, src, "attacked")
-			visible_message(SPAN_DANGER("[L.name] bites [src]!"), \
-							SPAN_USERDANGER("[L.name] bites you!"), SPAN_HEAR("You hear a chomp!"), COMBAT_MESSAGE_RANGE, L)
-			to_chat(L, SPAN_DANGER("You bite [src]!"))
-			playsound(loc, 'sound/weapons/bite.ogg', 50, TRUE, -1)
-			return TRUE
-		else
-			visible_message(SPAN_DANGER("[L.name]'s bite misses [src]!"), \
-							SPAN_DANGER("You avoid [L.name]'s bite!"), SPAN_HEAR("You hear the sound of jaws snapping shut!"), COMBAT_MESSAGE_RANGE, L)
-			to_chat(L, SPAN_WARNING("Your bite misses [src]!"))
-	else
-		visible_message(SPAN_NOTICE("[L.name] rubs its head against [src]."), \
-						SPAN_NOTICE("[L.name] rubs its head against you."), null, null, L)
-		to_chat(L, SPAN_NOTICE("You rub your head against [src]."))
-		return FALSE
-	return FALSE
-
-/mob/living/attack_alien(mob/living/carbon/alien/humanoid/user, list/modifiers)
-	if(LAZYACCESS(modifiers, RIGHT_CLICK))
-		user.do_attack_animation(src, ATTACK_EFFECT_DISARM)
-		return TRUE
-	if(user.combat_mode)
-		if(HAS_TRAIT(user, TRAIT_PACIFISM))
-			to_chat(user, SPAN_WARNING("You don't want to hurt anyone!"))
-			return FALSE
-		user.do_attack_animation(src)
-		return TRUE
-	else
-		visible_message(SPAN_NOTICE("[user] caresses [src] with its scythe-like arm."), \
-						SPAN_NOTICE("[user] caresses you with its scythe-like arm."), null, null, user)
-		to_chat(user, SPAN_NOTICE("You caress [src] with your scythe-like arm."))
-		return FALSE
-
 /mob/living/attack_hulk(mob/living/carbon/human/user)
 	..()
 	if(HAS_TRAIT(user, TRAIT_PACIFISM))

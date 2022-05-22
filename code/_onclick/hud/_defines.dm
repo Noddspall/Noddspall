@@ -118,13 +118,6 @@
 #define ui_borg_alerts "CENTER+4:21,SOUTH:5"
 #define ui_borg_language_menu "CENTER+4:19,SOUTH+1:6"
 
-//Aliens
-#define ui_alien_health "EAST,CENTER-1:15"
-#define ui_alienplasmadisplay "EAST,CENTER-2:15"
-#define ui_alien_queen_finder "EAST,CENTER-3:15"
-#define ui_alien_storage_r "CENTER+1:18,SOUTH:5"
-#define ui_alien_language_menu "EAST-4:20,SOUTH:5"
-
 //AI
 #define ui_ai_core "SOUTH:6,WEST"
 #define ui_ai_camera_list "SOUTH:6,WEST+1"

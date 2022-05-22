@@ -17,13 +17,13 @@ GLOBAL_LIST_EMPTY(start_landmarks_list) //list of all spawn points created
 GLOBAL_LIST_EMPTY(department_security_spawns) //list of all department security spawns
 GLOBAL_LIST_EMPTY(jobspawn_overrides) //These will take precedence over normal spawnpoints if created.
 
+GLOBAL_LIST_EMPTY(xeno_spawn)
 GLOBAL_LIST_EMPTY(wizardstart)
 GLOBAL_LIST_EMPTY(nukeop_start)
 GLOBAL_LIST_EMPTY(nukeop_leader_start)
 GLOBAL_LIST_EMPTY(newplayer_start)
 GLOBAL_LIST_EMPTY(prisonwarp) //admin prisoners go to these
 GLOBAL_LIST_EMPTY(holdingfacility) //captured people go here (ninja energy net)
-GLOBAL_LIST_EMPTY(xeno_spawn)//aliens, morphs and nightmares spawn at these
 GLOBAL_LIST_EMPTY(tdome1)
 GLOBAL_LIST_EMPTY(tdome2)
 GLOBAL_LIST_EMPTY(tdomeobserve)

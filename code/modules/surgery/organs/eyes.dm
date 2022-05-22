@@ -126,11 +126,6 @@
 			sight_flags &= ~SEE_BLACKNESS
 	owner.update_sight()
 
-/obj/item/organ/eyes/night_vision/alien
-	name = "alien eyes"
-	desc = "It turned out they had them after all!"
-	sight_flags = SEE_MOBS
-
 /obj/item/organ/eyes/night_vision/zombie
 	name = "undead eyes"
 	desc = "Somewhat counterintuitively, these half-rotten eyes actually have superior vision to those of a living human."

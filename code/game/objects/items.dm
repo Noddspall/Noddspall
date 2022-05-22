@@ -489,16 +489,6 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 	if(!user.put_in_active_hand(src, FALSE, FALSE))
 		user.dropItemToGround(src)
 
-/obj/item/attack_alien(mob/user, list/modifiers)
-	var/mob/living/carbon/alien/ayy = user
-
-	if(!user.can_hold_items(src))
-		if(src in ayy.contents) // To stop Aliens having items stuck in their pockets
-			ayy.dropItemToGround(src)
-		to_chat(user, SPAN_WARNING("Your claws aren't capable of such fine manipulation!"))
-		return
-	attack_paw(ayy, modifiers)
-
 /obj/item/proc/GetDeconstructableContents()
 	return GetAllContents() - src
 

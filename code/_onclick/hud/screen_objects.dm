@@ -571,13 +571,6 @@
 		return
 	. += mutable_appearance(overlay_icon, "[hud.mymob.zone_selected]")
 
-/atom/movable/screen/zone_sel/alien
-	icon = 'icons/hud/screen_alien.dmi'
-	overlay_icon = 'icons/hud/screen_alien.dmi'
-
-/atom/movable/screen/zone_sel/robot
-	icon = 'icons/hud/screen_cyborg.dmi'
-
 /atom/movable/screen/flash
 	name = "flash"
 	icon_state = "blank"
@@ -600,10 +593,6 @@
 	name = "health"
 	icon_state = "health0"
 	screen_loc = ui_health
-
-/atom/movable/screen/healths/alien
-	icon = 'icons/hud/screen_alien.dmi'
-	screen_loc = ui_alien_health
 
 /atom/movable/screen/healths/robot
 	icon = 'icons/hud/screen_cyborg.dmi'

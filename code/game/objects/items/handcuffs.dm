@@ -124,14 +124,6 @@
 	return
 
 /**
- * # Alien handcuffs
- *
- * Abductor reskin of the handcuffs.
-*/
-/obj/item/restraints/handcuffs/alien
-	icon_state = "handcuffAlien"
-
-/**
  *
  * # Fake handcuffs
  *

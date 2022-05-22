@@ -537,18 +537,6 @@
 		return S.can_cast(owner)
 	return FALSE
 
-/datum/action/spell_action/alien
-
-/datum/action/spell_action/alien/IsAvailable()
-	if(!target)
-		return FALSE
-	var/obj/effect/proc_holder/alien/ab = target
-	if(owner)
-		return ab.cost_check(ab.check_turf,owner,1)
-	return FALSE
-
-
-
 //Preset for general and toggled actions
 /datum/action/innate
 	check_flags = NONE
@@ -668,10 +656,6 @@
 	var/small = FALSE
 	var/small_icon
 	var/small_icon_state
-
-/datum/action/small_sprite/queen
-	small_icon = 'icons/mob/alien.dmi'
-	small_icon_state = "alienq"
 
 /datum/action/small_sprite/megafauna
 	icon_icon = 'icons/mob/actions/actions_xeno.dmi'

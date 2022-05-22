@@ -390,9 +390,6 @@
 
 /mob/living/carbon/get_status_tab_items()
 	. = ..()
-	var/obj/item/organ/alien/plasmavessel/vessel = getorgan(/obj/item/organ/alien/plasmavessel)
-	if(vessel)
-		. += "Plasma Stored: [vessel.storedPlasma]/[vessel.max_plasma]"
 	if(locate(/obj/item/assembly/health) in src)
 		. += "Health: [health]"
 

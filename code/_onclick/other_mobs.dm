@@ -139,45 +139,6 @@
 		return TRUE
 	return FALSE
 
-
-/*
-	Aliens
-	Defaults to same as monkey in most places
-*/
-/mob/living/carbon/alien/UnarmedAttack(atom/attack_target, proximity_flag, list/modifiers)
-	if(LIVING_UNARMED_ATTACK_BLOCKED(attack_target))
-		return
-	attack_target.attack_alien(src, modifiers)
-
-/atom/proc/attack_alien(mob/living/carbon/alien/user, list/modifiers)
-	attack_paw(user, modifiers)
-	return
-
-
-// Babby aliens
-/mob/living/carbon/alien/larva/UnarmedAttack(atom/attack_target, proximity_flag, list/modifiers)
-	if(LIVING_UNARMED_ATTACK_BLOCKED(attack_target))
-		return
-	attack_target.attack_larva(src)
-
-/atom/proc/attack_larva(mob/user)
-	return
-
-
-/*
-	Drones
-*/
-/mob/living/simple_animal/drone/UnarmedAttack(atom/attack_target, proximity_flag, list/modifiers)
-	if(LIVING_UNARMED_ATTACK_BLOCKED(attack_target))
-		return
-	attack_target.attack_drone(src, modifiers)
-
-/// Defaults to attack_hand or attack_hand_secondary. Override it when you don't want drones to do same stuff as humans.
-/atom/proc/attack_drone(mob/living/simple_animal/drone/user, list/modifiers)
-	if(!user.right_click_attack_chain(src, modifiers))
-		attack_hand(user, modifiers)
-
-
 /*
 	Brain
 */

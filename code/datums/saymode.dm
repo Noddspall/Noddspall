@@ -9,16 +9,6 @@
 /datum/saymode/proc/handle_message(mob/living/user, message, datum/language/language)
 	return TRUE
 
-/datum/saymode/xeno
-	key = "a"
-	mode = MODE_ALIEN
-
-/datum/saymode/xeno/handle_message(mob/living/user, message, datum/language/language)
-	if(user.hivecheck())
-		user.alien_talk(message)
-	return FALSE
-
-
 /datum/saymode/vocalcords
 	key = MODE_KEY_VOCALCORDS
 	mode = MODE_VOCALCORDS

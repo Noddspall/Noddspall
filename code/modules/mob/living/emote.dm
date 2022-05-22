@@ -338,8 +338,6 @@
 		return
 	if(istype(user, /mob/living/simple_animal/hostile/gorilla))
 		return 'sound/creatures/gorilla.ogg'
-	if(isalien(user))
-		return 'sound/voice/hiss6.ogg'
 	if(ishuman(user))
 		var/mob/living/carbon/human/human_user = user
 		var/datum/species/species_user = human_user.dna.species

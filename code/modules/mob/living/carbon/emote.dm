@@ -54,26 +54,6 @@
 	message_mime = "appears to moan!"
 	emote_type = EMOTE_AUDIBLE
 
-/datum/emote/living/carbon/roll
-	key = "roll"
-	key_third_person = "rolls"
-	message = "rolls."
-	mob_type_allowed_typecache = list(/mob/living/carbon/alien)
-	hands_use_check = TRUE
-
-/datum/emote/living/carbon/scratch
-	key = "scratch"
-	key_third_person = "scratches"
-	message = "scratches."
-	mob_type_allowed_typecache = list(/mob/living/carbon/alien)
-	hands_use_check = TRUE
-/datum/emote/living/carbon/sign
-	key = "sign"
-	key_third_person = "signs"
-	message_param = "signs the number %t."
-	mob_type_allowed_typecache = list(/mob/living/carbon/alien)
-	hands_use_check = TRUE
-
 /datum/emote/living/carbon/sign/select_param(mob/user, params)
 	. = ..()
 	if(!isnum(text2num(params)))
@@ -85,11 +65,6 @@
 	message_param = "raises %t fingers."
 	mob_type_allowed_typecache = list(/mob/living/carbon/human)
 	hands_use_check = TRUE
-
-/datum/emote/living/carbon/tail
-	key = "tail"
-	message = "waves their tail."
-	mob_type_allowed_typecache = list(/mob/living/carbon/alien)
 
 /datum/emote/living/carbon/wink
 	key = "wink"
