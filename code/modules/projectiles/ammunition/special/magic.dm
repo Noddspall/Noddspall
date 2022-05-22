@@ -6,9 +6,6 @@
 	firing_effect_type = /obj/effect/temp_visual/dir_setting/firing_effect/magic
 	heavy_metal = FALSE
 
-/obj/item/ammo_casing/magic/change
-	projectile_type = /obj/projectile/magic/change
-
 /obj/item/ammo_casing/magic/animate
 	projectile_type = /obj/projectile/magic/animate
 

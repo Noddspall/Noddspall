@@ -1165,23 +1165,6 @@
 	stop_pulling()
 	. = ..()
 
-// Called when we are hit by a bolt of polymorph and changed
-// Generally the mob we are currently in is about to be deleted
-/mob/living/proc/wabbajack_act(mob/living/new_mob)
-	new_mob.name = real_name
-	new_mob.real_name = real_name
-
-	if(mind)
-		mind.transfer_to(new_mob)
-	else
-		new_mob.key = key
-
-	for(var/para in hasparasites())
-		var/mob/living/simple_animal/hostile/guardian/G = para
-		G.summoner = new_mob
-		G.Recall()
-		to_chat(G, SPAN_HOLOPARASITE("Your summoner has changed form!"))
-
 /mob/living/rad_act(amount)
 	. = ..()
 
