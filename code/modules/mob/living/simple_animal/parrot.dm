@@ -96,7 +96,6 @@
 		/obj/structure/filingcabinet,
 		/obj/machinery/teleport,
 		/obj/machinery/telecomms,
-		/obj/machinery/nuclearbomb,
 		/obj/machinery/smartfridge,
 		/obj/machinery/computer,
 		/obj/machinery/suit_storage_unit,

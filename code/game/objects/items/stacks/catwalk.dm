@@ -41,11 +41,3 @@
 	icon_state = "catwalk_plated_smooth"
 	merge_type = /obj/item/stack/catwalk/plated/smooth
 	catwalk_type = /obj/structure/lattice/catwalk/plated/smooth
-
-/obj/item/stack/catwalk/swarmer
-	name = "swarmer catwalk rods"
-	singular_name = "swarmer catwalk rod"
-	desc = "Rods that could be used to make a quite peculiar catwalk."
-	icon_state = "catwalk_swarmer"
-	merge_type = /obj/item/stack/catwalk/swarmer
-	catwalk_type = /obj/structure/lattice/catwalk/swarmer_catwalk

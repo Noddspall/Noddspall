@@ -253,9 +253,6 @@
 	. = ..()
 	if(!istype(exposed_turf))
 		return
-	if(reac_volume>=10)
-		for(var/obj/effect/rune/R in exposed_turf)
-			qdel(R)
 	exposed_turf.Bless()
 
 /datum/reagent/water/hollowwater

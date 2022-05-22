@@ -186,11 +186,6 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning",
 	. = ..()
 	if(!proximity)
 		return
-	if(isfloorturf(A))
-		to_chat(user, SPAN_NOTICE("You hit the floor with the bible."))
-		if(user.mind && (user.mind.holy_role))
-			for(var/obj/effect/rune/R in orange(2,user))
-				R.invisibility = 0
 	if(user?.mind?.holy_role)
 		if(A.reagents && A.reagents.has_reagent(/datum/reagent/water)) // blesses all the water in the holder
 			to_chat(user, SPAN_NOTICE("You bless [A]."))
