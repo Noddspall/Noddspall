@@ -42,10 +42,6 @@
 		var/mob/living/simple_animal/hostile/swarmer/S = user
 		S.swarmer_chat(message)
 		return FALSE
-	if(isdrone(user))
-		var/mob/living/simple_animal/drone/D = user
-		D.drone_chat(message)
-		return FALSE
 	if(user.binarycheck())
 		return FALSE
 	return FALSE

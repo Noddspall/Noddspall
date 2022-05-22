@@ -81,20 +81,6 @@
 		release(TRUE, FALSE)
 		return
 
-/obj/item/clothing/head/mob_holder/drone/deposit(mob/living/L)
-	. = ..()
-	if(!isdrone(L))
-		qdel(src)
-	name = "drone (hiding)"
-	desc = "This drone is scared and has curled up into a ball!"
-
-/obj/item/clothing/head/mob_holder/drone/update_visuals(mob/living/L)
-	var/mob/living/simple_animal/drone/D = L
-	if(!D)
-		return ..()
-	icon = 'icons/mob/drone.dmi'
-	icon_state = "[D.visualAppearance]_hat"
-
 /obj/item/clothing/head/mob_holder/destructible
 
 /obj/item/clothing/head/mob_holder/destructible/Destroy()

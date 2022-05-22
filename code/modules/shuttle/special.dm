@@ -129,27 +129,6 @@
 /obj/structure/table/abductor/wabbajack/right
 	desc = "It wakes so you may sleep."
 
-// Bar staff, GODMODE mobs(as long as they stay in the shuttle) that just want to make sure people have drinks
-// and a good time.
-
-/mob/living/simple_animal/drone/snowflake/bardrone
-	name = "Bardrone"
-	desc = "A barkeeping drone, a robot built to tend bars."
-	hacked = TRUE
-	shy = FALSE
-	laws = "1. Serve drinks.\n\
-		2. Talk to patrons.\n\
-		3. Don't get messed up in their affairs."
-	unique_name = FALSE // disables the (123) number suffix
-	initial_language_holder = /datum/language_holder/universal
-
-/mob/living/simple_animal/drone/snowflake/bardrone/Initialize()
-	. = ..()
-	access_card.add_access(list(ACCESS_CENT_BAR))
-	become_area_sensitive(ROUNDSTART_TRAIT)
-	RegisterSignal(src, COMSIG_ENTER_AREA, .proc/check_barstaff_godmode)
-	check_barstaff_godmode()
-
 /mob/living/simple_animal/hostile/alien/maid/barmaid
 	gold_core_spawnable = NO_SPAWN
 	name = "Barmaid"

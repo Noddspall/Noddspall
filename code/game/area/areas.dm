@@ -259,12 +259,6 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 				else
 					a.triggerAlarm("Power", src, cameras, source)
 
-			for (var/item in GLOB.drones_list)
-				var/mob/living/simple_animal/drone/D = item
-				if(!state)
-					D.cancelAlarm("Power", src, source)
-				else
-					D.triggerAlarm("Power", src, cameras, source)
 			for(var/item in GLOB.alarmdisplay)
 				var/datum/computer_file/program/alarm_monitor/p = item
 				if(!state)
@@ -286,9 +280,6 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 			for (var/item in GLOB.alert_consoles)
 				var/obj/machinery/computer/station_alert/a = item
 				a.triggerAlarm("Atmosphere", src, cameras, source)
-			for (var/item in GLOB.drones_list)
-				var/mob/living/simple_animal/drone/D = item
-				D.triggerAlarm("Atmosphere", src, cameras, source)
 			for(var/item in GLOB.alarmdisplay)
 				var/datum/computer_file/program/alarm_monitor/p = item
 				p.triggerAlarm("Atmosphere", src, cameras, source)
@@ -297,9 +288,6 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 			for (var/item in GLOB.alert_consoles)
 				var/obj/machinery/computer/station_alert/a = item
 				a.cancelAlarm("Atmosphere", src, source)
-			for (var/item in GLOB.drones_list)
-				var/mob/living/simple_animal/drone/D = item
-				D.cancelAlarm("Atmosphere", src, source)
 			for(var/item in GLOB.alarmdisplay)
 				var/datum/computer_file/program/alarm_monitor/p = item
 				p.cancelAlarm("Atmosphere", src, source)
@@ -349,9 +337,6 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 		for (var/item in GLOB.alert_consoles)
 			var/obj/machinery/computer/station_alert/a = item
 			a.triggerAlarm("Fire", src, cameras, source)
-		for (var/item in GLOB.drones_list)
-			var/mob/living/simple_animal/drone/D = item
-			D.triggerAlarm("Fire", src, cameras, source)
 		for(var/item in GLOB.alarmdisplay)
 			var/datum/computer_file/program/alarm_monitor/p = item
 			p.triggerAlarm("Fire", src, cameras, source)
@@ -387,9 +372,6 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 		for (var/item in GLOB.alert_consoles)
 			var/obj/machinery/computer/station_alert/a = item
 			a.cancelAlarm("Fire", src, source)
-		for (var/item in GLOB.drones_list)
-			var/mob/living/simple_animal/drone/D = item
-			D.cancelAlarm("Fire", src, source)
 		for(var/item in GLOB.alarmdisplay)
 			var/datum/computer_file/program/alarm_monitor/p = item
 			p.cancelAlarm("Fire", src, source)
@@ -400,8 +382,6 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	LAZYREMOVE(cameras, cam)
 	for (var/obj/machinery/computer/station_alert/comp as anything in GLOB.alert_consoles)
 		comp.freeCamera(src, cam)
-	for (var/mob/living/simple_animal/drone/drone_on as anything in GLOB.drones_list)
-		drone_on.freeCamera(src, cam)
 	for(var/datum/computer_file/program/alarm_monitor/monitor as anything in GLOB.alarmdisplay)
 		monitor.freeCamera(src, cam)
 
