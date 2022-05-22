@@ -97,11 +97,6 @@
 	for(var/organ in M.internal_organs)
 		var/obj/item/organ/O = organ
 		O.setOrganDamage(0)
-	for(var/thing in M.diseases)
-		var/datum/disease/D = thing
-		if(D.severity == DISEASE_SEVERITY_POSITIVE)
-			continue
-		D.cure()
 	..()
 	. = TRUE
 
@@ -546,12 +541,6 @@
 	return TRUE
 
 /datum/reagent/medicine/ephedrine/overdose_process(mob/living/M, delta_time, times_fired)
-	if(DT_PROB(1 * normalise_creation_purity(), delta_time) && iscarbon(M))
-		var/datum/disease/D = new /datum/disease/heart_failure
-		M.ForceContractDisease(D)
-		to_chat(M, SPAN_USERDANGER("You're pretty sure you just felt your heart stop for a second there.."))
-		M.playsound_local(M, 'sound/effects/singlebeat.ogg', 100, 0)
-
 	if(DT_PROB(3.5 * normalise_creation_purity(), delta_time))
 		to_chat(M, SPAN_NOTICE("[pick("Your head pounds.", "You feel a tight pain in your chest.", "You find it hard to stay still.", "You feel your heart practically beating out of your chest.")]"))
 

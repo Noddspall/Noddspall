@@ -91,13 +91,6 @@
 			sec_job.spawn_positions = -1
 			message_admins("[key_name_admin(holder)] has removed the cap on security officers.")
 		//Buttons for helpful stuff. This is where people land in the tgui
-		if("clear_virus")
-			var/choice = tgui_alert(usr, "Are you sure you want to cure all disease?",, list("Yes", "Cancel"))
-			if(choice == "Yes")
-				message_admins("[key_name_admin(holder)] has cured all diseases.")
-				for(var/thing in SSdisease.active_diseases)
-					var/datum/disease/D = thing
-					D.cure(0)
 		if("list_bombers")
 			var/dat = "<B>Bombing List</B><HR>"
 			for(var/l in GLOB.bombers)
@@ -206,23 +199,6 @@
 			if(!SSshuttle.toggleShuttle("laborcamp","laborcamp_home","laborcamp_away"))
 				message_admins("[key_name_admin(holder)] moved labor shuttle")
 				log_admin("[key_name(holder)] moved the labor shuttle")
-		//!fun! buttons.
-		if("virus")
-			if(!is_funmin)
-				return
-			SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Virus Outbreak"))
-			switch(tgui_alert(usr,"Do you want this to be a random disease or do you have something in mind?",,list("Make Your Own","Random","Choose")))
-				if("Make Your Own")
-					AdminCreateVirus(holder)
-				if("Random")
-					var/datum/round_event_control/disease_outbreak/DC = locate(/datum/round_event_control/disease_outbreak) in SSgamemode.control
-					E = DC.runEvent()
-				if("Choose")
-					var/virus = input("Choose the virus to spread", "BIOHAZARD") as null|anything in sortList(typesof(/datum/disease), /proc/cmp_typepaths_asc)
-					var/datum/round_event_control/disease_outbreak/DC = locate(/datum/round_event_control/disease_outbreak) in SSgamemode.control
-					var/datum/round_event/disease_outbreak/DO = DC.runEvent()
-					DO.virus_type = virus
-					E = DO
 		if("allspecies")
 			if(!is_funmin)
 				return

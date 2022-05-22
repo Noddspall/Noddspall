@@ -36,16 +36,15 @@
 #define DIAG_PATH_HUD "16"
 /// Gland indicators for abductors
 #define GLAND_HUD "17"
-#define SENTIENT_DISEASE_HUD "18"
-#define AI_DETECT_HUD "19"
-#define NANITE_HUD "20"
-#define DIAG_NANITE_FULL_HUD "21"
+#define AI_DETECT_HUD "18"
+#define NANITE_HUD "19"
+#define DIAG_NANITE_FULL_HUD "20"
 /// Displays launchpads' targeting reticle
-#define DIAG_LAUNCHPAD_HUD "22"
+#define DIAG_LAUNCHPAD_HUD "21"
 //for antag huds. these are used at the /mob level
-#define ANTAG_HUD "23"
+#define ANTAG_HUD "22"
 // for fans to identify pins
-#define FAN_HUD "24"
+#define FAN_HUD "23"
 
 //by default everything in the hud_list of an atom is an image
 //a value in hud_list with one of these will change that behavior
@@ -60,25 +59,24 @@
 #define DATA_HUD_DIAGNOSTIC_BASIC 5
 #define DATA_HUD_DIAGNOSTIC_ADVANCED 6
 #define DATA_HUD_ABDUCTOR 7
-#define DATA_HUD_SENTIENT_DISEASE 8
-#define DATA_HUD_FAN 9
+#define DATA_HUD_FAN 8
 
 //antag HUD defines
-#define ANTAG_HUD_CULT 10
-#define ANTAG_HUD_REV 11
-#define ANTAG_HUD_OPS 12
-#define ANTAG_HUD_WIZ 13
-#define ANTAG_HUD_SHADOW 14
-#define ANTAG_HUD_TRAITOR 15
-#define ANTAG_HUD_NINJA 16
-#define ANTAG_HUD_CHANGELING 17
-#define ANTAG_HUD_ABDUCTOR 18
-#define ANTAG_HUD_BROTHER 19
-#define ANTAG_HUD_OBSESSED 20
-#define ANTAG_HUD_FUGITIVE 21
-#define ANTAG_HUD_GANGSTER 22
-#define ANTAG_HUD_SPACECOP 23
-#define ANTAG_HUD_HERETIC 24
+#define ANTAG_HUD_CULT 9
+#define ANTAG_HUD_REV 10
+#define ANTAG_HUD_OPS 11
+#define ANTAG_HUD_WIZ 12
+#define ANTAG_HUD_SHADOW 13
+#define ANTAG_HUD_TRAITOR 14
+#define ANTAG_HUD_NINJA 15
+#define ANTAG_HUD_CHANGELING 16
+#define ANTAG_HUD_ABDUCTOR 17
+#define ANTAG_HUD_BROTHER 18
+#define ANTAG_HUD_OBSESSED 19
+#define ANTAG_HUD_FUGITIVE 20
+#define ANTAG_HUD_GANGSTER 21
+#define ANTAG_HUD_SPACECOP 22
+#define ANTAG_HUD_HERETIC 23
 
 // Notification action types
 #define NOTIFY_JUMP "jump"

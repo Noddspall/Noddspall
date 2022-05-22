@@ -163,7 +163,6 @@
 
 	var/obj/item/food/meat/slab/allmeat[meat_produced]
 	var/obj/item/stack/sheet/animalhide/skin
-	var/list/datum/disease/diseases = mob_occupant.get_static_viruses()
 
 	if(ishuman(occupant))
 		var/mob/living/carbon/human/gibee = occupant
@@ -200,9 +199,9 @@
 	mob_occupant.ghostize()
 	set_occupant(null)
 	qdel(mob_occupant)
-	addtimer(CALLBACK(src, .proc/make_meat, skin, allmeat, meat_produced, gibtype, diseases), gibtime)
+	addtimer(CALLBACK(src, .proc/make_meat, skin, allmeat, meat_produced, gibtype), gibtime)
 
-/obj/machinery/gibber/proc/make_meat(obj/item/stack/sheet/animalhide/skin, list/obj/item/food/meat/slab/allmeat, meat_produced, gibtype, list/datum/disease/diseases)
+/obj/machinery/gibber/proc/make_meat(obj/item/stack/sheet/animalhide/skin, list/obj/item/food/meat/slab/allmeat, meat_produced, gibtype)
 	playsound(src.loc, 'sound/effects/splat.ogg', 50, TRUE)
 	operating = FALSE
 	var/turf/T = get_turf(src)
@@ -217,7 +216,7 @@
 		for (var/turfs=1 to meat_produced)
 			var/turf/gibturf = pick(nearby_turfs)
 			if (!gibturf.density && (src in view(gibturf)))
-				new gibtype(gibturf,i,diseases)
+				new gibtype(gibturf,i)
 
 	pixel_x = base_pixel_x //return to its spot after shaking
 	operating = FALSE

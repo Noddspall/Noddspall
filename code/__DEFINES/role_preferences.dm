@@ -50,7 +50,6 @@
 #define ROLE_NIGHTMARE "Nightmare"
 #define ROLE_WIZARD_APPRENTICE "apprentice"
 #define ROLE_SLAUGHTER_DEMON "Slaughter Demon"
-#define ROLE_SENTIENT_DISEASE "Sentient Disease"
 #define ROLE_MORPH "Morph"
 #define ROLE_SANTA "Santa"
 #define ROLE_FUGITIVE "Fugitive"

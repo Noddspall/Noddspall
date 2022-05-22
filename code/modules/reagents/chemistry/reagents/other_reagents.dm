@@ -20,18 +20,6 @@
 
 /datum/reagent/blood/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message=TRUE, touch_protection=0)
 	. = ..()
-	if(data && data["viruses"])
-		for(var/thing in data["viruses"])
-			var/datum/disease/strain = thing
-
-			if((strain.spread_flags & DISEASE_SPREAD_SPECIAL) || (strain.spread_flags & DISEASE_SPREAD_NON_CONTAGIOUS))
-				continue
-
-			if((methods & (TOUCH|VAPOR)) && (strain.spread_flags & DISEASE_SPREAD_CONTACT_FLUIDS))
-				exposed_mob.ContactContractDisease(strain)
-			else //ingest, patch or inject
-				exposed_mob.ForceContractDisease(strain)
-
 	if(iscarbon(exposed_mob))
 		var/mob/living/carbon/exposed_carbon = exposed_mob
 		if(exposed_carbon.get_blood_id() == /datum/reagent/blood && ((methods & INJECT) || ((methods & INGEST) && exposed_carbon.dna && exposed_carbon.dna.species && (DRINKSBLOOD in exposed_carbon.dna.species.species_traits))))
@@ -41,42 +29,12 @@
 				exposed_carbon.blood_volume = min(exposed_carbon.blood_volume + round(reac_volume, 0.1), BLOOD_VOLUME_MAXIMUM)
 
 
-/datum/reagent/blood/on_new(list/data)
-	if(istype(data))
-		SetViruses(src, data)
-
 /datum/reagent/blood/on_merge(list/mix_data)
 	if(data && mix_data)
 		if(data["blood_DNA"] != mix_data["blood_DNA"])
 			data["cloneable"] = 0 //On mix, consider the genetic sampling unviable for pod cloning if the DNA sample doesn't match.
-		if(data["viruses"] || mix_data["viruses"])
-
-			var/list/mix1 = data["viruses"]
-			var/list/mix2 = mix_data["viruses"]
-
-			// Stop issues with the list changing during mixing.
-			var/list/to_mix = list()
-
-			for(var/datum/disease/advance/AD in mix1)
-				to_mix += AD
-			for(var/datum/disease/advance/AD in mix2)
-				to_mix += AD
-
-			var/datum/disease/advance/AD = Advance_Mix(to_mix)
-			if(AD)
-				var/list/preserve = list(AD)
-				for(var/D in data["viruses"])
-					if(!istype(D, /datum/disease/advance))
-						preserve += D
-				data["viruses"] = preserve
 	return 1
 
-/datum/reagent/blood/proc/get_diseases()
-	. = list()
-	if(data && data["viruses"])
-		for(var/thing in data["viruses"])
-			var/datum/disease/D = thing
-			. += D
 
 /datum/reagent/blood/expose_turf(turf/exposed_turf, reac_volume)//splash the blood all over the place
 	. = ..()
@@ -110,40 +68,6 @@
 	color = "#dbcdcb"
 	description = "Ground up bones, gross!"
 	taste_description = "the most disgusting grain in existence"
-
-/datum/reagent/vaccine
-	//data must contain virus type
-	name = "Vaccine"
-	color = "#C81040" // rgb: 200, 16, 64
-	taste_description = "slime"
-	penetrates_skin = NONE
-
-/datum/reagent/vaccine/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message=TRUE, touch_protection=0)
-	. = ..()
-	if(!islist(data) || !(methods & (INGEST|INJECT)))
-		return
-
-	for(var/thing in exposed_mob.diseases)
-		var/datum/disease/infection = thing
-		if(infection.GetDiseaseID() in data)
-			infection.cure()
-	LAZYOR(exposed_mob.disease_resistances, data)
-
-/datum/reagent/vaccine/on_merge(list/data)
-	if(istype(data))
-		src.data |= data.Copy()
-
-/datum/reagent/vaccine/fungal_tb
-
-/datum/reagent/vaccine/fungal_tb/New(data)
-	. = ..()
-	var/list/cached_data
-	if(!data)
-		cached_data = list()
-	else
-		cached_data = data
-	cached_data |= "[/datum/disease/tuberculosis]"
-	src.data = cached_data
 
 /datum/reagent/water
 	name = "Water"
@@ -1114,32 +1038,6 @@
 	if(DT_PROB(5, delta_time))
 		M.emote("drool")
 	..()
-
-/datum/reagent/fungalspores
-	name = "Tubercle bacillus Cosmosis microbes"
-	description = "Active fungal spores."
-	color = "#92D17D" // rgb: 146, 209, 125
-	taste_description = "slime"
-	penetrates_skin = NONE
-	ph = 11
-
-/datum/reagent/fungalspores/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message = TRUE, touch_protection = 0)
-	. = ..()
-	if((methods & (PATCH|INGEST|INJECT)) || ((methods & VAPOR) && prob(min(reac_volume,100)*(1 - touch_protection))))
-		exposed_mob.ForceContractDisease(new /datum/disease/tuberculosis(), FALSE, TRUE)
-
-/datum/reagent/snail
-	name = "Agent-S"
-	description = "Virological agent that infects the subject with Gastrolosis."
-	color = "#003300" // rgb(0, 51, 0)
-	taste_description = "goo"
-	penetrates_skin = NONE
-	ph = 11
-
-/datum/reagent/snail/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message = TRUE, touch_protection = 0)
-	. = ..()
-	if((methods & (PATCH|INGEST|INJECT)) || ((methods & VAPOR) && prob(min(reac_volume,100)*(1 - touch_protection))))
-		exposed_mob.ForceContractDisease(new /datum/disease/gastrolosis(), FALSE, TRUE)
 
 /datum/reagent/fluorosurfactant//foam precursor
 	name = "Fluorosurfactant"
@@ -2320,18 +2218,6 @@
 	if(DT_PROB(16, delta_time))
 		to_chat(M, "You should sit down and take a rest...")
 	..()
-
-/datum/reagent/gondola_mutation_toxin
-	name = "Tranquility"
-	description = "A highly mutative liquid of unknown origin."
-	color = "#9A6750" //RGB: 154, 103, 80
-	taste_description = "inner peace"
-	penetrates_skin = NONE
-
-/datum/reagent/gondola_mutation_toxin/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message = TRUE, touch_protection = 0)
-	. = ..()
-	if((methods & (PATCH|INGEST|INJECT)) || ((methods & VAPOR) && prob(min(reac_volume,100)*(1 - touch_protection))))
-		exposed_mob.ForceContractDisease(new /datum/disease/transformation/gondola(), FALSE, TRUE)
 
 
 /datum/reagent/spider_extract

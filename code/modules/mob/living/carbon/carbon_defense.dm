@@ -144,15 +144,6 @@
 
 	if(SEND_SIGNAL(src, COMSIG_ATOM_ATTACK_HAND, user) & COMPONENT_CANCEL_ATTACK_CHAIN)
 		. = TRUE
-	for(var/thing in diseases)
-		var/datum/disease/D = thing
-		if(D.spread_flags & DISEASE_SPREAD_CONTACT_SKIN)
-			user.ContactContractDisease(D)
-
-	for(var/thing in user.diseases)
-		var/datum/disease/D = thing
-		if(D.spread_flags & DISEASE_SPREAD_CONTACT_SKIN)
-			ContactContractDisease(D)
 
 	for(var/datum/surgery/S in surgeries)
 		if(body_position == LYING_DOWN || !S.lying_required)
@@ -170,25 +161,11 @@
 
 /mob/living/carbon/attack_paw(mob/living/carbon/human/user, list/modifiers)
 
-	if(try_inject(user, injection_flags = INJECT_TRY_SHOW_ERROR_MESSAGE))
-		for(var/thing in diseases)
-			var/datum/disease/D = thing
-			if((D.spread_flags & DISEASE_SPREAD_CONTACT_SKIN) && prob(85))
-				user.ContactContractDisease(D)
-
-	for(var/thing in user.diseases)
-		var/datum/disease/D = thing
-		if(D.spread_flags & DISEASE_SPREAD_CONTACT_SKIN)
-			ContactContractDisease(D)
-
 	if(!user.combat_mode)
 		help_shake_act(user)
 		return FALSE
 
-	if(..()) //successful monkey bite.
-		for(var/thing in user.diseases)
-			var/datum/disease/D = thing
-			ForceContractDisease(D)
+	if(..())
 		return TRUE
 
 

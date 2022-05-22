@@ -978,22 +978,3 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 	if(ismob(loc))
 		return
 	..()
-
-/mob/living/simple_animal/parrot/poly/ghost/handle_automated_movement()
-	if(isliving(parrot_interest))
-		if(!ishuman(parrot_interest))
-			parrot_interest = null
-		else if(parrot_state == (PARROT_SWOOP | PARROT_ATTACK) && Adjacent(parrot_interest))
-			walk_to(src, parrot_interest, 0, parrot_speed)
-			Possess(parrot_interest)
-	..()
-
-/mob/living/simple_animal/parrot/poly/ghost/proc/Possess(mob/living/carbon/human/H)
-	if(!ishuman(H))
-		return
-	var/datum/disease/parrot_possession/P = new
-	P.parrot = src
-	forceMove(H)
-	H.ForceContractDisease(P, FALSE)
-	parrot_interest = null
-	H.visible_message(SPAN_DANGER("[src] dive bombs into [H]'s chest and vanishes!"), SPAN_USERDANGER("[src] dive bombs into your chest, vanishing! This can't be good!"))

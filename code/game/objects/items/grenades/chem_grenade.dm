@@ -530,7 +530,6 @@
 
 	B1.reagents.add_reagent(/datum/reagent/potassium, 50)
 	B1.reagents.add_reagent(/datum/reagent/phosphorus, 50)
-	B1.reagents.add_reagent(/datum/reagent/fungalspores, 200)
 	B2.reagents.add_reagent(/datum/reagent/blood, 250)
 	B2.reagents.add_reagent(/datum/reagent/consumable/sugar, 50)
 

@@ -201,11 +201,6 @@
 			stomach.adjust_charge(ETHEREAL_CHARGE_FULL - stomach.crystal_charge)
 		to_chat(H, SPAN_WARNING("You violently discharge energy!"))
 		H.visible_message(SPAN_DANGER("[H] violently discharges energy!"))
-		if(prob(10)) //chance of developing heart disease to dissuade overcharging oneself
-			var/datum/disease/D = new /datum/disease/heart_failure
-			H.ForceContractDisease(D)
-			to_chat(H, SPAN_USERDANGER("You're pretty sure you just felt your heart stop for a second there.."))
-			H.playsound_local(H, 'sound/effects/singlebeat.ogg', 100, 0)
 		H.Paralyze(100)
 
 

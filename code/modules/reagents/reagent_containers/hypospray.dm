@@ -205,23 +205,6 @@
 	base_icon_state = "salpen"
 	list_reagents = list(/datum/reagent/medicine/salbutamol = 10)
 
-/obj/item/reagent_containers/hypospray/medipen/tuberculosiscure
-	name = "BVAK autoinjector"
-	desc = "Bio Virus Antidote Kit autoinjector. Has a two use system for yourself, and someone else. Inject when infected."
-	icon_state = "tbpen"
-	inhand_icon_state = "tbpen"
-	base_icon_state = "tbpen"
-	volume = 20
-	amount_per_transfer_from_this = 10
-	list_reagents = list(/datum/reagent/vaccine/fungal_tb = 20)
-
-/obj/item/reagent_containers/hypospray/medipen/tuberculosiscure/update_icon_state()
-	. = ..()
-	if(reagents.total_volume >= volume)
-		icon_state = base_icon_state
-		return
-	icon_state = "[base_icon_state][(reagents.total_volume > 0) ? 1 : 0]"
-
 /obj/item/reagent_containers/hypospray/medipen/survival
 	name = "survival emergency medipen"
 	desc = "A medipen for surviving in the harsh environments, heals most common damage sources. WARNING: May cause organ damage."
@@ -266,25 +249,6 @@
 	inhand_icon_state = "atropen"
 	base_icon_state = "atropen"
 	list_reagents = list(/datum/reagent/medicine/atropine = 10)
-
-/obj/item/reagent_containers/hypospray/medipen/snail
-	name = "snail shot"
-	desc = "All-purpose snail medicine! Do not use on non-snails!"
-	icon_state = "snail"
-	inhand_icon_state = "snail"
-	base_icon_state = "snail"
-	list_reagents = list(/datum/reagent/snail = 10)
-
-/obj/item/reagent_containers/hypospray/medipen/magillitis
-	name = "experimental autoinjector"
-	desc = "A custom-frame needle injector with a small single-use reservoir, containing an experimental serum. Unlike the more common medipen frame, it cannot pierce through protective armor or hardsuits, nor can the chemical inside be extracted."
-	icon_state = "gorillapen"
-	inhand_icon_state = "gorillapen"
-	base_icon_state = "gorillapen"
-	volume = 5
-	ignore_flags = 0
-	reagent_flags = NONE
-	list_reagents = list(/datum/reagent/magillitis = 5)
 
 /obj/item/reagent_containers/hypospray/medipen/pumpup
 	name = "maintenance pump-up"

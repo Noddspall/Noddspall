@@ -439,7 +439,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAUMA_TRAIT "trauma"
 /// Trait inherited by experimental surgeries
 #define EXPERIMENTAL_SURGERY_TRAIT "experimental_surgery"
-#define DISEASE_TRAIT "disease"
 #define SPECIES_TRAIT "species"
 #define ORGAN_TRAIT "organ"
 /// cannot be removed without admin intervention

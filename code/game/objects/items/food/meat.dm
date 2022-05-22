@@ -840,20 +840,6 @@
 	foodtypes = MEAT | BREAKFAST
 	burns_on_grill = TRUE
 
-/obj/item/food/meat/slab/gondola
-	name = "gondola meat"
-	desc = "According to legends of old, consuming raw gondola flesh grants one inner peace."
-	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 4, /datum/reagent/gondola_mutation_toxin = 5, /datum/reagent/consumable/cooking_oil = 3)
-	tastes = list("meat" = 4, "tranquility" = 1)
-	foodtypes = RAW | MEAT
-
-/obj/item/food/meat/slab/gondola/MakeProcessable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/meat/rawcutlet/gondola, 3, 30)
-
-/obj/item/food/meat/slab/gondola/MakeGrillable()
-	AddComponent(/datum/component/grillable, /obj/item/food/meat/steak/gondola, rand(30 SECONDS, 90 SECONDS), TRUE, TRUE, /datum/pollutant/food/fried_meat) //Add medium rare later maybe?
-
-
 /obj/item/food/meat/slab/penguin
 	name = "penguin meat"
 	icon_state = "birdmeat"

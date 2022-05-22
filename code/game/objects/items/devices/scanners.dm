@@ -381,13 +381,6 @@ GENE SCANNER
 				render_list += "<div class='ml-2'>Type: [W.name]\nSeverity: [W.severity_text()]\nRecommended Treatment: [W.treat_text]</div>\n" // less lines than in woundscan() so we don't overload people trying to get basic med info
 			render_list += "</span>"
 
-	for(var/thing in M.diseases)
-		var/datum/disease/D = thing
-		if(!(D.visibility_flags & HIDDEN_SCANNER))
-			render_list += "<span class='alert ml-1'><b>Warning: [D.form] detected</b>\n\
-			<div class='ml-2'>Name: [D.name].\nType: [D.spread_text].\nStage: [D.stage]/[D.max_stages].\nPossible Cure: [D.cure_text]</div>\
-			</span>" // divs do not need extra linebreak
-
 	// Blood Level
 	if(M.has_dna())
 		var/mob/living/carbon/C = M
