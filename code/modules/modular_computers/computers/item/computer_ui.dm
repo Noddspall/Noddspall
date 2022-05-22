@@ -70,9 +70,6 @@
 	data["removable_media"] = list()
 	if(all_components[MC_SDD])
 		data["removable_media"] += "removable storage disk"
-	var/obj/item/computer_hardware/ai_slot/intelliholder = all_components[MC_AI]
-	if(intelliholder?.stored_card)
-		data["removable_media"] += "intelliCard"
 	var/obj/item/computer_hardware/card_slot/secondarycardholder = all_components[MC_CARD2]
 	if(secondarycardholder?.stored_card)
 		data["removable_media"] += "secondary RFID card"
@@ -196,12 +193,6 @@
 						return
 					if(uninstall_component(portable_drive, usr))
 						user.put_in_hands(portable_drive)
-						playsound(src, 'sound/machines/card_slide.ogg', 50)
-				if("intelliCard")
-					var/obj/item/computer_hardware/ai_slot/intelliholder = all_components[MC_AI]
-					if(!intelliholder)
-						return
-					if(intelliholder.try_eject(user))
 						playsound(src, 'sound/machines/card_slide.ogg', 50)
 				if("ID")
 					var/obj/item/computer_hardware/card_slot/cardholder = all_components[MC_CARD]

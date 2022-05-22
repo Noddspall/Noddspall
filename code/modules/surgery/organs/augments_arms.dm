@@ -217,25 +217,6 @@
 /obj/item/organ/cyberimp/arm/gun/taser/l
 	zone = BODY_ZONE_L_ARM
 
-/obj/item/organ/cyberimp/arm/toolset
-	name = "integrated toolset implant"
-	desc = "A stripped-down version of the engineering cyborg toolset, designed to be installed on subject's arm. Contain advanced versions of every tool."
-	items_to_create = list(/obj/item/screwdriver/cyborg, /obj/item/wrench/cyborg, /obj/item/weldingtool/largetank/cyborg,
-		/obj/item/crowbar/cyborg, /obj/item/wirecutters/cyborg, /obj/item/multitool/cyborg)
-
-/obj/item/organ/cyberimp/arm/toolset/l
-	zone = BODY_ZONE_L_ARM
-
-/obj/item/organ/cyberimp/arm/toolset/emag_act(mob/user)
-	for(var/datum/weakref/created_item in items_list)
-		var/obj/potential_knife = created_item.resolve()
-		if(istype(/obj/item/kitchen/knife/combat/cyborg, potential_knife))
-			return FALSE
-
-	to_chat(user, SPAN_NOTICE("You unlock [src]'s integrated knife!"))
-	items_list += WEAKREF(new /obj/item/kitchen/knife/combat/cyborg(src))
-	return TRUE
-
 /obj/item/organ/cyberimp/arm/esword
 	name = "arm-mounted energy blade"
 	desc = "An illegal and highly dangerous cybernetic implant that can project a deadly blade of concentrated energy."
@@ -269,25 +250,6 @@
 /obj/item/organ/cyberimp/arm/flash/Retract()
 	active_item.set_light_on(FALSE)
 	return ..()
-
-/obj/item/organ/cyberimp/arm/baton
-	name = "arm electrification implant"
-	desc = "An illegal combat implant that allows the user to administer disabling shocks from their arm."
-	items_to_create = list(/obj/item/borg/stun)
-
-/obj/item/organ/cyberimp/arm/combat
-	name = "combat cybernetics implant"
-	desc = "A powerful cybernetic implant that contains combat modules built into the user's arm."
-	items_to_create = list(/obj/item/melee/transforming/energy/blade/hardlight, /obj/item/gun/medbeam, /obj/item/borg/stun, /obj/item/assembly/flash/armimplant)
-
-/obj/item/organ/cyberimp/arm/combat/Initialize()
-	. = ..()
-	for(var/datum/weakref/created_item in items_list)
-		var/obj/potential_flash = created_item.resolve()
-		if(!istype(/obj/item/assembly/flash/armimplant, potential_flash))
-			continue
-		var/obj/item/assembly/flash/armimplant/flash = potential_flash
-		flash.arm = WEAKREF(src) // Todo: wipe single letter vars out of assembly code
 
 /obj/item/organ/cyberimp/arm/surgery
 	name = "surgical toolset implant"

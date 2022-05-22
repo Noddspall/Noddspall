@@ -154,17 +154,6 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 			update_appearance()
 	add_fingerprint(usr)
 
-/obj/machinery/announcement_system/attack_robot(mob/living/silicon/user)
-	. = attack_ai(user)
-
-/obj/machinery/announcement_system/attack_ai(mob/user)
-	if(!user.canUseTopic(src, !issilicon(user)))
-		return
-	if(machine_stat & BROKEN)
-		to_chat(user, SPAN_WARNING("[src]'s firmware appears to be malfunctioning!"))
-		return
-	interact(user)
-
 /obj/machinery/announcement_system/proc/act_up() //does funny breakage stuff
 	if(!obj_break()) // if badmins flag this unbreakable or its already broken
 		return

@@ -346,22 +346,6 @@ Possible to do for anyone motivated enough:
 		var/datum/holocall/HC = I
 		HC.Disconnect(src)
 
-//do not allow AIs to answer calls or people will use it to meta the AI sattelite
-/obj/machinery/holopad/attack_ai(mob/living/silicon/ai/user)
-	if (!istype(user))
-		return
-	if (!on_network)
-		return
-	/*There are pretty much only three ways to interact here.
-	I don't need to check for client since they're clicking on an object.
-	This may change in the future but for now will suffice.*/
-	if(user.eyeobj.loc != src.loc)//Set client eye on the object if it's not already.
-		user.eyeobj.setLoc(get_turf(src))
-	else if(!LAZYLEN(masters) || !masters[user])//If there is no hologram, possibly make one.
-		activate_holo(user)
-	else//If there is a hologram, remove it.
-		clear_holo(user)
-
 /obj/machinery/holopad/process()
 	if(LAZYLEN(masters))
 		for(var/I in masters)
@@ -400,22 +384,16 @@ Possible to do for anyone motivated enough:
 	if(!istype(AI))
 		AI = null
 
-	if(is_operational && (!AI || AI.eyeobj.loc == loc))//If the projector has power and client eye is on it
-		if (AI && istype(AI.current, /obj/machinery/holopad))
-			to_chat(user, "[SPAN_DANGER("ERROR:")] \black Image feed in progress.")
-			return
+	if(is_operational)//If the projector has power and client eye is on it
 
 		var/obj/effect/overlay/holo_pad_hologram/Hologram = new(loc)//Spawn a blank effect at the location.
-		if(AI)
-			Hologram.icon = AI.holo_icon
-		else //make it like real life
-			Hologram.icon = user.icon
-			Hologram.icon_state = user.icon_state
-			Hologram.copy_overlays(user, TRUE)
-			//codersprite some holo effects here
-			Hologram.alpha = 100
-			Hologram.add_atom_colour("#77abff", FIXED_COLOUR_PRIORITY)
-			Hologram.Impersonation = user
+		Hologram.icon = user.icon
+		Hologram.icon_state = user.icon_state
+		Hologram.copy_overlays(user, TRUE)
+		//codersprite some holo effects here
+		Hologram.alpha = 100
+		Hologram.add_atom_colour("#77abff", FIXED_COLOUR_PRIORITY)
+		Hologram.Impersonation = user
 
 		Hologram.mouse_opacity = MOUSE_OPACITY_TRANSPARENT//So you can't click on it.
 		Hologram.layer = FLY_LAYER//Above all the other objects/mobs. Or the vast majority of them.
@@ -434,11 +412,6 @@ Possible to do for anyone motivated enough:
 For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 /obj/machinery/holopad/Hear(message, atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, list/message_mods = list())
 	. = ..()
-	if(speaker && LAZYLEN(masters) && !radio_freq)//Master is mostly a safety in case lag hits or something. Radio_freq so AIs dont hear holopad stuff through radios.
-		for(var/mob/living/silicon/ai/master in masters)
-			if(masters[master] && speaker != master)
-				master.relay_speech(message, speaker, message_language, raw_message, radio_freq, spans, message_mods)
-
 	for(var/I in holo_calls)
 		var/datum/holocall/HC = I
 		if(HC.connected_holopad == src && speaker != HC.hologram)
@@ -471,9 +444,6 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 /obj/machinery/holopad/proc/set_holo(mob/living/user, obj/effect/overlay/holo_pad_hologram/h)
 	LAZYSET(masters, user, h)
 	LAZYSET(holorays, user, new /obj/effect/overlay/holoray(loc))
-	var/mob/living/silicon/ai/AI = user
-	if(istype(AI))
-		AI.current = src
 	SetLightsAndPower()
 	update_holoray(user, get_turf(loc))
 	return TRUE
@@ -484,9 +454,6 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	return TRUE
 
 /obj/machinery/holopad/proc/unset_holo(mob/living/user)
-	var/mob/living/silicon/ai/AI = user
-	if(istype(AI) && AI.current == src)
-		AI.current = null
 	LAZYREMOVE(masters, user) // Discard AI from the list of those who use holopad
 	qdel(holorays[user])
 	LAZYREMOVE(holorays, user)

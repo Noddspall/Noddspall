@@ -667,34 +667,6 @@
 				locked = FALSE
 				to_chat(user, SPAN_NOTICE("You place the power control board inside the frame."))
 				qdel(W)
-	else if(istype(W, /obj/item/electroadaptive_pseudocircuit) && opened)
-		var/obj/item/electroadaptive_pseudocircuit/P = W
-		if(!has_electronics)
-			if(machine_stat & BROKEN)
-				to_chat(user, SPAN_WARNING("[src]'s frame is too damaged to support a circuit."))
-				return
-			if(!P.adapt_circuit(user, 50))
-				return
-			user.visible_message(SPAN_NOTICE("[user] fabricates a circuit and places it into [src]."), \
-			SPAN_NOTICE("You adapt a power control board and click it into place in [src]'s guts."))
-			has_electronics = APC_ELECTRONICS_INSTALLED
-			locked = FALSE
-		else if(!cell)
-			if(machine_stat & MAINT)
-				to_chat(user, SPAN_WARNING("There's no connector for a power cell."))
-				return
-			if(!P.adapt_circuit(user, 500))
-				return
-			var/obj/item/stock_parts/cell/crap/empty/C = new(src)
-			C.forceMove(src)
-			cell = C
-			chargecount = 0
-			user.visible_message(SPAN_NOTICE("[user] fabricates a weak power cell and places it into [src]."), \
-			SPAN_WARNING("Your [P.name] whirrs with strain as you create a weak power cell and place it into [src]!"))
-			update_appearance()
-		else
-			to_chat(user, SPAN_WARNING("[src] has both electronics and a cell."))
-			return
 	else if (istype(W, /obj/item/wallframe/apc) && opened)
 		if (!(machine_stat & BROKEN || opened==APC_COVER_REMOVED || obj_integrity < max_integrity)) // There is nothing to repair
 			to_chat(user, SPAN_WARNING("You found no reason for repairing this APC!"))
@@ -978,22 +950,6 @@
 	area.power_change()
 
 /obj/machinery/power/apc/proc/can_use(mob/user, loud = 0) //used by attack_hand() and Topic()
-	if(isAdminGhostAI(user))
-		return TRUE
-	if(user.has_unlimited_silicon_privilege)
-		var/mob/living/silicon/ai/AI = user
-		var/mob/living/silicon/robot/robot = user
-		if (                                                             \
-			src.aidisabled ||                                            \
-			malfhack && istype(malfai) &&                                \
-			(                                                            \
-				(istype(AI) && (malfai!=AI && malfai != AI.parent)) ||   \
-				(istype(robot) && (robot in malfai.connected_robots))    \
-			)                                                            \
-		)
-			if(!loud)
-				to_chat(user, SPAN_DANGER("\The [src] has eee disabled!"))
-			return FALSE
 	return TRUE
 
 /obj/machinery/power/apc/can_interact(mob/user)
@@ -1074,60 +1030,6 @@
 	log_game("[key_name(user)] turned [operating ? "on" : "off"] the [src] in [AREACOORD(src)]")
 	update()
 	update_appearance()
-
-/obj/machinery/power/apc/transfer_ai(interaction, mob/user, mob/living/silicon/ai/AI, obj/item/aicard/card)
-	if(card.AI)
-		to_chat(user, SPAN_WARNING("[card] is already occupied!"))
-		return
-	if(!occupier)
-		to_chat(user, SPAN_WARNING("There's nothing in [src] to transfer!"))
-		return
-	if(!occupier.mind || !occupier.client)
-		to_chat(user, SPAN_WARNING("[occupier] is either inactive or destroyed!"))
-		return
-	if(!occupier.parent.stat)
-		to_chat(user, SPAN_WARNING("[occupier] is refusing all attempts at transfer!") )
-		return
-	if(transfer_in_progress)
-		to_chat(user, SPAN_WARNING("There's already a transfer in progress!"))
-		return
-	if(interaction != AI_TRANS_TO_CARD || occupier.stat)
-		return
-	var/turf/T = get_turf(user)
-	if(!T)
-		return
-	transfer_in_progress = TRUE
-	user.visible_message(SPAN_NOTICE("[user] slots [card] into [src]..."), SPAN_NOTICE("Transfer process initiated. Sending request for AI approval..."))
-	playsound(src, 'sound/machines/click.ogg', 50, TRUE)
-	SEND_SOUND(occupier, sound('sound/misc/notice2.ogg')) //To alert the AI that someone's trying to card them if they're tabbed out
-	if(tgui_alert(occupier, "[user] is attempting to transfer you to \a [card.name]. Do you consent to this?", "APC Transfer", list("Yes - Transfer Me", "No - Keep Me Here")) == "No - Keep Me Here")
-		to_chat(user, SPAN_DANGER("AI denied transfer request. Process terminated."))
-		playsound(src, 'sound/machines/buzz-sigh.ogg', 50, TRUE)
-		transfer_in_progress = FALSE
-		return
-	if(user.loc != T)
-		to_chat(user, SPAN_DANGER("Location changed. Process terminated."))
-		to_chat(occupier, SPAN_WARNING("[user] moved away! Transfer canceled."))
-		transfer_in_progress = FALSE
-		return
-	to_chat(user, SPAN_NOTICE("AI accepted request. Transferring stored intelligence to [card]..."))
-	to_chat(occupier, SPAN_NOTICE("Transfer starting. You will be moved to [card] shortly."))
-	if(!do_after(user, 50, target = src))
-		to_chat(occupier, SPAN_WARNING("[user] was interrupted! Transfer canceled."))
-		transfer_in_progress = FALSE
-		return
-	if(!occupier || !card)
-		transfer_in_progress = FALSE
-		return
-	user.visible_message(SPAN_NOTICE("[user] transfers [occupier] to [card]!"), SPAN_NOTICE("Transfer complete! [occupier] is now stored in [card]."))
-	to_chat(occupier, SPAN_NOTICE("Transfer complete! You've been stored in [user]'s [card.name]."))
-	occupier.forceMove(card)
-	card.AI = occupier
-	occupier.parent.shunted = FALSE
-	occupier.cancel_camera()
-	occupier = null
-	transfer_in_progress = FALSE
-	return
 
 /obj/machinery/power/apc/surplus()
 	if(terminal)

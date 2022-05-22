@@ -13,14 +13,6 @@
 	if(B)
 		B.suicided = suicide_state
 
-/mob/living/silicon/robot/set_suicide(suicide_state)
-	. = ..()
-	if(mmi)
-		if(mmi.brain)
-			mmi.brain.suicided = suicide_state
-		if(mmi.brainmob)
-			mmi.brainmob.suiciding = suicide_state
-
 /mob/living/carbon/human/verb/suicide()
 	set hidden = TRUE
 	if(!canSuicide())

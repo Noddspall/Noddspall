@@ -126,8 +126,7 @@
 		var/atom/movable/AM = i
 		if(istype(AM, /obj/item))
 			var/obj/item/bodypart/head/as_head = AM
-			var/obj/item/mmi/as_mmi = AM
-			if(istype(AM, /obj/item/organ/brain) || (istype(as_head) && as_head.brain) || (istype(as_mmi) && as_mmi.brain) || istype(AM, /obj/item/dullahan_relay))
+			if(istype(AM, /obj/item/organ/brain) || (istype(as_head) && as_head.brain) || istype(AM, /obj/item/dullahan_relay))
 				living_detected = TRUE
 			nom += AM
 		else if(isliving(AM))

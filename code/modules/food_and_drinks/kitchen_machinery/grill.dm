@@ -122,9 +122,6 @@
 		new /obj/item/stack/rods(loc, 5)
 	..()
 
-/obj/machinery/grill/attack_ai(mob/user)
-	return
-
 /obj/machinery/grill/attack_hand(mob/user, list/modifiers)
 	if(grilled_item)
 		to_chat(user, SPAN_NOTICE("You take out [grilled_item] from [src]."))

@@ -119,9 +119,6 @@
 		name = "[linked_controller.name] control panel"
 		desc = "A panel which interfaces with \the [linked_controller.name] controls."
 
-/obj/structure/lift_control_panel/attack_ai(mob/user)
-	return _try_interact(user)
-
 /obj/structure/lift_control_panel/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()
 	if(!linked_controller)

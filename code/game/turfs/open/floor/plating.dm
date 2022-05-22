@@ -43,13 +43,6 @@
 	if(..())
 		return
 	try_place_tile(C, user, attachment_holes, (broken || burnt))
-	if(istype(C, /obj/item/cautery/prt)) //plating repair tool
-		if((broken || burnt) && C.use_tool(src, user, 0, volume=80))
-			to_chat(user, SPAN_DANGER("You fix some dents on the broken plating."))
-			icon_state = base_icon_state
-			burnt = FALSE
-			broken = FALSE
-
 
 /turf/open/floor/plating/welder_act(mob/living/user, obj/item/I)
 	..()

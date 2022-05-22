@@ -811,28 +811,6 @@ GLOBAL_LIST_EMPTY(allCasters)
 	var/obj/item/photo/photo = user.is_holding_item_of_type(/obj/item/photo)
 	if(photo)
 		picture = photo.picture
-	if(issilicon(user))
-		var/obj/item/camera/siliconcam/targetcam
-		if(isAI(user))
-			var/mob/living/silicon/ai/R = user
-			targetcam = R.aicamera
-		else if(ispAI(user))
-			var/mob/living/silicon/pai/R = user
-			targetcam = R.aicamera
-		else if(iscyborg(user))
-			var/mob/living/silicon/robot/R = user
-			if(R.connected_ai)
-				targetcam = R.connected_ai.aicamera
-			else
-				targetcam = R.aicamera
-		else
-			to_chat(user, SPAN_WARNING("You cannot interface with silicon photo uploading!"))
-		if(!targetcam.stored.len)
-			to_chat(usr, SPAN_BOLDANNOUNCE("No images saved."))
-			return
-		var/datum/picture/selection = targetcam.selectpicture(user)
-		if(selection)
-			picture = selection
 
 /obj/machinery/newscaster/proc/scan_user(mob/living/user)
 	if(ishuman(user))

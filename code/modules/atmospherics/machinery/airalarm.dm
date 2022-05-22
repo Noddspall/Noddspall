@@ -696,7 +696,7 @@
 				emissive_state = "alarm1"
 			if(2)
 				emissive_state = "alarm2"
-	
+
 		. += mutable_appearance(icon, emissive_state)
 		. += emissive_appearance(icon, "light_emissive")
 
@@ -902,16 +902,6 @@
 					buildstage = AIRALARM_BUILD_NO_WIRES
 					update_appearance()
 					qdel(W)
-				return
-
-			if(istype(W, /obj/item/electroadaptive_pseudocircuit))
-				var/obj/item/electroadaptive_pseudocircuit/P = W
-				if(!P.adapt_circuit(user, 25))
-					return
-				user.visible_message(SPAN_NOTICE("[user] fabricates a circuit and places it into [src]."), \
-				SPAN_NOTICE("You adapt an air alarm circuit and slot it into the assembly."))
-				buildstage = AIRALARM_BUILD_NO_WIRES
-				update_appearance()
 				return
 
 	return ..()

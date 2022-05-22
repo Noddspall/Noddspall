@@ -33,7 +33,6 @@ GLOBAL_LIST_INIT(rod_recipes, list ( \
 	novariants = TRUE
 	matter_amount = 2
 	cost = 250
-	source = /datum/robot_energy_storage/iron
 	merge_type = /obj/item/stack/rods
 
 /obj/item/stack/rods/suicide_act(mob/living/carbon/user)

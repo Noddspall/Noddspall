@@ -166,7 +166,6 @@
 		/obj/item/toy/balloon,
 		/obj/item/toy/gun,
 		/obj/item/toy/sword,
-		/obj/item/toy/talking/ai,
 		/obj/item/toy/talking/owl,
 		/obj/item/toy/talking/griffin,
 		/obj/item/toy/minimeteor,

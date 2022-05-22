@@ -285,7 +285,6 @@
 		augment_list = list()
 		var/list/templist = list(
 		/obj/item/organ/cyberimp/brain/anti_drop,
-		/obj/item/organ/cyberimp/arm/toolset,
 		/obj/item/organ/cyberimp/arm/surgery,
 		/obj/item/organ/cyberimp/chest/thrusters,
 		/obj/item/organ/lungs/cybernetic/tier3,

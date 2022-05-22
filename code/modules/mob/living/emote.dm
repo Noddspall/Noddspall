@@ -333,21 +333,9 @@
 	)
 	vary = TRUE
 
-/datum/emote/living/scream/can_run_emote(mob/living/user, status_check, intentional)
-	if(iscyborg(user))
-		var/mob/living/silicon/robot/R = user
-
-		if(R.cell?.charge < 200)
-			to_chat(R, SPAN_WARNING("Scream module deactivated. Please recharge."))
-			return FALSE
-		R.cell.use(200)
-	return ..()
-
 /datum/emote/living/scream/get_sound(mob/living/user, override = FALSE)
 	if(!override)
 		return
-	if(iscyborg(user))
-		return 'sound/voice/scream_silicon.ogg'
 	if(istype(user, /mob/living/simple_animal/hostile/gorilla))
 		return 'sound/creatures/gorilla.ogg'
 	if(isalien(user))

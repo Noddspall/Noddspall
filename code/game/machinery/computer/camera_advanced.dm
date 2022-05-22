@@ -1,3 +1,20 @@
+/mob/camera/ai_eye/remote
+	name = "Inactive Camera Eye"
+	var/sprint = 10
+	var/cooldown = 0
+	var/acceleration = 1
+	var/mob/living/eye_user = null
+	var/obj/machinery/origin
+	var/eye_initialized = 0
+	var/visible_icon = 0
+	var/image/user_image = null
+
+/mob/camera/ai_eye/remote/update_remote_sight(mob/living/user)
+	user.see_invisible = SEE_INVISIBLE_LIVING //can't see ghosts through cameras
+	user.sight = SEE_TURFS | SEE_BLACKNESS
+	user.see_in_dark = 2
+	return TRUE
+
 /obj/machinery/computer/camera_advanced
 	name = "advanced camera console"
 	desc = "Used to access the various cameras on the station."
@@ -161,12 +178,6 @@
 		give_eye_control(L)
 		eyeobj.setLoc(eyeobj.loc, TRUE)
 
-/obj/machinery/computer/camera_advanced/attack_robot(mob/user)
-	return attack_hand(user)
-
-/obj/machinery/computer/camera_advanced/attack_ai(mob/user)
-	return //AIs would need to disable their own camera procs to use the console safely. Bugs happen otherwise.
-
 /obj/machinery/computer/camera_advanced/proc/give_eye_control(mob/user)
 	GrantActions(user)
 	current_user = user
@@ -177,77 +188,6 @@
 	eyeobj.setLoc(eyeobj.loc, TRUE)
 	if(should_supress_view_changes )
 		user.client.view_size.supress()
-
-/mob/camera/ai_eye/remote
-	name = "Inactive Camera Eye"
-	ai_detector_visible = FALSE
-	var/sprint = 10
-	var/cooldown = 0
-	var/acceleration = 1
-	var/mob/living/eye_user = null
-	var/obj/machinery/origin
-	var/eye_initialized = 0
-	var/visible_icon = 0
-	var/image/user_image = null
-
-/mob/camera/ai_eye/remote/update_remote_sight(mob/living/user)
-	user.see_invisible = SEE_INVISIBLE_LIVING //can't see ghosts through cameras
-	user.sight = SEE_TURFS | SEE_BLACKNESS
-	user.see_in_dark = 2
-	return TRUE
-
-/mob/camera/ai_eye/remote/Destroy()
-	if(origin && eye_user)
-		origin.remove_eye_control(eye_user,src)
-	origin = null
-	. = ..()
-	eye_user = null
-
-/mob/camera/ai_eye/remote/GetViewerClient()
-	if(eye_user)
-		return eye_user.client
-	return null
-
-/mob/camera/ai_eye/remote/setLoc(destination, force_update)
-	if(eye_user)
-		destination = get_turf(destination)
-		if (destination)
-			if(!force_update && loc) //If we dont have a loc, let it be moved out regardless boundaries. Removing this bandaid will require checking all sources of AI eyes manipulations
-				var/datum/map_zone/mapzone = loc.get_map_zone()
-				if(!mapzone.is_in_bounds(destination))
-					return
-			abstract_move(destination)
-		else
-			moveToNullspace()
-
-		update_ai_detect_hud()
-
-		if(use_static)
-			GLOB.cameranet.visibility(src, GetViewerClient(), null, use_static)
-
-		if(visible_icon)
-			if(eye_user.client)
-				eye_user.client.images -= user_image
-				user_image = image(icon,loc,icon_state,FLY_LAYER)
-				eye_user.client.images += user_image
-
-/mob/camera/ai_eye/remote/relaymove(mob/living/user, direction)
-	var/initial = initial(sprint)
-	var/max_sprint = 50
-
-	if(cooldown && cooldown < world.timeofday) // 3 seconds
-		sprint = initial
-
-	for(var/i = 0; i < max(sprint, initial); i += 20)
-		var/turf/step = get_turf(get_step(src, direction))
-		if(step)
-			setLoc(step)
-
-	cooldown = world.timeofday + 5
-	if(acceleration)
-		sprint = min(sprint + 0.5, max_sprint)
-	else
-		sprint = initial
 
 /datum/action/innate/camera_off
 	name = "End Camera View"

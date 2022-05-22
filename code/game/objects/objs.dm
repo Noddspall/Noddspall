@@ -166,19 +166,10 @@
 /obj/proc/updateDialog(update_viewers = TRUE,update_ais = TRUE)
 	// Check that people are actually using the machine. If not, don't update anymore.
 	if(obj_flags & IN_USE)
-		var/is_in_use = FALSE
 		if(update_viewers)
 			for(var/mob/M in viewers(1, src))
 				if ((M.client && M.machine == src))
-					is_in_use = TRUE
 					src.interact(M)
-		var/ai_in_use = FALSE
-		if(update_ais)
-			ai_in_use = AutoUpdateAI(src)
-
-		if(update_viewers && update_ais) //State change is sure only if we check both
-			if(!ai_in_use && !is_in_use)
-				obj_flags &= ~IN_USE
 
 
 /obj/attack_ghost(mob/user)

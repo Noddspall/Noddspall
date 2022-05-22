@@ -156,10 +156,6 @@
 	active_power_usage = 6
 	power_channel = AREA_USAGE_ENVIRON
 
-/obj/machinery/readybutton/attack_ai(mob/user)
-	to_chat(user, SPAN_WARNING("The station AI is not to interact with these devices!"))
-	return
-
 /obj/machinery/readybutton/attack_paw(mob/user, list/modifiers)
 	to_chat(user, SPAN_WARNING("You are too primitive to use this device!"))
 	return

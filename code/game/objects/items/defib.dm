@@ -670,25 +670,6 @@
 				playsound(src, 'sound/machines/defib_failed.ogg', 50, FALSE)
 	do_cancel()
 
-/obj/item/shockpaddles/cyborg
-	name = "cyborg defibrillator paddles"
-	icon = 'icons/obj/defib.dmi'
-	icon_state = "defibpaddles0"
-	inhand_icon_state = "defibpaddles0"
-	req_defib = FALSE
-
-/obj/item/shockpaddles/cyborg/attack(mob/M, mob/user)
-	if(iscyborg(user))
-		var/mob/living/silicon/robot/R = user
-		if(R.emagged)
-			combat = TRUE
-		else
-			combat = FALSE
-	else
-		combat = FALSE
-
-	. = ..()
-
 /obj/item/shockpaddles/syndicate
 	name = "syndicate defibrillator paddles"
 	desc = "A pair of paddles used to revive deceased operatives. They possess both the ability to penetrate armor and to deliver powerful or disabling shocks offensively."

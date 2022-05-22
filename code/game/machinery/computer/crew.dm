@@ -208,12 +208,6 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 	. = ..()
 	if(.)
 		return
-	switch (action)
-		if ("select_person")
-			var/mob/living/silicon/ai/AI = usr
-			if(!istype(AI))
-				return
-			AI.ai_camera_track(params["name"])
 
 #undef SENSORS_UPDATE_PERIOD
 #undef UNKNOWN_JOB_ID

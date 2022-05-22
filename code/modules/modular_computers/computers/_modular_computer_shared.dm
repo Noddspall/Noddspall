@@ -32,17 +32,6 @@
 
 	var/user_is_adjacent = Adjacent(user) //don't reveal full details unless they're close enough to see it on the screen anyway.
 
-	var/obj/item/computer_hardware/ai_slot/ai_slot = get_modular_computer_part(MC_AI)
-	if(ai_slot)
-		if(ai_slot.stored_card)
-			if(user_is_adjacent)
-				. += "It has a slot installed for an intelliCard which contains: [ai_slot.stored_card.name]"
-			else
-				. += "It has a slot installed for an intelliCard, which appears to be occupied."
-			. += SPAN_INFO("Alt-click to eject the intelliCard.")
-		else
-			. += "It has a slot installed for an intelliCard."
-
 	var/obj/item/computer_hardware/card_slot/card_slot = get_modular_computer_part(MC_CARD)
 	var/obj/item/computer_hardware/card_slot/card_slot2 = get_modular_computer_part(MC_CARD2)
 	var/multiple_slots = istype(card_slot) && istype(card_slot2)

@@ -665,11 +665,6 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		variant_name = pick(variant_list)
 	update_appearance()
 
-/obj/item/lighter/cyborg_unequip(mob/user)
-	if(!lit)
-		return
-	set_lit(FALSE)
-
 /obj/item/lighter/suicide_act(mob/living/carbon/user)
 	if (lit)
 		user.visible_message(SPAN_SUICIDE("[user] begins holding \the [src]'s flame up to [user.p_their()] face! It looks like [user.p_theyre()] trying to commit suicide!"))

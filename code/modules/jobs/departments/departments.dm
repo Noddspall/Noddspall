@@ -93,16 +93,6 @@
 	label_class = "service"
 	latejoin_color = "#bbe291"
 
-
-/datum/job_department/silicon
-	department_name = DEPARTMENT_SILICON
-	department_bitflags = DEPARTMENT_BITFLAG_SILICON
-	department_head = /datum/job/ai
-	department_experience_type = EXP_TYPE_SILICON
-	display_order = 8
-	label_class = "silicon"
-	latejoin_color = "#ccffcc"
-
 /datum/job_department/civillian
 	department_name = DEPARTMENT_CIVILLIAN
 	department_bitflags = DEPARTMENT_BITFLAG_CIVILLIAN

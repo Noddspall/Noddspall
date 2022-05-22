@@ -177,19 +177,6 @@
 	if(user)
 		user.balloon_alert_to_viewers("released [src]", "released [src]")
 
-/obj/machinery/door/firedoor/attack_ai(mob/user)
-	add_fingerprint(user)
-	if(welded || operating || machine_stat & NOPOWER)
-		return TRUE
-	if(density)
-		open()
-	else
-		close()
-	return TRUE
-
-/obj/machinery/door/firedoor/attack_robot(mob/user)
-	return attack_ai(user)
-
 /obj/machinery/door/firedoor/attack_alien(mob/user, list/modifiers)
 	add_fingerprint(user)
 	if(welded)
@@ -419,15 +406,6 @@
 					if(reinforced)
 						new /obj/item/stack/sheet/plasteel(T, 2)
 					qdel(src)
-				return
-			if(istype(C, /obj/item/electroadaptive_pseudocircuit))
-				var/obj/item/electroadaptive_pseudocircuit/P = C
-				if(!P.adapt_circuit(user, DEFAULT_STEP_TIME * 0.5))
-					return
-				user.visible_message(SPAN_NOTICE("[user] fabricates a circuit and places it into [src]."), \
-				SPAN_NOTICE("You adapt a firelock circuit and slot it into the assembly."))
-				constructionStep = CONSTRUCTION_PANEL_OPEN
-				update_appearance()
 				return
 	return ..()
 

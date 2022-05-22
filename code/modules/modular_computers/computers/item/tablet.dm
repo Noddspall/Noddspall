@@ -91,52 +91,10 @@
 		return ..()
 	return FALSE
 
-/**
- * Returns a ref to the RoboTact app, creating the app if need be.
- *
- * The RoboTact app is important for borgs, and so should always be available.
- * This proc will look for it in the tablet's robotact var, then check the
- * hard drive if the robotact var is unset, and finally attempt to create a new
- * copy if the hard drive does not contain the app. If the hard drive rejects
- * the new copy (such as due to lack of space), the proc will crash with an error.
- * RoboTact is supposed to be undeletable, so these will create runtime messages.
- */
-/obj/item/modular_computer/tablet/integrated/proc/get_robotact()
-	if(!borgo)
-		return null
-	if(!robotact)
-		var/obj/item/computer_hardware/hard_drive/hard_drive = all_components[MC_HDD]
-		robotact = hard_drive.find_file_by_name("robotact")
-		if(!robotact)
-			stack_trace("Cyborg [borgo] ( [borgo.type] ) was somehow missing their self-manage app in their tablet. A new copy has been created.")
-			robotact = new(hard_drive)
-			if(!hard_drive.store_file(robotact))
-				qdel(robotact)
-				robotact = null
-				CRASH("Cyborg [borgo]'s tablet hard drive rejected recieving a new copy of the self-manage app. To fix, check the hard drive's space remaining. Please make a bug report about this.")
-	return robotact
-
 //Makes the light settings reflect the borg's headlamp settings
 /obj/item/modular_computer/tablet/integrated/ui_data(mob/user)
 	. = ..()
 	.["has_light"] = TRUE
-	.["light_on"] = borgo?.lamp_enabled
-	.["comp_light_color"] = borgo?.lamp_color
-
-//Makes the flashlight button affect the borg rather than the tablet
-/obj/item/modular_computer/tablet/integrated/toggle_flashlight()
-	if(!borgo || QDELETED(borgo))
-		return FALSE
-	borgo.toggle_headlamp()
-	return TRUE
-
-//Makes the flashlight color setting affect the borg rather than the tablet
-/obj/item/modular_computer/tablet/integrated/set_flashlight_color(color)
-	if(!borgo || QDELETED(borgo) || !color)
-		return FALSE
-	borgo.lamp_color = color
-	borgo.toggle_headlamp(FALSE, TRUE)
-	return TRUE
 
 /obj/item/modular_computer/tablet/integrated/alert_call(datum/computer_file/program/caller, alerttext, sound = 'sound/machines/twobeep_high.ogg')
 	if(!caller || !caller.alert_able || caller.alert_silenced || !alerttext) //Yeah, we're checking alert_able. No, you don't get to make alerts that the user can't silence.
@@ -150,8 +108,3 @@
 	icon_state_powered = "tablet-silicon-syndicate"
 	icon_state_unpowered = "tablet-silicon-syndicate"
 	device_theme = "syndicate"
-
-
-/obj/item/modular_computer/tablet/integrated/syndicate/Initialize()
-	. = ..()
-	borgo.lamp_color = COLOR_RED //Syndicate likes it red

@@ -434,9 +434,6 @@
 /obj/structure/mining_shuttle_beacon/proc/clear_cooldown()
 	anti_spam_cd = 0
 
-/obj/structure/mining_shuttle_beacon/attack_robot(mob/user)
-	return attack_hand(user) //So borgies can help
-
 #undef ZONE_SET
 #undef BAD_ZLEVEL
 #undef BAD_AREA

@@ -114,8 +114,6 @@
 			for(var/sig in GLOB.lawchanges)
 				dat += "[sig]<BR>"
 			holder << browse(dat, "window=lawchanges;size=800x500")
-		if("showailaws")
-			holder.holder.output_ai_laws()//huh, inconvenient var naming, huh?
 		if("manifest")
 			var/dat = "<B>Showing Crew Manifest.</B><HR>"
 			dat += "<table cellspacing=5><tr><th>Name</th><th>Position</th></tr>"
@@ -263,11 +261,6 @@
 				return
 			holder.anon_names()
 			SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Anonymous Names"))
-		if("tripleAI")
-			if(!is_funmin)
-				return
-			holder.triple_ai()
-			SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Triple AI"))
 		if("eagles")
 			if(!is_funmin)
 				return

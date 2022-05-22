@@ -153,7 +153,6 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 	material_type = /datum/material/iron
 	matter_amount = 4
 	cost = 500
-	source = /datum/robot_energy_storage/iron
 
 /obj/item/stack/sheet/iron/fifty
 	amount = 50
@@ -179,7 +178,6 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
  * Plasteel
  */
 GLOBAL_LIST_INIT(plasteel_recipes, list ( \
-	new/datum/stack_recipe("AI core", /obj/structure/ai_core, 4, time = 50, one_per_turf = TRUE), \
 	new/datum/stack_recipe("bomb assembly", /obj/machinery/syndicatebomb/empty, 10, time = 50), \
 	null, \
 	new /datum/stack_recipe_list("airlock assemblies", list( \

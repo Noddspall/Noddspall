@@ -780,12 +780,7 @@ What a mess.*/
 
 /obj/machinery/computer/secure_data/proc/get_photo(mob/user)
 	var/obj/item/photo/P = null
-	if(issilicon(user))
-		var/mob/living/silicon/tempAI = user
-		var/datum/picture/selection = tempAI.GetPhoto(user)
-		if(selection)
-			P = new(null, selection)
-	else if(istype(user.get_active_held_item(), /obj/item/photo))
+	if(istype(user.get_active_held_item(), /obj/item/photo))
 		P = user.get_active_held_item()
 	return P
 

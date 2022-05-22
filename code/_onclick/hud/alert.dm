@@ -491,25 +491,6 @@ so as to remain in compliance with the most up-to-date laws."
 	icon_state = "newlaw"
 	timeout = 300
 
-/atom/movable/screen/alert/hackingapc
-	name = "Hacking APC"
-	desc = "An Area Power Controller is being hacked. When the process is \
-		complete, you will have exclusive control of it, and you will gain \
-		additional processing time to unlock more malfunction abilities."
-	icon_state = "hackingapc"
-	timeout = 600
-	var/atom/target = null
-
-/atom/movable/screen/alert/hackingapc/Click()
-	. = ..()
-	if(!.)
-		return
-
-	var/mob/living/silicon/ai/ai_owner = owner
-	var/turf/target_turf = get_turf(target)
-	if(target_turf)
-		ai_owner.eyeobj.setLoc(target_turf)
-
 //MECHS
 
 /atom/movable/screen/alert/low_mech_integrity

@@ -18,8 +18,6 @@
 		cpu.install_component(new /obj/item/computer_hardware/printer)
 	if(_has_battery)
 		cpu.install_component(new /obj/item/computer_hardware/battery(cpu, /obj/item/stock_parts/cell/computer/super))
-	if(_has_ai)
-		cpu.install_component(new /obj/item/computer_hardware/ai_slot)
 	install_programs()
 
 // Override in child types to install preset-specific programs.
@@ -48,8 +46,6 @@
 	var/obj/item/computer_hardware/hard_drive/hard_drive = cpu.all_components[MC_HDD]
 	hard_drive.store_file(new/datum/computer_file/program/ntnetmonitor())
 	hard_drive.store_file(new/datum/computer_file/program/chatclient())
-	hard_drive.store_file(new/datum/computer_file/program/aidiag())
-
 
 // ===== COMMAND CONSOLE =====
 /obj/machinery/modular_computer/console/preset/command

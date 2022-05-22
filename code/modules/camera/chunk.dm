@@ -84,7 +84,7 @@
 		added_turf.vis_contents -= vis_contents_opaque
 
 	for(var/turf/removed_turf as anything in visRemoved)
-		if(obscuredTurfs[removed_turf] && !istype(removed_turf, /turf/open/ai_visible))
+		if(obscuredTurfs[removed_turf])
 			removed_turf.vis_contents += vis_contents_opaque
 
 	changed = FALSE
@@ -101,10 +101,6 @@
 	for(var/obj/machinery/camera/camera in urange(CHUNK_SIZE, locate(x + (CHUNK_SIZE / 2), y + (CHUNK_SIZE / 2), z)))
 		if(camera.can_use())
 			cameras += camera
-
-	for(var/mob/living/silicon/sillycone in urange(CHUNK_SIZE, locate(x + (CHUNK_SIZE / 2), y + (CHUNK_SIZE / 2), z)))
-		if(sillycone.builtInCamera?.can_use())
-			cameras += sillycone.builtInCamera
 
 	for(var/turf/t as anything in block(locate(max(x, 1), max(y, 1), z), locate(min(x + CHUNK_SIZE - 1, world.maxx), min(y + CHUNK_SIZE - 1, world.maxy), z)))
 		turfs[t] = t

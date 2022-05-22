@@ -139,11 +139,6 @@
 	merger.temperature = spawn_temp
 	O.assume_air(merger)
 
-/obj/machinery/atmospherics/miner/attack_ai(mob/living/silicon/user)
-	if(broken)
-		to_chat(user, "[src] seems to be broken. Its debug interface outputs: [broken_message]")
-	..()
-
 /obj/machinery/atmospherics/miner/n2o
 	name = "\improper N2O Gas Miner"
 	overlay_color = "#FFCCCC"

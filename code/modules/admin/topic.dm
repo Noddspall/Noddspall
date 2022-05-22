@@ -650,28 +650,6 @@
 		message_admins(SPAN_DANGER("Admin [key_name_admin(usr)] healed / revived [key_name_admin(L)]!"))
 		log_admin("[key_name(usr)] healed / Revived [key_name(L)].")
 
-	else if(href_list["makeai"])
-		if(!check_rights(R_SPAWN))
-			return
-
-		var/mob/living/carbon/human/H = locate(href_list["makeai"])
-		if(!istype(H))
-			to_chat(usr, "This can only be used on instances of type /mob/living/carbon/human.", confidential = TRUE)
-			return
-
-		var/move = TRUE
-		switch(tgui_alert(usr,"Move new AI to AI spawn location?","Move AI?", list("Yes", "No","Cancel")))
-			if("Cancel")
-				return
-			if("No")
-				move = FALSE
-		if(QDELETED(H))
-			to_chat(usr, SPAN_DANGER("Subject was deleted already. Transform canceled."))
-			return
-		message_admins(SPAN_DANGER("Admin [key_name_admin(usr)] AIized [key_name_admin(H)]!"))
-		log_admin("[key_name(usr)] AIized [key_name(H)].")
-		H.AIize(TRUE, H.client, move)
-
 	else if(href_list["makealien"])
 		if(!check_rights(R_SPAWN))
 			return
@@ -682,18 +660,6 @@
 			return
 
 		usr.client.cmd_admin_alienize(H)
-
-
-	else if(href_list["makerobot"])
-		if(!check_rights(R_SPAWN))
-			return
-
-		var/mob/living/carbon/human/H = locate(href_list["makerobot"])
-		if(!istype(H))
-			to_chat(usr, "This can only be used on instances of type /mob/living/carbon/human.", confidential = TRUE)
-			return
-
-		usr.client.cmd_admin_robotize(H)
 
 	else if(href_list["makeanimal"])
 		if(!check_rights(R_SPAWN))
@@ -748,11 +714,6 @@
 			C.admin_ghost()
 		sleep(2)
 		C.jumptocoord(x,y,z)
-
-	else if(href_list["adminchecklaws"])
-		if(!check_rights(R_ADMIN))
-			return
-		output_ai_laws()
 
 	else if(href_list["adminmoreinfo"])
 		var/mob/M = locate(href_list["adminmoreinfo"]) in GLOB.mob_list
@@ -1049,16 +1010,6 @@
 		else
 			show_traitor_panel(M)
 
-	else if(href_list["borgpanel"])
-		if(!check_rights(R_ADMIN))
-			return
-
-		var/mob/M = locate(href_list["borgpanel"])
-		if(!iscyborg(M))
-			to_chat(usr, "This can only be used on cyborgs", confidential = TRUE)
-		else
-			open_borgopanel(M)
-
 	else if(href_list["initmind"])
 		if(!check_rights(R_ADMIN))
 			return
@@ -1195,11 +1146,6 @@
 								var/mob/living/L = usr
 								var/obj/item/I = O
 								L.put_in_hands(I)
-								if(iscyborg(L))
-									var/mob/living/silicon/robot/R = L
-									if(R.model)
-										R.model.add_module(I, TRUE, TRUE)
-										R.activate_module(I)
 
 		if(pod)
 			new /obj/effect/pod_landingzone(target, pod)

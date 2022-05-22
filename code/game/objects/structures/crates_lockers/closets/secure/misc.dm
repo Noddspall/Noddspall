@@ -8,7 +8,6 @@
 	..()
 	new /obj/item/storage/firstaid/regular(src)
 	new /obj/item/storage/box/handcuffs(src)
-	new /obj/item/aicard(src)
 	new /obj/item/assembly/flash/handheld(src)
 	if(prob(50))
 		new /obj/item/ammo_box/magazine/m50(src)

@@ -127,21 +127,6 @@
 				to_chat(ass, SPAN_NOTICE("You feel a slight pressure on your ass."))
 			return TRUE
 
-		// AI printing photos from their saved images.
-		if("ai_photo")
-			if(busy)
-				to_chat(usr, SPAN_WARNING("[src] is currently busy copying something. Please wait until it is finished."))
-				return FALSE
-			var/mob/living/silicon/ai/tempAI = usr
-			if(!length(tempAI.aicamera.stored))
-				to_chat(usr, SPAN_BOLDANNOUNCE("No images saved."))
-				return
-			var/datum/picture/selection = tempAI.aicamera.selectpicture(usr)
-			var/obj/item/photo/photo = new(loc, selection) // AI prints color photos only.
-			give_pixel_offset(photo)
-			toner_cartridge.charges -= PHOTO_TONER_USE
-			return TRUE
-
 		// Switch between greyscale and color photos
 		if("color_mode")
 			if(params["mode"] in list(PHOTO_GREYSCALE, PHOTO_COLOR))

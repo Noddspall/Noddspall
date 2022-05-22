@@ -36,10 +36,6 @@
 	show_boombox_ui(user)
 	return TRUE
 
-/obj/item/boombox/attack_robot(mob/user)
-	show_boombox_ui(user)
-	return TRUE
-
 /obj/item/boombox/Destroy()
 	stop_song()
 	return..()

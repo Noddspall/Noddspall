@@ -76,18 +76,6 @@
 	else if(S.active)
 		return S.seconds_remaining()
 
-/obj/effect/countdown/transformer
-	name = "transformer countdown"
-	color = "#4C5866"
-
-/obj/effect/countdown/transformer/get_value()
-	var/obj/machinery/transformer/T = attached_to
-	if(!istype(T))
-		return
-	else if(T.cooldown)
-		var/seconds_left = max(0, (T.cooldown_timer - world.time) / 10)
-		return "[round(seconds_left)]"
-
 /obj/effect/countdown/hourglass
 	name = "hourglass countdown"
 

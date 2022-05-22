@@ -196,12 +196,6 @@
 	else
 		alarm(user)
 
-/obj/machinery/firealarm/attack_ai(mob/user)
-	return attack_hand(user)
-
-/obj/machinery/firealarm/attack_robot(mob/user)
-	return attack_hand(user)
-
 /obj/machinery/firealarm/attackby(obj/item/tool, mob/living/user, params)
 	add_fingerprint(user)
 
@@ -288,16 +282,6 @@
 					update_appearance()
 					return
 
-				else if(istype(tool, /obj/item/electroadaptive_pseudocircuit))
-					var/obj/item/electroadaptive_pseudocircuit/pseudoc = tool
-					if(!pseudoc.adapt_circuit(user, 15))
-						return
-					user.visible_message(SPAN_NOTICE("[user] fabricates a circuit and places it into [src]."), \
-					SPAN_NOTICE("You adapt a fire alarm circuit and slot it into the assembly."))
-					buildstage = 1
-					update_appearance()
-					return
-
 				else if(tool.tool_behaviour == TOOL_WRENCH)
 					user.visible_message(
 						SPAN_NOTICE("[user] removes the fire alarm assembly from the wall."),
@@ -370,20 +354,6 @@
 /obj/machinery/firealarm/examine(mob/user)
 	. = ..()
 	. += "A light on the side indicates the thermal sensor is [detecting ? "enabled" : "disabled"]."
-
-// Allows Silicons to disable thermal sensor
-/obj/machinery/firealarm/BorgCtrlClick(mob/living/silicon/robot/user)
-	if(get_dist(src,user) <= user.interaction_range)
-		AICtrlClick(user)
-		return
-	return ..()
-
-/obj/machinery/firealarm/AICtrlClick(mob/living/silicon/robot/user)
-	if(obj_flags & EMAGGED)
-		to_chat(user, SPAN_WARNING("The control circuitry of [src] appears to be malfunctioning."))
-		return
-	detecting = !detecting
-	to_chat(user, SPAN_NOTICE("You [ detecting ? "enable" : "disable" ] [src]'s detecting unit!"))
 
 /obj/machinery/firealarm/directional/north
 	pixel_y = 26

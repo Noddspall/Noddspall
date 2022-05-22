@@ -756,14 +756,6 @@
 		update(0)
 	flickering = FALSE
 
-// ai attack - make lights flicker, because why not
-
-/obj/machinery/light/attack_ai(mob/user)
-	no_emergency = !no_emergency
-	to_chat(user, SPAN_NOTICE("Emergency lights for this fixture have been [no_emergency ? "disabled" : "enabled"]."))
-	update(FALSE)
-	return
-
 // attack with hand - remove tube/bulb
 // if hands aren't protected and the light is on, burn the player
 

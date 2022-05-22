@@ -77,8 +77,6 @@ GLOBAL_LIST_EMPTY(PDAs)
 	var/obj/item/card/id/id = null //Making it possible to slot an ID card into the PDA so it can function as both.
 	var/ownjob = null //related to above
 
-	var/obj/item/paicard/pai = null // A slot for a personal AI device
-
 	var/datum/picture/picture //Scanned photo
 
 	var/list/contained_item = list(/obj/item/pen, /obj/item/toy/crayon, /obj/item/lipstick, /obj/item/flashlight/pen, /obj/item/clothing/mask/cigarette)
@@ -191,13 +189,6 @@ GLOBAL_LIST_EMPTY(PDAs)
 	if(light_on)
 		overlay.icon_state = "light_overlay"
 		. += new /mutable_appearance(overlay)
-	if(pai)
-		if(pai.pai)
-			overlay.icon_state = "pai_overlay"
-			. += new /mutable_appearance(overlay)
-		else
-			overlay.icon_state = "pai_off_overlay"
-			. += new /mutable_appearance(overlay)
 
 /obj/item/pda/MouseDrop(mob/over, src_location, over_location)
 	var/mob/M = usr
@@ -330,13 +321,6 @@ GLOBAL_LIST_EMPTY(PDAs)
 						dat += "<li><a href='byond://?src=[REF(src)];drone_blacklist=[!blacklist_state];choice=Drone Access'>[PDAIMG(droneblacklist)][blacklist_state ? "Disable" : "Enable"] Drone Blacklist</a></li>"
 				dat += "<li><a href='byond://?src=[REF(src)];choice=3'>[PDAIMG(atmos)]Atmospheric Scan</a></li>"
 				dat += "<li><a href='byond://?src=[REF(src)];choice=Light'>[PDAIMG(flashlight)][light_on ? "Disable" : "Enable"] Flashlight</a></li>"
-				if (pai)
-					if(pai.loc != src)
-						pai = null
-						update_appearance()
-					else
-						dat += "<li><a href='byond://?src=[REF(src)];choice=pai;option=1'>pAI Device Configuration</a></li>"
-						dat += "<li><a href='byond://?src=[REF(src)];choice=pai;option=2'>Eject pAI Device</a></li>"
 				dat += "</ul>"
 
 			if (1)
@@ -636,16 +620,6 @@ GLOBAL_LIST_EMPTY(PDAs)
 							else
 								M.close()
 
-//pAI FUNCTIONS===================================
-
-			if("pai")
-				switch(href_list["option"])
-					if("1") // Configure pAI device
-						pai.attack_self(U)
-					if("2") // Eject pAI device
-						usr.put_in_hands(pai)
-						to_chat(usr, SPAN_NOTICE("You remove the pAI from the [name]."))
-
 //LINK FUNCTIONS===================================
 
 			else//Cartridge menu linking
@@ -787,9 +761,6 @@ GLOBAL_LIST_EMPTY(PDAs)
 	var/mob/living/L = null
 	if(loc && isliving(loc))
 		L = loc
-	//Maybe they are a pAI!
-	else
-		L = get(src, /mob/living/silicon)
 
 	if(L && (L.stat == CONSCIOUS || L.stat == SOFT_CRIT))
 		var/reply = "(<a href='byond://?src=[REF(src)];choice=Message;skiprefresh=1;target=[REF(signal.source)]'>Reply</a>)"
@@ -1015,13 +986,6 @@ GLOBAL_LIST_EMPTY(PDAs)
 
 			return //Return in case of failed check or when successful.
 		updateSelfDialog()//For the non-input related code.
-	else if(istype(C, /obj/item/paicard) && !pai)
-		if(!user.transferItemToLoc(C, src))
-			return
-		pai = C
-		to_chat(user, SPAN_NOTICE("You slot \the [C] into [src]."))
-		update_appearance()
-		updateUsrDialog()
 	else if(is_type_in_list(C, contained_item)) //Checks if there is a pen
 		if(inserted_item)
 			to_chat(user, SPAN_WARNING("There is already \a [inserted_item] in \the [src]!"))
@@ -1116,83 +1080,9 @@ GLOBAL_LIST_EMPTY(PDAs)
 		QDEL_NULL(id)
 	if(istype(cartridge))
 		QDEL_NULL(cartridge)
-	if(istype(pai))
-		QDEL_NULL(pai)
 	if(istype(inserted_item))
 		QDEL_NULL(inserted_item)
 	return ..()
-
-//AI verb and proc for sending PDA messages.
-
-/obj/item/pda/ai/verb/cmd_toggle_pda_receiver()
-	set category = "AI Commands"
-	set name = "PDA - Toggle Sender/Receiver"
-
-	if(usr.stat == DEAD)
-		return //won't work if dead
-	var/mob/living/silicon/S = usr
-	if(istype(S) && !isnull(S.aiPDA))
-		S.aiPDA.toff = !S.aiPDA.toff
-		to_chat(usr, SPAN_NOTICE("PDA sender/receiver toggled [(S.aiPDA.toff ? "Off" : "On")]!"))
-	else
-		to_chat(usr, "You do not have a PDA. You should make an issue report about this.")
-
-/obj/item/pda/ai/verb/cmd_toggle_pda_silent()
-	set category = "AI Commands"
-	set name = "PDA - Toggle Ringer"
-
-	if(usr.stat == DEAD)
-		return //won't work if dead
-	var/mob/living/silicon/S = usr
-	if(istype(S) && !isnull(S.aiPDA))
-		//0
-		S.aiPDA.silent = !S.aiPDA.silent
-		to_chat(usr, SPAN_NOTICE("PDA ringer toggled [(S.aiPDA.silent ? "Off" : "On")]!"))
-	else
-		to_chat(usr, "You do not have a PDA. You should make an issue report about this.")
-
-/mob/living/silicon/proc/cmd_send_pdamesg(mob/user)
-	var/list/plist = list()
-	var/list/namecounts = list()
-
-	if(aiPDA.toff)
-		to_chat(user, SPAN_ALERT("Turn on your receiver in order to send messages."))
-		return
-
-	for (var/obj/item/pda/P in get_viewable_pdas())
-		if (P == src)
-			continue
-		else if (P == aiPDA)
-			continue
-
-		plist[avoid_assoc_duplicate_keys(P.owner, namecounts)] = P
-
-	var/c = input(user, "Please select a PDA") as null|anything in sortList(plist)
-
-	if (!c)
-		return
-
-	var/selected = plist[c]
-
-	if(aicamera.stored.len)
-		var/add_photo = input(user,"Do you want to attach a photo?","Photo","No") as null|anything in list("Yes","No")
-		if(add_photo=="Yes")
-			var/datum/picture/Pic = aicamera.selectpicture(user)
-			aiPDA.picture = Pic
-
-	if(incapacitated())
-		return
-
-	aiPDA.create_message(src, selected)
-
-/mob/living/silicon/proc/cmd_show_message_log(mob/user)
-	if(incapacitated())
-		return
-	if(!isnull(aiPDA))
-		var/HTML = "<html><head><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><title>AI PDA Message Log</title></head><body>[aiPDA.tnote]</body></html>"
-		user << browse(HTML, "window=log;size=400x444;border=1;can_resize=1;can_close=1;can_minimize=0")
-	else
-		to_chat(user, SPAN_WARNING("You do not have a PDA! You should make an issue report about this."))
 
 // Pass along the pulse to atoms in contents, largely added so pAIs are vulnerable to EMP
 /obj/item/pda/emp_act(severity)

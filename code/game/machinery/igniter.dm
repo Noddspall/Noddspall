@@ -122,12 +122,6 @@
 	else
 		return ..()
 
-/obj/machinery/sparker/attack_ai()
-	if (anchored)
-		return ignite()
-	else
-		return
-
 /obj/machinery/sparker/proc/ignite()
 	if (!(powered()))
 		return

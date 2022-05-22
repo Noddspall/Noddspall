@@ -425,23 +425,6 @@
 		))
 		new rig_snacks(src)
 
-/obj/item/storage/belt/military/abductor
-	name = "agent belt"
-	desc = "A belt used by abductor agents."
-	icon = 'icons/obj/abductor.dmi'
-	icon_state = "belt"
-	inhand_icon_state = "security"
-	worn_icon_state = "security"
-
-/obj/item/storage/belt/military/abductor/full/PopulateContents()
-	new /obj/item/screwdriver/abductor(src)
-	new /obj/item/wrench/abductor(src)
-	new /obj/item/weldingtool/abductor(src)
-	new /obj/item/crowbar/abductor(src)
-	new /obj/item/wirecutters/abductor(src)
-	new /obj/item/multitool/abductor(src)
-	new /obj/item/stack/cable_coil(src)
-
 /obj/item/storage/belt/military/army
 	name = "army belt"
 	desc = "A belt used by military forces."

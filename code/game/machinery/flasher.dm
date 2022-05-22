@@ -104,11 +104,6 @@
 	else
 		return ..()
 
-//Let the AI trigger them directly.
-/obj/machinery/flasher/attack_ai()
-	if (anchored)
-		return flash()
-
 /obj/machinery/flasher/proc/flash()
 	if (!powered() || !bulb)
 		return

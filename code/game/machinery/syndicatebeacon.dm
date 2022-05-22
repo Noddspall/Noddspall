@@ -43,11 +43,6 @@
 	if(user)
 		to_chat(user, SPAN_NOTICE("You deactivate the beacon."))
 
-
-/obj/machinery/power/singularity_beacon/attack_ai(mob/user)
-	return
-
-
 /obj/machinery/power/singularity_beacon/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(.)

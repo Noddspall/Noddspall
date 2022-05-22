@@ -48,15 +48,6 @@
 					else
 						mob_data["job"] = "Unknown"
 					mob_data["species"] = H.dna.species.name
-				else if(issilicon(L))
-					category = "silicons"
-					if(isAI(L))
-						mob_data["module"] = "AI"
-					else if(ispAI(L))
-						mob_data["module"] = "pAI"
-					else if(iscyborg(L))
-						var/mob/living/silicon/robot/R = L
-						mob_data["module"] = R.model.name
 				else
 					category = "others"
 					mob_data["typepath"] = M.type

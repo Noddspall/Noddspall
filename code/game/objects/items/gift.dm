@@ -74,7 +74,6 @@ GLOBAL_LIST_EMPTY(possible_gifts)
 		/obj/item/banhammer,
 		/obj/item/food/grown/ambrosia/deus,
 		/obj/item/food/grown/ambrosia/vulgaris,
-		/obj/item/paicard,
 		/obj/item/instrument/violin,
 		/obj/item/instrument/guitar,
 		/obj/item/storage/belt/utility/full,

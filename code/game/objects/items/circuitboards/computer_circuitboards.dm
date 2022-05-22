@@ -1,15 +1,5 @@
 //Command
 
-/obj/item/circuitboard/computer/aiupload
-	name = "AI Upload (Computer Board)"
-	greyscale_colors = CIRCUIT_COLOR_COMMAND
-	build_path = /obj/machinery/computer/upload/ai
-
-/obj/item/circuitboard/computer/borgupload
-	name = "Cyborg Upload (Computer Board)"
-	greyscale_colors = CIRCUIT_COLOR_COMMAND
-	build_path = /obj/machinery/computer/upload/borg
-
 //Engineering
 
 /obj/item/circuitboard/computer/apc_control
@@ -321,11 +311,6 @@
 	build_path = /obj/machinery/computer/pandemic
 
 //Science
-
-/obj/item/circuitboard/computer/aifixer
-	name = "AI Integrity Restorer (Computer Board)"
-	greyscale_colors = CIRCUIT_COLOR_SCIENCE
-	build_path = /obj/machinery/computer/aifixer
 
 /obj/item/circuitboard/computer/launchpad_console
 	name = "Launchpad Control Console (Computer Board)"

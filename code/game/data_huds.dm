@@ -69,15 +69,6 @@
 /datum/atom_hud/sentient_disease
 	hud_icons = list(SENTIENT_DISEASE_HUD)
 
-/datum/atom_hud/ai_detector
-	hud_icons = list(AI_DETECT_HUD)
-
-/datum/atom_hud/ai_detector/add_hud_to(mob/M)
-	..()
-	if(M && (hudusers.len == 1))
-		for(var/V in GLOB.aiEyes)
-			var/mob/camera/ai_eye/E = V
-			E.update_ai_detect_hud()
 
 /* MED/SEC/DIAG HUD HOOKS */
 
@@ -321,61 +312,6 @@ Diagnostic HUDs!
 			return "crit"
 		else
 			return "dead"
-
-//Sillycone hooks
-/mob/living/silicon/proc/diag_hud_set_health()
-	var/image/holder = hud_list[DIAG_HUD]
-	var/icon/I = icon(icon, icon_state, dir)
-	holder.pixel_y = I.Height() - world.icon_size
-	if(stat == DEAD)
-		holder.icon_state = "huddiagdead"
-	else
-		holder.icon_state = "huddiag[RoundDiagBar(health/maxHealth)]"
-
-/mob/living/silicon/proc/diag_hud_set_status()
-	var/image/holder = hud_list[DIAG_STAT_HUD]
-	var/icon/I = icon(icon, icon_state, dir)
-	holder.pixel_y = I.Height() - world.icon_size
-	switch(stat)
-		if(CONSCIOUS)
-			holder.icon_state = "hudstat"
-		if(UNCONSCIOUS, HARD_CRIT)
-			holder.icon_state = "hudoffline"
-		else
-			holder.icon_state = "huddead2"
-
-//Borgie battery tracking!
-/mob/living/silicon/robot/proc/diag_hud_set_borgcell()
-	var/image/holder = hud_list[DIAG_BATT_HUD]
-	var/icon/I = icon(icon, icon_state, dir)
-	holder.pixel_y = I.Height() - world.icon_size
-	if(cell)
-		var/chargelvl = (cell.charge/cell.maxcharge)
-		holder.icon_state = "hudbatt[RoundDiagBar(chargelvl)]"
-	else
-		holder.icon_state = "hudnobatt"
-
-//borg-AI shell tracking
-/mob/living/silicon/robot/proc/diag_hud_set_aishell() //Shows tracking beacons on the mech
-	var/image/holder = hud_list[DIAG_TRACK_HUD]
-	var/icon/I = icon(icon, icon_state, dir)
-	holder.pixel_y = I.Height() - world.icon_size
-	if(!shell) //Not an AI shell
-		holder.icon_state = null
-	else if(deployed) //AI shell in use by an AI
-		holder.icon_state = "hudtrackingai"
-	else //Empty AI shell
-		holder.icon_state = "hudtracking"
-
-//AI side tracking of AI shell control
-/mob/living/silicon/ai/proc/diag_hud_set_deployed() //Shows tracking beacons on the mech
-	var/image/holder = hud_list[DIAG_TRACK_HUD]
-	var/icon/I = icon(icon, icon_state, dir)
-	holder.pixel_y = I.Height() - world.icon_size
-	if(!deployed_shell)
-		holder.icon_state = null
-	else //AI is currently controlling a shell
-		holder.icon_state = "hudtrackingai"
 
 /*~~~~~~~~~~~~
 	Airlocks!

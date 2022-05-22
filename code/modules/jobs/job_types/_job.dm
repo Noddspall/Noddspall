@@ -364,35 +364,6 @@
 	player_client.prefs.apply_prefs_to(src)
 	dna.update_dna_identity()
 
-
-/mob/living/silicon/ai/apply_prefs_job(client/player_client, datum/job/job)
-	if(GLOB.current_anonymous_theme)
-		fully_replace_character_name(real_name, GLOB.current_anonymous_theme.anonymous_ai_name(TRUE))
-		return
-	apply_pref_name("ai", player_client) // This proc already checks if the player is appearance banned.
-	set_core_display_icon(null, player_client)
-
-
-/mob/living/silicon/robot/apply_prefs_job(client/player_client, datum/job/job)
-	if(mmi)
-		var/organic_name
-		if(GLOB.current_anonymous_theme)
-			organic_name = GLOB.current_anonymous_theme.anonymous_name(src)
-		else
-			if(!player_client)
-				return // Disconnected while checking the appearance ban.
-			organic_name = player_client.prefs.real_name
-
-		mmi.name = "[initial(mmi.name)]: [organic_name]"
-		if(mmi.brain)
-			mmi.brain.name = "[organic_name]'s brain"
-		if(mmi.brainmob)
-			mmi.brainmob.real_name = organic_name //the name of the brain inside the cyborg is the robotized human's name.
-			mmi.brainmob.name = organic_name
-	// If this checks fails, then the name will have been handled during initialization.
-	if(!GLOB.current_anonymous_theme && player_client.prefs.custom_names["cyborg"] != DEFAULT_CYBORG_NAME)
-		apply_pref_name("cyborg", player_client)
-
 /**
  * Called after a successful roundstart spawn.
  * Client is not yet in the mob.

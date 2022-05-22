@@ -173,18 +173,9 @@
 
 	var/list/contents = M.contents.Copy()
 
-	if(iscyborg(M))
-		var/mob/living/silicon/robot/Robot = M
-		// Disconnect AI's in shells
-		if(Robot.connected_ai)
-			Robot.connected_ai.disconnect_shell()
-		if(Robot.mmi)
-			qdel(Robot.mmi)
-		Robot.notify_ai(NEW_BORG)
-	else
-		for(var/obj/item/W in contents)
-			if(!M.dropItemToGround(W))
-				qdel(W)
+	for(var/obj/item/W in contents)
+		if(!M.dropItemToGround(W))
+			qdel(W)
 
 	var/mob/living/new_mob
 

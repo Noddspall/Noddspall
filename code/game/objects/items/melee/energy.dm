@@ -115,44 +115,6 @@
 		return ..()
 	return 0
 
-/obj/item/melee/transforming/energy/sword/cyborg
-	sword_color = "red"
-	var/hitcost = 50
-
-/obj/item/melee/transforming/energy/sword/cyborg/attack(mob/M, mob/living/silicon/robot/R)
-	if(R.cell)
-		var/obj/item/stock_parts/cell/C = R.cell
-		if(active && !(C.use(hitcost)))
-			attack_self(R)
-			to_chat(R, SPAN_NOTICE("It's out of charge!"))
-			return
-		return ..()
-
-/obj/item/melee/transforming/energy/sword/cyborg/saw //Used by medical Syndicate cyborgs
-	name = "energy saw"
-	desc = "For heavy duty cutting. It has a carbon-fiber blade in addition to a toggleable hard-light edge to dramatically increase sharpness."
-	force_on = 30
-	force = 18 //About as much as a spear
-	hitsound = 'sound/weapons/circsawhit.ogg'
-	icon = 'icons/obj/surgery.dmi'
-	icon_state = "esaw_0"
-	icon_state_on = "esaw_1"
-	sword_color = null //stops icon from breaking when turned on.
-	hitcost = 75 //Costs more than a standard cyborg esword
-	w_class = WEIGHT_CLASS_NORMAL
-	sharpness = SHARP_EDGED
-	light_color = LIGHT_COLOR_LIGHT_CYAN
-	tool_behaviour = TOOL_SAW
-	toolspeed = 0.7 //faster as a saw
-
-/obj/item/melee/transforming/energy/sword/cyborg/saw/cyborg_unequip(mob/user)
-	if(!active)
-		return
-	transform_weapon(user, TRUE)
-
-/obj/item/melee/transforming/energy/sword/cyborg/saw/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
-	return 0
-
 /obj/item/melee/transforming/energy/sword/saber
 	var/list/possible_colors = list("red" = COLOR_SOFT_RED, "blue" = LIGHT_COLOR_LIGHT_CYAN, "green" = LIGHT_COLOR_GREEN, "purple" = LIGHT_COLOR_LAVENDER)
 	var/hacked = FALSE

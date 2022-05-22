@@ -185,6 +185,3 @@
 			to_chat(user, SPAN_NOTICE("You remove the prox sensor from the turret frame."))
 			new /obj/item/assembly/prox_sensor(loc)
 			build_step = PTURRET_GUN_EQUIPPED
-
-/obj/machinery/porta_turret_construct/attack_ai()
-	return

@@ -15,9 +15,8 @@
 		var/obj/item/organ/brain/OB = new(loc) //we create a new brain organ for it.
 		OB.brainmob = src
 		forceMove(OB)
-	if(!container?.mecha) //Unless inside a mecha, brains are rather helpless.
-		ADD_TRAIT(src, TRAIT_IMMOBILIZED, BRAIN_UNAIDED)
-		ADD_TRAIT(src, TRAIT_HANDS_BLOCKED, BRAIN_UNAIDED)
+	ADD_TRAIT(src, TRAIT_IMMOBILIZED, BRAIN_UNAIDED)
+	ADD_TRAIT(src, TRAIT_HANDS_BLOCKED, BRAIN_UNAIDED)
 
 
 /mob/living/brain/proc/create_dna()
@@ -33,7 +32,6 @@
 		if(mind) //You aren't allowed to return to brains that don't exist
 			mind.set_current(null)
 		ghostize() //Ghostize checks for key so nothing else is necessary.
-	container = null
 	QDEL_NULL(stored_dna)
 	return ..()
 
@@ -51,7 +49,7 @@
 	return // no eyes, no flashing
 
 /mob/living/brain/can_be_revived()
-	if(!container || health <= HEALTH_THRESHOLD_DEAD)
+	if(health <= HEALTH_THRESHOLD_DEAD)
 		return FALSE
 	return TRUE
 
@@ -61,39 +59,16 @@
 		stored_dna.real_name = real_name
 
 /mob/living/brain/forceMove(atom/destination)
-	if(container)
-		return container.forceMove(destination)
-	else if (istype(loc, /obj/item/organ/brain))
+	if (istype(loc, /obj/item/organ/brain))
 		var/obj/item/organ/brain/B = loc
 		B.forceMove(destination)
 	else if (istype(destination, /obj/item/organ/brain))
 		doMove(destination)
-	else if (istype(destination, /obj/item/mmi))
-		doMove(destination)
 	else
 		CRASH("Brainmob without a container [src] attempted to move to [destination].")
-
-/mob/living/brain/update_mouse_pointer()
-	if (!client)
-		return
-	client.mouse_pointer_icon = initial(client.mouse_pointer_icon)
-	if(!container)
-		return
-	if (container.mecha)
-		var/obj/vehicle/sealed/mecha/M = container.mecha
-		if(M.mouse_pointer)
-			client.mouse_pointer_icon = M.mouse_pointer
-	if (client && ranged_ability?.ranged_mousepointer)
-		client.mouse_pointer_icon = ranged_ability.ranged_mousepointer
 
 /mob/living/brain/proc/get_traumas()
 	. = list()
 	if(istype(loc, /obj/item/organ/brain))
 		var/obj/item/organ/brain/B = loc
 		. = B.traumas
-
-/mob/living/brain/get_policy_keywords()
-	. = ..()
-
-	if(container)
-		. += "[container.type]"

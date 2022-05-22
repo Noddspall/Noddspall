@@ -29,14 +29,6 @@
 	var/mob/dead/observer/G = usr
 	G.dead_tele()
 
-/atom/movable/screen/ghost/pai
-	name = "pAI Candidate"
-	icon_state = "pai"
-
-/atom/movable/screen/ghost/pai/Click()
-	var/mob/dead/observer/G = usr
-	G.register_pai()
-
 /datum/hud/ghost/New(mob/owner)
 	..()
 	var/atom/movable/screen/using
@@ -53,11 +45,6 @@
 
 	using = new /atom/movable/screen/ghost/teleport()
 	using.screen_loc = ui_ghost_teleport
-	using.hud = src
-	static_inventory += using
-
-	using = new /atom/movable/screen/ghost/pai()
-	using.screen_loc = ui_ghost_pai
 	using.hud = src
 	static_inventory += using
 

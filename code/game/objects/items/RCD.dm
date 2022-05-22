@@ -733,45 +733,6 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	. = ..()
 	update_appearance()
 
-/obj/item/construction/rcd/borg
-	no_ammo_message = SPAN_WARNING("Insufficient charge.")
-	desc = "A device used to rapidly build walls and floors."
-	canRturf = TRUE
-	banned_upgrades = NONE
-	var/energyfactor = 72
-
-
-/obj/item/construction/rcd/borg/useResource(amount, mob/user)
-	if(!iscyborg(user))
-		return 0
-	var/mob/living/silicon/robot/borgy = user
-	if(!borgy.cell)
-		if(user)
-			to_chat(user, no_ammo_message)
-		return 0
-	. = borgy.cell.use(amount * energyfactor) //borgs get 1.3x the use of their RCDs
-	if(!. && user)
-		to_chat(user, no_ammo_message)
-	return .
-
-/obj/item/construction/rcd/borg/checkResource(amount, mob/user)
-	if(!iscyborg(user))
-		return 0
-	var/mob/living/silicon/robot/borgy = user
-	if(!borgy.cell)
-		if(user)
-			to_chat(user, no_ammo_message)
-		return 0
-	. = borgy.cell.charge >= (amount * energyfactor)
-	if(!. && user)
-		to_chat(user, no_ammo_message)
-	return .
-
-/obj/item/construction/rcd/borg/syndicate
-	icon_state = "ircd"
-	inhand_icon_state = "ircd"
-	energyfactor = 66
-
 /obj/item/construction/rcd/loaded
 	matter = 160
 

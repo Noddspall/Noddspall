@@ -138,11 +138,6 @@
 /obj/structure/fireaxecabinet/attack_paw(mob/living/user, list/modifiers)
 	return attack_hand(user, modifiers)
 
-/obj/structure/fireaxecabinet/attack_ai(mob/user)
-	toggle_lock(user)
-	return
-
-
 /obj/structure/fireaxecabinet/attack_tk(mob/user)
 	. = COMPONENT_CANCEL_ATTACK_CHAIN
 	if(locked)
