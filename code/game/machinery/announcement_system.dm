@@ -30,7 +30,7 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 /obj/machinery/announcement_system/Initialize()
 	. = ..()
 	GLOB.announcement_systems += src
-	radio = new /obj/item/radio/headset/silicon/ai(src)
+	radio = new /obj/item/radio/headset/integrated(src)
 	update_appearance()
 
 /obj/machinery/announcement_system/update_icon_state()
@@ -125,7 +125,7 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 	. = ..()
 	if(.)
 		return
-	if(!usr.canUseTopic(src, !issilicon(usr)))
+	if(!usr.canUseTopic(src))
 		return
 	if(machine_stat & BROKEN)
 		visible_message(SPAN_WARNING("[src] buzzes."), SPAN_HEAR("You hear a faint buzz."))
@@ -134,14 +134,14 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 	switch(action)
 		if("ArrivalText")
 			var/NewMessage = trim(html_encode(param["newText"]), MAX_MESSAGE_LEN)
-			if(!usr.canUseTopic(src, !issilicon(usr)))
+			if(!usr.canUseTopic(src))
 				return
 			if(NewMessage)
 				arrival = NewMessage
 				log_game("The arrivals announcement was updated: [NewMessage] by:[key_name(usr)]")
 		if("NewheadText")
 			var/NewMessage = trim(html_encode(param["newText"]), MAX_MESSAGE_LEN)
-			if(!usr.canUseTopic(src, !issilicon(usr)))
+			if(!usr.canUseTopic(src))
 				return
 			if(NewMessage)
 				newhead = NewMessage

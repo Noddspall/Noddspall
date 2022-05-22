@@ -244,19 +244,6 @@ Possible to do for anyone motivated enough:
 		return
 
 	switch(action)
-		if("AIrequest")
-			if(last_request + 200 < world.time)
-				last_request = world.time
-				to_chat(usr, SPAN_INFO("You requested an AI's presence."))
-				var/area/area = get_area(src)
-				for(var/mob/living/silicon/ai/AI in GLOB.silicon_mobs)
-					if(!AI.client)
-						continue
-					to_chat(AI, SPAN_INFO("Your presence is requested at <a href='?src=[REF(AI)];jumptoholopad=[REF(src)]'>\the [area]</a>."))
-				return TRUE
-			else
-				to_chat(usr, SPAN_INFO("A request for AI presence was already sent recently."))
-				return
 		if("holocall")
 			/// Admin ghosts trying to holocall through AI powers. Please don't
 			if(isobserver(usr))
@@ -350,9 +337,6 @@ Possible to do for anyone motivated enough:
 	if(LAZYLEN(masters))
 		for(var/I in masters)
 			var/mob/living/master = I
-			var/mob/living/silicon/ai/AI = master
-			if(!istype(AI))
-				AI = null
 
 			if(!is_operational || !validate_user(master))
 				clear_holo(master)
@@ -380,10 +364,6 @@ Possible to do for anyone motivated enough:
 	update_appearance()
 
 /obj/machinery/holopad/proc/activate_holo(mob/living/user)
-	var/mob/living/silicon/ai/AI = user
-	if(!istype(AI))
-		AI = null
-
 	if(is_operational)//If the projector has power and client eye is on it
 
 		var/obj/effect/overlay/holo_pad_hologram/Hologram = new(loc)//Spawn a blank effect at the location.

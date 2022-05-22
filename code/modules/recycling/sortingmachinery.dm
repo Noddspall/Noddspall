@@ -262,10 +262,6 @@
 	flags_1 = CONDUCT_1
 	slot_flags = ITEM_SLOT_BELT
 
-/obj/item/dest_tagger/borg
-	name = "cyborg destination tagger"
-	desc = "Used to fool the disposal mail network into thinking that you're a harmless parcel. Does actually work as a regular destination tagger as well."
-
 /obj/item/dest_tagger/suicide_act(mob/living/user)
 	user.visible_message(SPAN_SUICIDE("[user] begins tagging [user.p_their()] final destination! It looks like [user.p_theyre()] trying to commit suicide!"))
 	if (islizard(user))

@@ -431,8 +431,7 @@
 				SPAN_NOTICE("You stuff [O] into [src]."), \
 				SPAN_HEAR("You hear a loud metal bang."))
 			var/mob/living/L = O
-			if(!issilicon(L))
-				L.Paralyze(40)
+			L.Paralyze(40)
 			if(istype(src, /obj/structure/closet/supplypod/extractionpod))
 				O.forceMove(src)
 			else
@@ -480,7 +479,7 @@
 	if(!usr.canUseTopic(src, BE_CLOSE) || !isturf(loc))
 		return
 
-	if(iscarbon(usr) || issilicon(usr) || isdrone(usr))
+	if(iscarbon(usr))
 		return toggle(usr)
 	else
 		to_chat(usr, SPAN_WARNING("This mob type can't use this verb."))

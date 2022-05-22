@@ -299,10 +299,3 @@
 	selfcharge = TRUE
 	charge_type = /obj/item/food/pie/cream
 	maxWeightClass = 60 //20 pies.
-
-/obj/item/pneumatic_cannon/pie/selfcharge/cyborg
-	name = "low velocity pie cannon"
-	automatic = FALSE
-	charge_type = /obj/item/food/pie/cream/nostun
-	maxWeightClass = 6 //2 pies
-	charge_ticks = 2 //4 second/pie

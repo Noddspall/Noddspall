@@ -269,22 +269,17 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	inhand_icon_state = "cent_headset_alt"
 	keyslot = null
 
-/obj/item/radio/headset/headset_cent/alt/ComponentInitialize()
-	. = ..()
-	AddComponent(/datum/component/wearertargeting/earprotection, list(ITEM_SLOT_EARS))
-
-/obj/item/radio/headset/silicon/pai
-	name = "\proper mini Integrated Subspace Transceiver "
-	subspace_transmission = FALSE
-
-
-/obj/item/radio/headset/silicon/ai
+/obj/item/radio/headset/integrated
 	name = "\proper Integrated Subspace Transceiver "
 	keyslot2 = new /obj/item/encryptionkey/ai
 	command = TRUE
 
-/obj/item/radio/headset/silicon/can_receive(freq, map_zones)
+/obj/item/radio/headset/integrated/can_receive(freq, map_zones)
 	return ..(freq, map_zones, TRUE)
+
+/obj/item/radio/headset/headset_cent/alt/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/wearertargeting/earprotection, list(ITEM_SLOT_EARS))
 
 /obj/item/radio/headset/attackby(obj/item/W, mob/user, params)
 	user.set_machine(src)

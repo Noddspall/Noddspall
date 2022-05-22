@@ -259,9 +259,6 @@
 	J.myreplacer = src
 	J.update_appearance()
 
-/obj/item/lightreplacer/cyborg/janicart_insert(mob/user, obj/structure/janitorialcart/J)
-	return
-
 #undef LIGHT_OK
 #undef LIGHT_EMPTY
 #undef LIGHT_BROKEN

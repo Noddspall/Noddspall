@@ -43,7 +43,7 @@
 		I.play_tool_sound(src, 100)
 		for(var/a in modkits)
 			var/obj/item/modkit/M = a
-			M.forceMove(drop_location()) //uninstallation handled in Exited(), or /mob/living/silicon/robot/remove_from_upgrades() for borgs
+			M.forceMove(drop_location()) //uninstallation handled in Exited()
 	else
 		to_chat(user, SPAN_NOTICE("There are no modifications currently installed."))
 
@@ -72,11 +72,6 @@
 	for(var/A in modkits)
 		var/obj/item/modkit/M = A
 		M.modify_projectile(K)
-
-/obj/item/gun/energy/kinetic_accelerator/cyborg
-	holds_charge = TRUE
-	unique_frequency = TRUE
-	max_mod_capacity = 80
 
 /obj/item/gun/energy/kinetic_accelerator/minebot
 	trigger_guard = TRIGGER_GUARD_ALLOW_ALL
@@ -468,8 +463,6 @@
 
 /obj/item/modkit/bounty/proc/get_kill(mob/living/L)
 	var/bonus_mod = 1
-	if(ismegafauna(L)) //megafauna reward
-		bonus_mod = 4
 	if(!bounties_reaped[L.type])
 		bounties_reaped[L.type] = min(modifier * bonus_mod, maximum_bounty)
 	else

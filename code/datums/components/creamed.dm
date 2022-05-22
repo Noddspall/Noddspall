@@ -1,7 +1,6 @@
 GLOBAL_LIST_INIT(creamable, typecacheof(list(
 	/mob/living/carbon/human,
-	/mob/living/simple_animal/pet/dog/corgi,
-	/mob/living/silicon/ai)))
+	/mob/living/simple_animal/pet/dog/corgi)))
 
 /**
  * Creamed component
@@ -32,8 +31,6 @@ GLOBAL_LIST_INIT(creamable, typecacheof(list(
 		SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "creampie", /datum/mood_event/creampie)
 	else if(iscorgi(parent))
 		creamface.icon_state = "creampie_corgi"
-	else if(isAI(parent))
-		creamface.icon_state = "creampie_ai"
 
 	var/atom/A = parent
 	A.add_overlay(creamface)

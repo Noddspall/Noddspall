@@ -21,12 +21,6 @@
 	INVOKE_ASYNC(src, .proc/activate, "action_button")
 
 /obj/item/implant/proc/can_be_implanted_in(mob/living/target)
-	if(issilicon(target))
-		return FALSE
-
-	if(isslime(target))
-		return TRUE
-
 	if(isanimal(target))
 		var/mob/living/simple_animal/animal = target
 		// Robots and most non-organics aren't healable.

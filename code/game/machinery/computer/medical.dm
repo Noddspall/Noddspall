@@ -166,7 +166,7 @@
 	if(!(active2 in GLOB.data_core.medical))
 		active2 = null
 
-	if(usr.contents.Find(src) || (in_range(src, usr) && isturf(loc)) || issilicon(usr) || isAdminGhostAI(usr))
+	if(usr.contents.Find(src) || (in_range(src, usr) && isturf(loc)) || isAdminGhostAI(usr))
 		usr.set_machine(src)
 		if(href_list["temp"])
 			temp = null
@@ -194,13 +194,7 @@
 			if(isliving(usr))
 				var/mob/living/L = usr
 				I = L.get_idcard(TRUE)
-			if(issilicon(usr))
-				active1 = null
-				active2 = null
-				authenticated = 1
-				rank = "AI"
-				screen = 1
-			else if(isAdminGhostAI(usr))
+			if(isAdminGhostAI(usr))
 				active1 = null
 				active2 = null
 				authenticated = 1
@@ -545,7 +539,7 @@
 
 /obj/machinery/computer/med_data/proc/canUseMedicalRecordsConsole(mob/user, message = 1, record1, record2)
 	if(user && message && authenticated)
-		if(user.canUseTopic(src, !issilicon(user)))
+		if(user.canUseTopic(src))
 			if(!record1 || record1 == active1)
 				if(!record2 || record2 == active2)
 					return TRUE

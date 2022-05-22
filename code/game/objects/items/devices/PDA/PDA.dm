@@ -623,7 +623,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 	return
 
 /obj/item/pda/proc/remove_id(mob/user)
-	if(issilicon(user) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+	if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		return
 	do_remove_id(user)
 
@@ -742,9 +742,6 @@ GLOBAL_LIST_EMPTY(PDAs)
 		var/reply = "(<a href='byond://?src=[REF(src)];choice=Message;skiprefresh=1;target=[REF(signal.source)]'>Reply</a>)"
 		var/hrefstart
 		var/hrefend
-		if (isAI(L))
-			hrefstart = "<a href='?src=[REF(L)];track=[html_encode(signal.data["name"])]'>"
-			hrefend = "</a>"
 
 		if(signal.data["automated"])
 			reply = "\[Automated Message\]"
@@ -821,7 +818,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 	eject_cart(usr)
 
 /obj/item/pda/proc/toggle_light(mob/user)
-	if(issilicon(user) || !user.canUseTopic(src, BE_CLOSE))
+	if(!user.canUseTopic(src, BE_CLOSE))
 		return
 	if(light_on)
 		set_light_on(FALSE)
@@ -843,7 +840,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 
 /obj/item/pda/proc/remove_pen(mob/user)
 
-	if(issilicon(user) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK)) //TK doesn't work even with this removed but here for readability
+	if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK)) //TK doesn't work even with this removed but here for readability
 		return
 
 	if(inserted_item)
@@ -856,7 +853,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 		to_chat(user, SPAN_WARNING("This PDA does not have a pen in it!"))
 
 /obj/item/pda/proc/eject_cart(mob/user)
-	if(issilicon(user) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK)) //TK disabled to stop cartridge teleporting into hand
+	if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK)) //TK disabled to stop cartridge teleporting into hand
 		return
 	if (!isnull(cartridge))
 		user.put_in_hands(cartridge)

@@ -104,7 +104,7 @@
 	. = ..()
 	if(.)
 		return
-	if(locked && !issilicon(user))
+	if(locked)
 		to_chat(user, SPAN_WARNING("The machine is locked, you are unable to use it!"))
 		return
 	if(panel_open)
@@ -353,7 +353,7 @@
 	if(!anchored)
 		to_chat(user, SPAN_WARNING("\The [src] needs to be firmly secured to the floor first!"))
 		return
-	if(locked && !issilicon(user))
+	if(locked)
 		to_chat(user, SPAN_WARNING("The controls are locked!"))
 		return
 	if(!powernet)

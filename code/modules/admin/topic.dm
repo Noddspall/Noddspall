@@ -217,8 +217,6 @@
 					newmob.equipOutfit(posttransformoutfit)
 			if("monkey")
 				M.change_mob_type( /mob/living/carbon/human/species/monkey , null, null, delmob )
-			if("robot")
-				M.change_mob_type( /mob/living/silicon/robot , null, null, delmob )
 			if("cat")
 				M.change_mob_type( /mob/living/simple_animal/pet/cat , null, null, delmob )
 			if("runtime")
@@ -483,9 +481,6 @@
 		if(!ismob(M))
 			to_chat(usr, "This can only be used on instances of type /mob.", confidential = TRUE)
 			return
-		if(isAI(M))
-			to_chat(usr, "This cannot be used on instances of type /mob/living/silicon/ai.", confidential = TRUE)
-			return
 
 		if(tgui_alert(usr, "Send [key_name(M)] to Prison?", "Message", list("Yes", "No")) != "Yes")
 			return
@@ -531,9 +526,6 @@
 		if(!isliving(M))
 			to_chat(usr, "This can only be used on instances of type /mob/living.", confidential = TRUE)
 			return
-		if(isAI(M))
-			to_chat(usr, "This cannot be used on instances of type /mob/living/silicon/ai.", confidential = TRUE)
-			return
 		var/mob/living/L = M
 
 		for(var/obj/item/I in L)
@@ -556,9 +548,6 @@
 		var/mob/M = locate(href_list["tdome2"])
 		if(!isliving(M))
 			to_chat(usr, "This can only be used on instances of type /mob/living.", confidential = TRUE)
-			return
-		if(isAI(M))
-			to_chat(usr, "This cannot be used on instances of type /mob/living/silicon/ai.", confidential = TRUE)
 			return
 		var/mob/living/L = M
 
@@ -583,9 +572,6 @@
 		if(!isliving(M))
 			to_chat(usr, "This can only be used on instances of type /mob/living.", confidential = TRUE)
 			return
-		if(isAI(M))
-			to_chat(usr, "This cannot be used on instances of type /mob/living/silicon/ai.", confidential = TRUE)
-			return
 		var/mob/living/L = M
 
 		L.Unconscious(100)
@@ -605,9 +591,6 @@
 		var/mob/M = locate(href_list["tdomeobserve"])
 		if(!isliving(M))
 			to_chat(usr, "This can only be used on instances of type /mob/living.", confidential = TRUE)
-			return
-		if(isAI(M))
-			to_chat(usr, "This cannot be used on instances of type /mob/living/silicon/ai.", confidential = TRUE)
 			return
 		var/mob/living/L = M
 
@@ -1069,7 +1052,7 @@
 
 		switch(where)
 			if("inhand")
-				if (!iscarbon(usr) && !iscyborg(usr))
+				if (!iscarbon(usr))
 					to_chat(usr, "Can only spawn in hand when you're a carbon mob or cyborg.", confidential = TRUE)
 					where = "onfloor"
 				target = usr

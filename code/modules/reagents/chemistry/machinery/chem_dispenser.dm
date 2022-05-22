@@ -330,7 +330,7 @@
 			if(!is_operational)
 				return
 			var/name = stripped_input(usr,"Name","What do you want to name this recipe?", "Recipe", MAX_NAME_LEN)
-			if(!usr.canUseTopic(src, !issilicon(usr)))
+			if(!usr.canUseTopic(src))
 				return
 			if(saved_recipes[name] && tgui_alert(usr, "\"[name]\" already exists, do you want to overwrite it?",, list("Yes", "No")) == "No")
 				return

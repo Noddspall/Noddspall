@@ -32,8 +32,6 @@
 	. += "[icon_state]_[open ? "open" : "door"]"
 
 /obj/structure/guncase/attackby(obj/item/I, mob/living/user, params)
-	if(iscyborg(user))
-		return
 	if(istype(I, gun_category) && open)
 		if(LAZYLEN(contents) < capacity)
 			if(!user.transferItemToLoc(I, src))
@@ -53,8 +51,6 @@
 /obj/structure/guncase/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(.)
-		return
-	if(iscyborg(user))
 		return
 	if(contents.len && open)
 		show_menu(user)

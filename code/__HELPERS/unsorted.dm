@@ -242,7 +242,7 @@ Turf and target are separate in case you want to teleport some distance from a t
 	var/list/pois = list()
 	for(var/mob/M in mobs)
 		if(skip_mindless && (!M.mind && !M.ckey))
-			if(!iscameramob(M) && !ismegafauna(M))
+			if(!iscameramob(M))
 				continue
 		if(M.client && M.client.holder && M.client.holder.fakekey) //stealthmins
 			continue
@@ -266,13 +266,7 @@ Turf and target are separate in case you want to teleport some distance from a t
 /proc/sortmobs()
 	var/list/moblist = list()
 	var/list/sortmob = sortNames(GLOB.mob_list)
-	for(var/mob/living/silicon/ai/M in sortmob)
-		moblist.Add(M)
 	for(var/mob/camera/M in sortmob)
-		moblist.Add(M)
-	for(var/mob/living/silicon/pai/M in sortmob)
-		moblist.Add(M)
-	for(var/mob/living/silicon/robot/M in sortmob)
 		moblist.Add(M)
 	for(var/mob/living/carbon/human/M in sortmob)
 		moblist.Add(M)

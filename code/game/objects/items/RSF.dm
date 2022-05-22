@@ -59,9 +59,6 @@ RSF
 	. = ..()
 	. += SPAN_NOTICE("It currently holds [matter]/[max_matter] [discriptor].")
 
-/obj/item/rsf/cyborg
-	matter = 30
-
 /obj/item/rsf/attackby(obj/item/W, mob/user, params)
 	if(is_type_in_list(W,matter_by_item))//If the thing we got hit by is in our matter list
 		var/tempMatter = matter_by_item[W.type] + matter

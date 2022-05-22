@@ -522,8 +522,6 @@
 		if(labeler.mode)
 			return FALSE
 	. = TRUE //no afterattack
-	if(iscyborg(M))
-		return
 	if(!can_be_inserted(I, FALSE, M))
 		var/atom/real_location = real_location()
 		if(real_location.contents.len >= max_items) //don't use items on the backpack if they don't fit
@@ -608,7 +606,7 @@
 
 	if(isitem(O))
 		var/obj/item/I = O
-		if(iscarbon(M) || isdrone(M))
+		if(iscarbon(M))
 			var/mob/living/L = M
 			if(!L.incapacitated() && I == L.get_active_held_item())
 				if(!SEND_SIGNAL(I, COMSIG_CONTAINS_STORAGE) && can_be_inserted(I, FALSE)) //If it has storage it should be trying to dump, not insert.

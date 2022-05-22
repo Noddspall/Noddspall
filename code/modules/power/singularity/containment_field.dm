@@ -63,12 +63,7 @@
 	if(!FG1 || !FG2)
 		qdel(src)
 		return
-	if(ismegafauna(user))
-		user.visible_message(SPAN_WARNING("[user] glows fiercely as the containment field flickers out!"))
-		FG1.calc_power(INFINITY) //rip that 'containment' field
-		user.adjustHealth(-user.obj_damage)
-	else
-		return ..()
+	return ..()
 
 /obj/machinery/field/containment/proc/on_entered(datum/source, atom/movable/AM)
 	SIGNAL_HANDLER
@@ -129,14 +124,6 @@
 	if(iscarbon(user))
 		user.Paralyze(300)
 		user.electrocute_act(shock_damage, src, 1)
-
-	else if(issilicon(user))
-		if(prob(20))
-			user.Stun(40)
-		user.take_overall_damage(0, shock_damage)
-		user.visible_message(SPAN_DANGER("[user.name] is shocked by the [src.name]!"), \
-		SPAN_USERDANGER("Energy pulse detected, system damaged!"), \
-		SPAN_HEAR("You hear an electrical crack."))
 
 	user.updatehealth()
 	bump_field(user)

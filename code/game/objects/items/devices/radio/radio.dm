@@ -109,7 +109,7 @@
 	AddElement(/datum/element/empprotection, EMP_PROTECT_WIRES)
 
 /obj/item/radio/interact(mob/user)
-	if(unscrewed && !isAI(user))
+	if(unscrewed)
 		wires.interact(user)
 		add_fingerprint(user)
 	else

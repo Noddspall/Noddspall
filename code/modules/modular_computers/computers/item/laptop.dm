@@ -82,8 +82,6 @@
 		return attack_self(user)
 
 /obj/item/modular_computer/laptop/proc/try_toggle_open(mob/living/user)
-	if(issilicon(user))
-		return
 	if(!isturf(loc) && !ismob(loc)) // No opening it in backpack.
 		return
 	if(!user.canUseTopic(src, BE_CLOSE))

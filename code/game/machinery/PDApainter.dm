@@ -190,7 +190,7 @@
  */
 /obj/machinery/pdapainter/proc/eject_pda(mob/living/user)
 	if(stored_pda)
-		if(user && !issilicon(user) && in_range(src, user))
+		if(user && in_range(src, user))
 			user.put_in_hands(stored_pda)
 		else
 			stored_pda.forceMove(drop_location())
@@ -232,7 +232,7 @@
  */
 /obj/machinery/pdapainter/proc/eject_id_card(mob/living/user)
 	if(stored_id_card)
-		if(user && !issilicon(user) && in_range(src, user))
+		if(user && in_range(src, user))
 			user.put_in_hands(stored_id_card)
 		else
 			stored_id_card.forceMove(drop_location())

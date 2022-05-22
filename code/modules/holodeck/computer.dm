@@ -140,7 +140,7 @@ and clear when youre done! if you dont i will use :newspaper2: on you
 		data["emagged"] = TRUE
 		data["emag_programs"] = emag_programs
 	data["program"] = program
-	data["can_toggle_safety"] = issilicon(user) || isAdminGhostAI(user)
+	data["can_toggle_safety"] = isAdminGhostAI(user)
 	return data
 
 /obj/machinery/computer/holodeck/ui_act(action, params)

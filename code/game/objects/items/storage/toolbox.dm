@@ -138,22 +138,6 @@
 	new /obj/item/multitool(src)
 	new /obj/item/clothing/gloves/combat(src)
 
-/obj/item/storage/toolbox/drone
-	name = "mechanical toolbox"
-	icon_state = "blue"
-	inhand_icon_state = "toolbox_blue"
-	material_flags = NONE
-
-/obj/item/storage/toolbox/drone/PopulateContents()
-	var/pickedcolor = pick("red","yellow","green","blue","pink","orange","cyan","white")
-	new /obj/item/screwdriver(src)
-	new /obj/item/wrench(src)
-	new /obj/item/weldingtool(src)
-	new /obj/item/crowbar(src)
-	new /obj/item/stack/cable_coil(src,MAXCOIL,pickedcolor)
-	new /obj/item/wirecutters(src)
-	new /obj/item/multitool(src)
-
 /obj/item/storage/toolbox/artistic
 	name = "artistic toolbox"
 	desc = "A toolbox painted bright green. Why anyone would store art supplies in a toolbox is beyond you, but it has plenty of extra space."

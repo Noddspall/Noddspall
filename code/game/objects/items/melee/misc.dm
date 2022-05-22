@@ -262,26 +262,6 @@
 		else
 			user.take_bodypart_damage(2*force)
 		return
-	if(iscyborg(target))
-		// We don't stun if we're on harm.
-		if (!user.combat_mode)
-			if (affect_silicon)
-				var/list/desc = get_silicon_stun_description(target, user)
-
-				target.flash_act(affect_silicon = TRUE)
-				target.Paralyze(stun_time_silicon)
-				additional_effects_silicon(target, user)
-
-				user.visible_message(desc["visible"], desc["local"])
-				playsound(get_turf(src), on_stun_sound, 100, TRUE, -1)
-
-				if (stun_animation)
-					user.do_attack_animation(target)
-			else
-				..()
-		else
-			..()
-		return
 	if(!isliving(target))
 		return
 	var/list/modifiers = params2list(params)

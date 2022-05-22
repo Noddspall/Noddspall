@@ -201,9 +201,6 @@
 	if(operating || (obj_flags & EMAGGED))
 		return
 	if(ismob(AM))
-		var/mob/B = AM
-		if((isdrone(B) || iscyborg(B)) && B.stat)
-			return
 		if(isliving(AM))
 			var/mob/living/M = AM
 			if(world.time - M.last_bumped <= 10)

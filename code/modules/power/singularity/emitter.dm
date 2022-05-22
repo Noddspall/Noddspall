@@ -177,11 +177,7 @@
 	update_appearance()
 
 /obj/machinery/power/emitter/attack_animal(mob/living/simple_animal/user, list/modifiers)
-	if(ismegafauna(user) && anchored)
-		set_anchored(FALSE)
-		user.visible_message(SPAN_WARNING("[user] rips [src] free from its moorings!"))
-	else
-		. = ..()
+	. = ..()
 	if(. && !anchored)
 		step(src, get_dir(user, src))
 

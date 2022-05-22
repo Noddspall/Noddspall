@@ -443,13 +443,13 @@
 		. = ..()
 
 /obj/item/stack/attack_hand_secondary(mob/user, modifiers)
-	if(is_cyborg || !user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, !iscyborg(user)) || zero_amount())
+	if(is_cyborg || !user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE) || zero_amount())
 		return SECONDARY_ATTACK_CONTINUE_CHAIN
 	var/max = get_amount()
 	var/stackmaterial = round(input(user, "How many sheets do you wish to take out of this stack? (Maximum [max])", "Stack Split") as null|num)
 	max = get_amount()
 	stackmaterial = min(max, stackmaterial)
-	if(stackmaterial == null || stackmaterial <= 0 || !user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, !iscyborg(user)))
+	if(stackmaterial == null || stackmaterial <= 0 || !user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE))
 		return SECONDARY_ATTACK_CONTINUE_CHAIN
 	split_stack(user, stackmaterial)
 	to_chat(user, SPAN_NOTICE("You take [stackmaterial] sheets out of the stack."))

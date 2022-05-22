@@ -272,10 +272,7 @@ GLOBAL_LIST_EMPTY(cryopod_computers)
 		to_chat(user, SPAN_NOTICE("Dead people can not be put into cryo."))
 		return FALSE
 	if(user != target && target.client)
-		if(iscyborg(target))
-			to_chat(user, SPAN_DANGER("You can't put [target] into [src]. [target.p_theyre(capitalized = TRUE)] online."))
-		else
-			to_chat(user, SPAN_DANGER("You can't put [target] into [src]. [target.p_theyre(capitalized = TRUE)] conscious."))
+		to_chat(user, SPAN_DANGER("You can't put [target] into [src]. [target.p_theyre(capitalized = TRUE)] conscious."))
 		return FALSE
 	return TRUE
 

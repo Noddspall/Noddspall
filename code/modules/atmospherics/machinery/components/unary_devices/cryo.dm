@@ -477,7 +477,7 @@ GLOBAL_VAR_INIT(cryo_overlay_cover_off, mutable_appearance('icons/obj/cryogenics
 		if("ejectbeaker")
 			if(beaker)
 				beaker.forceMove(drop_location())
-				if(Adjacent(usr) && !issilicon(usr))
+				if(Adjacent(usr))
 					usr.put_in_hands(beaker)
 				beaker = null
 				. = TRUE

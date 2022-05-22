@@ -473,7 +473,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	if(!ishuman(user))
 		if(clothes_req || human_req)
 			return FALSE
-		if(nonabstract_req && (isbrain(user) || ispAI(user)))
+		if(nonabstract_req && (isbrain(user)))
 			return FALSE
 	return TRUE
 

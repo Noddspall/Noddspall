@@ -132,9 +132,6 @@
 	if(isAdminGhostAI(user))
 		return TRUE
 
-	if(issilicon(user))
-		return TRUE
-
 	if(!length(access))
 		var/obj/item/card/id/D
 		var/obj/item/computer_hardware/card_slot/card_slot

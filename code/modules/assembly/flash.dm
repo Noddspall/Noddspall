@@ -236,18 +236,6 @@
 	if(iscarbon(M))
 		flash_carbon(M, user, 5, TRUE)
 		return
-	if(issilicon(M))
-		var/mob/living/silicon/robot/flashed_borgo = M
-		log_combat(user, flashed_borgo, "flashed", src)
-		update_icon(ALL, TRUE)
-		if(!flashed_borgo.flash_act(affect_silicon = TRUE))
-			user.visible_message(SPAN_WARNING("[user] fails to blind [flashed_borgo] with the flash!"), SPAN_WARNING("You fail to blind [flashed_borgo] with the flash!"))
-			return
-		flashed_borgo.Paralyze(rand(80,120))
-		var/diff = 5 * CONFUSION_STACK_MAX_MULTIPLIER - M.get_confusion()
-		flashed_borgo.add_confusion(min(5, diff))
-		user.visible_message(SPAN_WARNING("[user] overloads [flashed_borgo]'s sensors with the flash!"), SPAN_DANGER("You overload [flashed_borgo]'s sensors with the flash!"))
-		return
 
 	user.visible_message(SPAN_WARNING("[user] fails to blind [M] with the flash!"), SPAN_WARNING("You fail to blind [M] with the flash!"))
 
@@ -271,21 +259,6 @@
 	if(!..())
 		return
 	AOE_flash()
-
-/obj/item/assembly/flash/cyborg
-
-/obj/item/assembly/flash/cyborg/attack(mob/living/M, mob/user)
-	..()
-	new /obj/effect/temp_visual/borgflash(get_turf(src))
-
-/obj/item/assembly/flash/cyborg/attack_self(mob/user)
-	..()
-	new /obj/effect/temp_visual/borgflash(get_turf(src))
-
-/obj/item/assembly/flash/cyborg/attackby(obj/item/W, mob/user, params)
-	return
-/obj/item/assembly/flash/cyborg/screwdriver_act(mob/living/user, obj/item/I)
-	return
 
 /obj/item/assembly/flash/memorizer
 	name = "memorizer"

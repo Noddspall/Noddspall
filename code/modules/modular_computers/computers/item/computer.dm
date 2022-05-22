@@ -104,8 +104,6 @@
 
 /obj/item/modular_computer/AltClick(mob/user)
 	..()
-	if(issilicon(user))
-		return
 
 	if(user.canUseTopic(src, BE_CLOSE))
 		var/obj/item/computer_hardware/card_slot/card_slot2 = all_components[MC_CARD2]
@@ -268,12 +266,8 @@
 		turn_on(user)
 
 /obj/item/modular_computer/proc/turn_on(mob/user)
-	var/issynth = issilicon(user) // Robots and AIs get different activation messages.
 	if(obj_integrity <= integrity_failure * max_integrity)
-		if(issynth)
-			to_chat(user, SPAN_WARNING("You send an activation signal to \the [src], but it responds with an error code. It must be damaged."))
-		else
-			to_chat(user, SPAN_WARNING("You press the power button, but the computer fails to boot up, displaying variety of errors before shutting down again."))
+		to_chat(user, SPAN_WARNING("You press the power button, but the computer fails to boot up, displaying variety of errors before shutting down again."))
 		return FALSE
 
 	// If we have a recharger, enable it automatically. Lets computer without a battery work.
@@ -282,10 +276,7 @@
 		recharger.enabled = 1
 
 	if(all_components[MC_CPU] && use_power()) // use_power() checks if the PC is powered
-		if(issynth)
-			to_chat(user, SPAN_NOTICE("You send an activation signal to \the [src], turning it on."))
-		else
-			to_chat(user, SPAN_NOTICE("You press the power button and start up \the [src]."))
+		to_chat(user, SPAN_NOTICE("You press the power button and start up \the [src]."))
 		if(looping_sound)
 			soundloop.start()
 		enabled = 1
@@ -293,10 +284,7 @@
 		ui_interact(user)
 		return TRUE
 	else // Unpowered
-		if(issynth)
-			to_chat(user, SPAN_WARNING("You send an activation signal to \the [src] but it does not respond."))
-		else
-			to_chat(user, SPAN_WARNING("You press the power button but \the [src] does not respond."))
+		to_chat(user, SPAN_WARNING("You press the power button but \the [src] does not respond."))
 		return FALSE
 
 // Process currently calls handle_power(), may be expanded in future if more things are added.

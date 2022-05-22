@@ -109,7 +109,7 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 		z = T.z
 	. = list(
 		"sensors" = update_data(z),
-		"link_allowed" = isAI(user)
+		"link_allowed" = FALSE
 	)
 
 /datum/crewmonitor/proc/update_data(z)

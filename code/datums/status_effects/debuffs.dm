@@ -12,12 +12,12 @@
 	if(isnum(set_duration))
 		duration = set_duration
 	. = ..()
-	if(. && (needs_update_stat || issilicon(owner)))
+	if(. && (needs_update_stat))
 		owner.update_stat()
 
 
 /datum/status_effect/incapacitating/on_remove()
-	if(needs_update_stat || issilicon(owner)) //silicons need stat updates in addition to normal canmove updates
+	if(needs_update_stat)
 		owner.update_stat()
 	return ..()
 

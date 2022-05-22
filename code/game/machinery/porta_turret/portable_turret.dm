@@ -269,11 +269,6 @@ DEFINE_BITFIELD(turret_flags, list(
 		if("shootheads")
 			turret_flags ^= TURRET_FLAG_SHOOT_HEADS
 			return TRUE
-		if("manual")
-			if(!issilicon(usr))
-				return
-			give_control(usr)
-			return TRUE
 
 /obj/machinery/porta_turret/ui_host(mob/user)
 	if(has_cover && cover)
@@ -882,12 +877,6 @@ DEFINE_BITFIELD(turret_flags, list(
 		turrets |= T
 		T.cp = src
 
-/obj/machinery/turretid/examine(mob/user)
-	. += ..()
-	if(issilicon(user) && !(machine_stat & BROKEN))
-		. += {"[SPAN_NOTICE("Ctrl-click [src] to [ enabled ? "disable" : "enable"] turrets.")]
-					[SPAN_NOTICE("Alt-click [src] to set turrets to [ lethal ? "stun" : "kill"].")]"}
-
 /obj/machinery/turretid/attackby(obj/item/I, mob/user, params)
 	if(machine_stat & BROKEN)
 		return
@@ -900,9 +889,6 @@ DEFINE_BITFIELD(turret_flags, list(
 			turrets |= M.buffer
 			to_chat(user, SPAN_NOTICE("You link \the [M.buffer] with \the [src]."))
 			return
-
-	if (issilicon(user))
-		return attack_hand(user)
 
 	if ( get_dist(src, user) == 0 ) // trying to unlock the interface
 		if (allowed(usr))

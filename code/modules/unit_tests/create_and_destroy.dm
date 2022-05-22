@@ -80,8 +80,6 @@
 	ignore += typesof(/obj/effect/anomaly/grav/high)
 	//See above
 	ignore += typesof(/obj/effect/timestop)
-	//Invoke async in init, skippppp
-	ignore += typesof(/mob/living/silicon/robot/model)
 	//this boi spawns turf changing stuff, and it stacks and causes pain. Let's just not
 	ignore += typesof(/obj/effect/sliding_puzzle)
 	//Stacks baseturfs, can't be tested here

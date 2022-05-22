@@ -120,59 +120,6 @@
 		death(FALSE)
 		ghostize(FALSE) // Disallows reentering body and disassociates mind
 
-/mob/living/silicon/ai/verb/suicide()
-	set hidden = TRUE
-	if(!canSuicide())
-		return
-	var/confirm = tgui_alert(usr,"Are you sure you want to commit suicide?", "Confirm Suicide", list("Yes", "No"))
-	if(!canSuicide())
-		return
-	if(confirm == "Yes")
-		set_suicide(TRUE)
-		visible_message(SPAN_DANGER("[src] is powering down. It looks like [p_theyre()] trying to commit suicide."), \
-				SPAN_USERDANGER("[src] is powering down. It looks like [p_theyre()] trying to commit suicide."))
-
-		suicide_log()
-
-		//put em at -175
-		adjustOxyLoss(max(maxHealth * 2 - getToxLoss() - getFireLoss() - getBruteLoss() - getOxyLoss(), 0))
-		death(FALSE)
-		ghostize(FALSE) // Disallows reentering body and disassociates mind
-
-/mob/living/silicon/robot/verb/suicide()
-	set hidden = TRUE
-	if(!canSuicide())
-		return
-	var/confirm = tgui_alert(usr,"Are you sure you want to commit suicide?", "Confirm Suicide", list("Yes", "No"))
-	if(!canSuicide())
-		return
-	if(confirm == "Yes")
-		set_suicide(TRUE)
-		visible_message(SPAN_DANGER("[src] is powering down. It looks like [p_theyre()] trying to commit suicide."), \
-				SPAN_USERDANGER("[src] is powering down. It looks like [p_theyre()] trying to commit suicide."))
-
-		suicide_log()
-
-		//put em at -175
-		adjustOxyLoss(max(maxHealth * 2 - getToxLoss() - getFireLoss() - getBruteLoss() - getOxyLoss(), 0))
-		death(FALSE)
-		ghostize(FALSE) // Disallows reentering body and disassociates mind
-
-/mob/living/silicon/pai/verb/suicide()
-	set hidden = TRUE
-	var/confirm = tgui_alert(usr,"Are you sure you want to commit suicide?", "Confirm Suicide", list("Yes", "No"))
-	if(confirm == "Yes")
-		var/turf/T = get_turf(src.loc)
-		T.visible_message(SPAN_NOTICE("[src] flashes a message across its screen, \"Wiping core files. Please acquire a new personality to continue using pAI device functions.\""), null, \
-			SPAN_NOTICE("[src] bleeps electronically."))
-
-		suicide_log()
-
-		death(FALSE)
-		ghostize(FALSE) // Disallows reentering body and disassociates mind
-	else
-		to_chat(src, "Aborting suicide attempt.")
-
 /mob/living/simple_animal/verb/suicide()
 	set hidden = TRUE
 	if(!canSuicide())

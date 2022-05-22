@@ -68,9 +68,6 @@
 			icon_state = "[initial(icon_state)]"
 	return ..()
 
-/obj/item/storage/bag/trash/cyborg
-	insertable = FALSE
-
 /obj/item/storage/bag/trash/proc/janicart_insert(mob/user, obj/structure/janitorialcart/J)
 	if(insertable)
 		J.put_in_cart(src, user)
@@ -100,9 +97,6 @@
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_combined_w_class = 60
 	STR.max_items = 60
-
-/obj/item/storage/bag/trash/bluespace/cyborg
-	insertable = FALSE
 
 // -----------------------------
 //        Mining Satchel
@@ -177,9 +171,6 @@
 			user.visible_message(SPAN_NOTICE("[user] scoops up the ores beneath [user.p_them()]."), \
 				SPAN_NOTICE("You scoop up the ores beneath you with your [name]."))
 	spam_protection = FALSE
-
-/obj/item/storage/bag/ore/cyborg
-	name = "cyborg mining satchel"
 
 /obj/item/storage/bag/ore/holding //miners, your messiah has arrived
 	name = "mining satchel of holding"
@@ -261,20 +252,6 @@
 			/obj/item/stack/sheet/mineral/wood
 			))
 	STR.max_combined_stack_amount = 300
-
-// -----------------------------
-//    Sheet Snatcher (Cyborg)
-// -----------------------------
-
-/obj/item/storage/bag/sheetsnatcher/borg
-	name = "sheet snatcher 9000"
-	desc = ""
-	capacity = 500//Borgs get more because >specialization
-
-/obj/item/storage/bag/sheetsnatcher/borg/ComponentInitialize()
-	. = ..()
-	var/datum/component/storage/concrete/stack/STR = GetComponent(/datum/component/storage/concrete/stack)
-	STR.max_combined_stack_amount = 500
 
 // -----------------------------
 //           Book bag

@@ -362,7 +362,7 @@ SUBSYSTEM_DEF(gamemode)
 			continue
 		if(player_mob.client.is_afk()) //If afk
 			continue
-		if(!ishuman(player_mob) && !iscyborg(player_mob) && !isAI(player_mob))
+		if(!ishuman(player_mob))
 			continue
 		active_players++
 		if(player_mob.mind?.assigned_role)

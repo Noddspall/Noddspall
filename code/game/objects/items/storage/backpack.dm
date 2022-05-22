@@ -519,22 +519,6 @@
 	resistance_flags = FIRE_PROOF
 	worn_template_greyscale_color = "#FFC20E"
 
-/obj/item/storage/backpack/duffelbag/drone
-	name = "drone duffel bag"
-	desc = "A large duffel bag for holding tools and hats."
-	icon_state = "duffel-drone"
-	inhand_icon_state = "duffel-drone"
-	resistance_flags = FIRE_PROOF
-
-/obj/item/storage/backpack/duffelbag/drone/PopulateContents()
-	new /obj/item/screwdriver(src)
-	new /obj/item/wrench(src)
-	new /obj/item/weldingtool(src)
-	new /obj/item/crowbar(src)
-	new /obj/item/stack/cable_coil(src)
-	new /obj/item/wirecutters(src)
-	new /obj/item/multitool(src)
-
 /obj/item/storage/backpack/duffelbag/clown
 	name = "clown's duffel bag"
 	desc = "A large duffel bag for holding lots of funny gags!"

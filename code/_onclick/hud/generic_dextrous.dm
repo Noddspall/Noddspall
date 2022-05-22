@@ -3,19 +3,6 @@
 	..()
 	var/atom/movable/screen/using
 
-	using = new /atom/movable/screen/drop()
-	using.icon = ui_style
-	using.screen_loc = ui_drone_drop
-	using.hud = src
-	static_inventory += using
-
-	pull_icon = new /atom/movable/screen/pull()
-	pull_icon.icon = ui_style
-	pull_icon.update_appearance()
-	pull_icon.screen_loc = ui_drone_pull
-	pull_icon.hud = src
-	static_inventory += pull_icon
-
 	build_hand_slots()
 
 	using = new /atom/movable/screen/swap_hand()

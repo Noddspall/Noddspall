@@ -10,7 +10,6 @@
 	invisibility = INVISIBILITY_MAXIMUM
 	hud_possible = list(ANTAG_HUD, AI_DETECT_HUD = HUD_LIST_LIST)
 	var/list/visibleCameraChunks = list()
-	var/mob/living/silicon/ai/ai = null
 	var/relay_speech = FALSE
 	var/use_static = TRUE
 	var/static_visibility_range = 16
@@ -33,21 +32,18 @@
 // It will also stream the chunk that the new loc is in.
 
 /mob/camera/ai_eye/proc/setLoc(destination, force_update = FALSE)
-	if(ai)
-		if(!isturf(ai.loc))
-			return
-		destination = get_turf(destination)
-		if(!force_update && (destination == get_turf(src)) )
-			return //we are already here!
-		if (destination)
-			if(!force_update)
-				var/datum/map_zone/mapzone = loc.get_map_zone()
-				if(!mapzone.is_in_bounds(destination))
-					return
-			abstract_move(destination)
-		else
-			moveToNullspace()
-		update_parallax_contents()
+	destination = get_turf(destination)
+	if(!force_update && (destination == get_turf(src)) )
+		return //we are already here!
+	if (destination)
+		if(!force_update)
+			var/datum/map_zone/mapzone = loc.get_map_zone()
+			if(!mapzone.is_in_bounds(destination))
+				return
+		abstract_move(destination)
+	else
+		moveToNullspace()
+	update_parallax_contents()
 
 //it uses setLoc not forceMove, talks to the sillycone and not the camera mob
 /mob/camera/ai_eye/zMove(dir, feedback = FALSE)
@@ -55,12 +51,8 @@
 		return FALSE
 	var/turf/target = get_step_multiz(src, dir)
 	if(!target)
-		if(feedback)
-			to_chat(ai, SPAN_WARNING("There's nowhere to go in that direction!"))
 		return FALSE
 	if(!canZMove(dir, target))
-		if(feedback)
-			to_chat(ai, SPAN_WARNING("You couldn't move there!"))
 		return FALSE
 	setLoc(target, TRUE)
 	return TRUE
@@ -72,8 +64,6 @@
 	return
 
 /mob/camera/ai_eye/proc/GetViewerClient()
-	if(ai)
-		return ai.client
 	return null
 
 /mob/camera/ai_eye/Destroy()

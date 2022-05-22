@@ -308,7 +308,6 @@
 	data["pressure_charging"] = pressure_charging
 	data["panel_open"] = panel_open
 	data["per"] = CLAMP01(air_contents.return_pressure() / (SEND_PRESSURE))
-	data["isai"] = isAI(user)
 	return data
 
 /obj/machinery/disposal/bin/ui_act(action, params)

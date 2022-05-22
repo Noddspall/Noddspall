@@ -40,7 +40,7 @@
 	var/mob/living/L = user
 
 	if(istype(L))
-		if(!user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, !iscyborg(user)))
+		if(!user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE))
 			return FALSE
 		else
 			return TRUE
@@ -447,7 +447,7 @@
 
 /obj/structure/chair/bronze/AltClick(mob/user)
 	turns = 0
-	if(!user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, !iscyborg(user)))
+	if(!user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE))
 		return
 	if(!(datum_flags & DF_ISPROCESSING))
 		user.visible_message(SPAN_NOTICE("[user] spins [src] around, and the last vestiges of Ratvarian technology keeps it spinning FOREVER."), \

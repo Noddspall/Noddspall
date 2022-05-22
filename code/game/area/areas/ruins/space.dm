@@ -23,10 +23,6 @@
 	name = "Hallway"
 	icon_state = "hallC"
 
-/area/ruin/space/has_grav/onehalf/drone_bay
-	name = "Mining Drone Bay"
-	icon_state = "engine"
-
 /area/ruin/space/has_grav/onehalf/dorms_med
 	name = "Crew Quarters"
 	icon_state = "Sleep"

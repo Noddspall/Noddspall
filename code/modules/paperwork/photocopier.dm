@@ -63,11 +63,7 @@
 		data["is_photo"] = TRUE
 		data["color_mode"] = color_mode
 
-	if(isAI(user))
-		data["isAI"] = TRUE
-		data["can_AI_print"] = toner_cartridge ? toner_cartridge.charges >= PHOTO_TONER_USE : FALSE
-	else
-		data["isAI"] = FALSE
+	data["isAI"] = FALSE
 
 	if(toner_cartridge)
 		data["has_toner"] = TRUE
@@ -135,7 +131,7 @@
 
 		// Remove the toner cartridge from the copier.
 		if("remove_toner")
-			if(issilicon(usr) || (ishuman(usr) && !usr.put_in_hands(toner_cartridge)))
+			if((ishuman(usr) && !usr.put_in_hands(toner_cartridge)))
 				toner_cartridge.forceMove(drop_location())
 			toner_cartridge = null
 			return TRUE
@@ -311,11 +307,8 @@
  * * user - the user removing the item.
  */
 /obj/machinery/photocopier/proc/remove_photocopy(obj/item/object, mob/user)
-	if(!issilicon(user)) //surprised this check didn't exist before, putting stuff in AI's hand is bad
-		object.forceMove(user.loc)
-		user.put_in_hands(object)
-	else
-		object.forceMove(drop_location())
+	object.forceMove(user.loc)
+	user.put_in_hands(object)
 	to_chat(user, SPAN_NOTICE("You take [object] out of [src]. [busy ? "The [src] comes to a halt." : ""]"))
 
 /obj/machinery/photocopier/attackby(obj/item/O, mob/user, params)

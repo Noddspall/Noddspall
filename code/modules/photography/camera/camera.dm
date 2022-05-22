@@ -111,9 +111,7 @@
 	if(!T)
 		return FALSE
 	if(istype(user))
-		if(isAI(user) && !GLOB.cameranet.checkTurfVis(T))
-			return FALSE
-		else if(user.client && !(get_turf(target) in get_hear(user.client.view, user)))
+		if(user.client && !(get_turf(target) in get_hear(user.client.view, user)))
 			return FALSE
 		else if(!(get_turf(target) in get_hear(world.view, user)))
 			return FALSE
@@ -172,7 +170,6 @@
 	var/list/desc = list("This is a photo of an area of [size_x+1] meters by [size_y+1] meters.")
 	var/list/mobs_spotted = list()
 	var/list/dead_spotted = list()
-	var/ai_user = isAI(user)
 	var/list/seen
 	var/list/viewlist = (user && user.client)? getviewsize(user.client.view) : getviewsize(world.view)
 	var/viewr = max(viewlist[1], viewlist[2]) + max(size_x, size_y)
@@ -188,7 +185,7 @@
 			if(!T)
 				break
 
-		if(T && ((ai_user && GLOB.cameranet.checkTurfVis(placeholder)) || (placeholder in seen)))
+		if(T && ((placeholder in seen)))
 			turfs += T
 			for(var/mob/M in T)
 				mobs += M

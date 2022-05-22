@@ -56,14 +56,6 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/scatter, /obj/item/ammo_casing/energy/laser)
 	shaded_charge = FALSE
 
-/obj/item/gun/energy/laser/cyborg
-	can_charge = FALSE
-	desc = "An energy-based laser gun that draws power from the cyborg's internal energy cell directly. So this is what freedom looks like?"
-	use_cyborg_cell = TRUE
-
-/obj/item/gun/energy/laser/cyborg/emp_act()
-	return
-
 /obj/item/gun/energy/laser/scatter
 	name = "scatter laser gun"
 	desc = "A laser gun equipped with a refraction kit that spreads bolts."

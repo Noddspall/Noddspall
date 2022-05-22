@@ -389,7 +389,7 @@
 
 	GLOB.joined_player_list += character.ckey
 
-	if(CONFIG_GET(flag/allow_latejoin_antagonists) && humanc) //Borgs aren't allowed to be antags. Will need to be tweaked if we get true latejoin ais.
+	if(CONFIG_GET(flag/allow_latejoin_antagonists) && humanc)
 		if(SSshuttle.emergency)
 			switch(SSshuttle.emergency.mode)
 				if(SHUTTLE_RECALL, SHUTTLE_IDLE)
@@ -465,10 +465,9 @@
 	var/mob/living/spawning_mob = mind.assigned_role.get_spawn_mob(client, destination)
 	if(QDELETED(src) || !client)
 		return // Disconnected while checking for the appearance ban.
-	if(!isAI(spawning_mob)) // Unfortunately there's still snowflake AI code out there.
-		mind.original_character_slot_index = client.prefs.default_slot
-		mind.transfer_to(spawning_mob) //won't transfer key since the mind is not active
-		mind.set_original_character(spawning_mob)
+	mind.original_character_slot_index = client.prefs.default_slot
+	mind.transfer_to(spawning_mob) //won't transfer key since the mind is not active
+	mind.set_original_character(spawning_mob)
 	client.init_verbs()
 	. = spawning_mob
 	new_character = .

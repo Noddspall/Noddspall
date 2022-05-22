@@ -25,7 +25,7 @@
 
 /obj/machinery/recharger/examine(mob/user)
 	. = ..()
-	if(!in_range(user, src) && !issilicon(user) && !isobserver(user))
+	if(!in_range(user, src) && !isobserver(user))
 		. += SPAN_WARNING("You're too far away to examine [src]'s contents and display!")
 		return
 

@@ -70,12 +70,6 @@
 					if(ismob(item_to_retrieve.loc)) //If its on someone, properly drop it
 						var/mob/M = item_to_retrieve.loc
 
-						if(issilicon(M)) //Items in silicons warp the whole silicon
-							M.loc.visible_message(SPAN_WARNING("[M] suddenly disappears!"))
-							M.forceMove(L.loc)
-							M.loc.visible_message(SPAN_WARNING("[M] suddenly appears!"))
-							item_to_retrieve = null
-							break
 						M.dropItemToGround(item_to_retrieve)
 
 					else

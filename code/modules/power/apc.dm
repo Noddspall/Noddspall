@@ -142,12 +142,9 @@
 	var/lastused_total = 0
 	var/main_status = 0
 	powernet = FALSE // set so that APCs aren't found as powernet nodes //Hackish, Horrible, was like this before I changed it :(
-	var/malfhack = FALSE //New var for my changes to AI malf. --NeoFite
-	var/mob/living/silicon/ai/malfai = null //See above --NeoFite
 	var/has_electronics = APC_ELECTRONICS_MISSING // 0 - none, 1 - plugged in, 2 - secured by screwdriver
 	var/overload = 1 //used for the Blackout malf module
 	var/beenhit = 0 // used for counting how many times it has been hit, used for Aliens at the moment
-	var/mob/living/silicon/ai/occupier = null
 	var/transfer_in_progress = FALSE //Is there an AI being transferred out of us?
 	var/longtermpower = 10
 	var/auto_name = FALSE
@@ -330,15 +327,10 @@
 	else
 		if (machine_stat & MAINT)
 			. += "The cover is closed. Something is wrong with it. It doesn't work."
-		else if (malfhack)
-			. += "The cover is broken. It may be hard to force it open."
 		else
 			. += "The cover is closed."
 
 	. += SPAN_NOTICE("Alt-Click the APC to [ locked ? "unlock" : "lock"] the interface.")
-
-	if(issilicon(user))
-		. += SPAN_NOTICE("Ctrl-Click the APC to switch the breaker [ operating ? "off" : "on"].")
 
 // update the APC icon to show the three base states
 // also add overlays for indicator lights
@@ -376,7 +368,7 @@
 		if(update_state & UPSTATE_OPENED1)
 			icon_state = (update_state & (UPSTATE_MAINT|UPSTATE_BROKE)) ? "apcmaint" : basestate
 		else if(update_state & UPSTATE_OPENED2)
-			icon_state = "[basestate][((update_state & UPSTATE_BROKE) || malfhack) ? "-b" : null]-nocover"
+			icon_state = "[basestate][((update_state & UPSTATE_BROKE)) ? "-b" : null]-nocover"
 		return ..()
 	if(update_state & UPSTATE_BROKE)
 		icon_state = "apc-b"
@@ -427,7 +419,7 @@
 		if(cell)
 			new_update_state |= UPSTATE_CELL_IN
 
-	else if((obj_flags & EMAGGED) || malfai)
+	else if((obj_flags & EMAGGED))
 		new_update_state |= UPSTATE_BLUESCREEN
 	else if(panel_open)
 		new_update_state |= UPSTATE_WIREEXP
@@ -482,12 +474,6 @@
 						obj_flags &= ~EMAGGED
 						user.visible_message(SPAN_NOTICE("[user.name] discards an emagged power control board from [src.name]!"),\
 							SPAN_NOTICE("You discard the emagged power control board."))
-						return
-					else if (malfhack)
-						user.visible_message(SPAN_NOTICE("[user.name] discards a strangely programmed power control board from [src.name]!"),\
-							SPAN_NOTICE("You discard the strangely programmed board."))
-						malfai = null
-						malfhack = 0
 						return
 					else
 						user.visible_message(SPAN_NOTICE("[user.name] removes the power control board from [src.name]!"),\
@@ -595,9 +581,6 @@
 				if(shock_source == cell)//If the shock is coming from the cell just fully discharge it, because it's funny
 					cell.use(cell.charge)
 				return
-
-	if(issilicon(user) && get_dist(src,user)>1)
-		return attack_hand(user)
 
 	if (istype(W, /obj/item/stock_parts/cell) && opened)
 		if(cell)
@@ -747,7 +730,7 @@
 
 /obj/machinery/power/apc/AltClick(mob/user)
 	..()
-	if(!user.canUseTopic(src, !issilicon(user)) || !isturf(loc))
+	if(!user.canUseTopic(src) || !isturf(loc))
 		return
 	else
 		togglelock(user)
@@ -762,7 +745,7 @@
 	else if(machine_stat & (BROKEN|MAINT))
 		to_chat(user, SPAN_WARNING("Nothing happens!"))
 	else
-		if(allowed(usr) && !wires.is_cut(WIRE_IDSCAN) && !malfhack)
+		if(allowed(usr) && !wires.is_cut(WIRE_IDSCAN))
 			locked = !locked
 			to_chat(user, SPAN_NOTICE("You [ locked ? "lock" : "unlock"] the APC interface."))
 			update_appearance()
@@ -798,7 +781,7 @@
 			update_appearance()
 
 /obj/machinery/power/apc/emag_act(mob/user)
-	if(!(obj_flags & EMAGGED) && !malfhack)
+	if(!(obj_flags & EMAGGED))
 		if(opened)
 			to_chat(user, SPAN_WARNING("You must close the cover to swipe an ID card!"))
 		else if(panel_open)
@@ -867,7 +850,7 @@
 						to_chat(H, SPAN_WARNING("You can't transfer power to the APC!"))
 				return
 
-	if(opened && (!issilicon(user)))
+	if(opened )
 		if(cell)
 			user.visible_message(SPAN_NOTICE("[user] removes \the [cell] from [src]!"), SPAN_NOTICE("You remove \the [cell]."))
 			user.put_in_hands(cell)
@@ -1261,8 +1244,6 @@
 	if (!(. & EMP_PROTECT_CONTENTS))
 		if(cell)
 			cell.emp_act(severity)
-		if(occupier)
-			occupier.emp_act(severity)
 	if(. & EMP_PROTECT_SELF)
 		return
 	lighting = APC_CHANNEL_OFF
@@ -1311,10 +1292,6 @@
 /obj/machinery/power/apc/proc/energy_fail(duration)
 	for(var/obj/machinery/M in area.contents)
 		if(M.critical_machine)
-			return
-	for(var/A in GLOB.ai_list)
-		var/mob/living/silicon/ai/I = A
-		if(get_area(I) == area)
 			return
 
 	failure_timer = max(failure_timer, round(duration))

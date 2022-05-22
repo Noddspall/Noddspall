@@ -110,19 +110,6 @@
 				outmsg = SPAN_WARNING("You fail to blind [C] by shining [src] at [C.p_their()] eyes!")
 				log_combat(user, C, "attempted to blind with a laser pointer",src)
 
-	//robots
-	else if(iscyborg(target))
-		var/mob/living/silicon/S = target
-		log_combat(user, S, "shone in the sensors", src)
-		//chance to actually hit the eyes depends on internal component
-		if(prob(effectchance * diode.rating))
-			S.flash_act(affect_silicon = 1)
-			S.Paralyze(rand(100,200))
-			to_chat(S, SPAN_DANGER("Your sensors were overloaded by a laser!"))
-			outmsg = SPAN_NOTICE("You overload [S] by shining [src] at [S.p_their()] sensors.")
-		else
-			outmsg = SPAN_WARNING("You fail to overload [S] by shining [src] at [S.p_their()] sensors!")
-
 	//cameras
 	else if(istype(target, /obj/machinery/camera))
 		var/obj/machinery/camera/C = target

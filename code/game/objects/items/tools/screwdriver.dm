@@ -114,13 +114,3 @@
 		tool_behaviour = TOOL_SCREWDRIVER
 		to_chat(user, SPAN_NOTICE("You attach the screw bit to [src]."))
 		icon_state = "drill_screw"
-
-/obj/item/screwdriver/cyborg
-	name = "automated screwdriver"
-	desc = "A powerful automated screwdriver, designed to be both precise and quick."
-	icon = 'icons/obj/items_cyborg.dmi'
-	icon_state = "screwdriver_cyborg"
-	hitsound = 'sound/items/drill_hit.ogg'
-	usesound = 'sound/items/drill_use.ogg'
-	toolspeed = 0.5
-	random_color = FALSE

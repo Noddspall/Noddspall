@@ -923,7 +923,7 @@
 
 /obj/machinery/airalarm/AltClick(mob/user)
 	..()
-	if(!user.canUseTopic(src, !issilicon(user)) || !isturf(loc))
+	if(!user.canUseTopic(src) || !isturf(loc))
 		return
 	else
 		togglelock(user)

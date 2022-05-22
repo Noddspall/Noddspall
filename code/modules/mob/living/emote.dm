@@ -267,7 +267,7 @@
 	emote_type = EMOTE_AUDIBLE
 	audio_cooldown = 5 SECONDS
 	vary = TRUE
-	mob_type_allowed_typecache = list(/mob/living/carbon, /mob/living/silicon/pai)
+	mob_type_allowed_typecache = list(/mob/living/carbon)
 
 /datum/emote/living/laugh/get_sound(mob/living/user)
 	if(ismoth(user))
@@ -649,7 +649,7 @@
 	message = "beeps."
 	message_param = "beeps at %t."
 	sound = 'sound/machines/twobeep.ogg'
-	mob_type_allowed_typecache = list(/mob/living/brain, /mob/living/silicon)
+	mob_type_allowed_typecache = list(/mob/living/brain)
 	emote_type = EMOTE_AUDIBLE
 
 /datum/emote/living/inhale
@@ -670,7 +670,7 @@
 	message = "rustles their quills."
 	emote_type = EMOTE_AUDIBLE
 	muzzle_ignore = TRUE
-	mob_type_allowed_typecache = list(/mob/living/carbon, /mob/living/silicon/pai)
+	mob_type_allowed_typecache = list(/mob/living/carbon)
 	vary = TRUE
 	sound = 'sound/voice/voxrustle.ogg'
 
@@ -821,7 +821,7 @@
 	muzzle_ignore = TRUE
 	hands_use_check = TRUE
 	vary = TRUE
-	mob_type_allowed_typecache = list(/mob/living/carbon, /mob/living/silicon/pai)
+	mob_type_allowed_typecache = list(/mob/living/carbon)
 
 /datum/emote/living/clap1/get_sound(mob/living/user)
 	return pick(
@@ -842,7 +842,7 @@
 	muzzle_ignore = TRUE
 	hands_use_check = TRUE
 	vary = TRUE
-	mob_type_allowed_typecache = list(/mob/living/carbon, /mob/living/silicon/pai)
+	mob_type_allowed_typecache = list(/mob/living/carbon)
 
 /datum/emote/living/clap/get_sound(mob/living/user)
 	return pick(
@@ -1038,7 +1038,7 @@
 	key_third_person = "hisses"
 	message = "hisses!"
 	emote_type = EMOTE_AUDIBLE
-	mob_type_allowed_typecache = list(/mob/living/carbon, /mob/living/silicon/pai)
+	mob_type_allowed_typecache = list(/mob/living/carbon)
 	vary = TRUE
 	sound = 'sound/voice/hiss.ogg'
 
@@ -1055,7 +1055,7 @@
 	key_third_person = "chitters"
 	message = "chitters!"
 	emote_type = EMOTE_AUDIBLE
-	mob_type_allowed_typecache = list(/mob/living/carbon, /mob/living/silicon/pai)
+	mob_type_allowed_typecache = list(/mob/living/carbon)
 	vary = TRUE
 	sound = 'sound/voice/mothchitter.ogg'
 

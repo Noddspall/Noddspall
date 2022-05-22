@@ -83,9 +83,8 @@
 	if(.)
 		return
 
-	if(!issilicon(usr))
-		if(!istype(usr.get_active_held_item(), /obj/item/multitool))
-			return
+	if(!istype(usr.get_active_held_item(), /obj/item/multitool))
+		return
 
 	var/obj/item/multitool/heldmultitool = get_multitool(operator)
 
@@ -212,6 +211,6 @@
 	return P
 
 /obj/machinery/telecomms/proc/canAccess(mob/user)
-	if(issilicon(user) || in_range(user, src))
+	if(in_range(user, src))
 		return TRUE
 	return FALSE

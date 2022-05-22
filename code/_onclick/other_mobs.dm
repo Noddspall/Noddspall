@@ -148,14 +148,6 @@
 
 
 /*
-	pAI
-*/
-
-/mob/living/silicon/pai/UnarmedAttack(atom/attack_target, proximity_flag, list/modifiers)//Stops runtimes due to attack_animal being the default
-	return
-
-
-/*
 	Simple animals
 */
 

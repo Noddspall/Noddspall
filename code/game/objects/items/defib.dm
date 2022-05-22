@@ -454,10 +454,7 @@
 		playsound(src, 'sound/machines/defib_failed.ogg', 50, FALSE)
 		return
 	if(!wielded)
-		if(iscyborg(user))
-			to_chat(user, SPAN_WARNING("You must activate the paddles in your active module before you can use them on someone!"))
-		else
-			to_chat(user, SPAN_WARNING("You need to wield the paddles in both hands before you can use them on someone!"))
+		to_chat(user, SPAN_WARNING("You need to wield the paddles in both hands before you can use them on someone!"))
 		return
 	if(cooldown)
 		if(req_defib)
@@ -685,9 +682,6 @@
 	icon_state = "ntpaddles0"
 	inhand_icon_state = "ntpaddles0"
 	base_icon_state = "ntpaddles"
-
-/obj/item/shockpaddles/syndicate/cyborg
-	req_defib = FALSE
 
 #undef HALFWAYCRITDEATH
 #undef DEFIB_CAN_HURT

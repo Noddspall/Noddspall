@@ -187,17 +187,14 @@
 
 	L.forceMove(loc)
 
-	if(issilicon(L))
-		playsound(src, 'sound/items/welder.ogg', 50, TRUE)
-	else
-		playsound(src, 'sound/effects/splat.ogg', 50, TRUE)
+	playsound(src, 'sound/effects/splat.ogg', 50, TRUE)
 
 	if(iscarbon(L))
 		if(L.stat == CONSCIOUS)
 			L.say("ARRRRRRRRRRRGH!!!", forced="recycler grinding")
 		add_mob_blood(L)
 
-	if(!bloody && !issilicon(L))
+	if(!bloody)
 		bloody = TRUE
 		update_appearance()
 

@@ -1,73 +1,5 @@
 #define EMP_RANDOMISE_TIME 300
 
-/datum/action/item_action/chameleon/drone/randomise
-	name = "Randomise Headgear"
-	icon_icon = 'icons/mob/actions/actions_items.dmi'
-	button_icon_state = "random"
-
-/datum/action/item_action/chameleon/drone/randomise/Trigger()
-	if(!IsAvailable())
-		return
-
-	// Damn our lack of abstract interfeces
-	if (istype(target, /obj/item/clothing/head/chameleon/drone))
-		var/obj/item/clothing/head/chameleon/drone/X = target
-		X.chameleon_action.random_look(owner)
-	if (istype(target, /obj/item/clothing/mask/chameleon/drone))
-		var/obj/item/clothing/mask/chameleon/drone/Z = target
-		Z.chameleon_action.random_look(owner)
-
-	return 1
-
-
-/datum/action/item_action/chameleon/drone/togglehatmask
-	name = "Toggle Headgear Mode"
-	icon_icon = 'icons/mob/actions/actions_silicon.dmi'
-
-/datum/action/item_action/chameleon/drone/togglehatmask/New()
-	..()
-
-	if (istype(target, /obj/item/clothing/head/chameleon/drone))
-		button_icon_state = "drone_camogear_helm"
-	if (istype(target, /obj/item/clothing/mask/chameleon/drone))
-		button_icon_state = "drone_camogear_mask"
-
-/datum/action/item_action/chameleon/drone/togglehatmask/Trigger()
-	if(!IsAvailable())
-		return
-
-	// No point making the code more complicated if no non-drone
-	// is ever going to use one of these
-
-	var/mob/living/simple_animal/drone/D
-
-	if(istype(owner, /mob/living/simple_animal/drone))
-		D = owner
-	else
-		return
-
-	// The drone unEquip() proc sets head to null after dropping
-	// an item, so we need to keep a reference to our old headgear
-	// to make sure it's deleted.
-	var/obj/old_headgear = target
-	var/obj/new_headgear
-
-	if(istype(old_headgear, /obj/item/clothing/head/chameleon/drone))
-		new_headgear = new /obj/item/clothing/mask/chameleon/drone()
-	else if(istype(old_headgear, /obj/item/clothing/mask/chameleon/drone))
-		new_headgear = new /obj/item/clothing/head/chameleon/drone()
-	else
-		to_chat(owner, SPAN_WARNING("You shouldn't be able to toggle a camogear helmetmask if you're not wearing it."))
-	if(new_headgear)
-		// Force drop the item in the headslot, even though
-		// it's has TRAIT_NODROP
-		D.dropItemToGround(target, TRUE)
-		qdel(old_headgear)
-		// where is `ITEM_SLOT_HEAD` defined? WHO KNOWS
-		D.equip_to_slot(new_headgear, ITEM_SLOT_HEAD)
-	return 1
-
-
 /datum/action/chameleon_outfit
 	name = "Select Chameleon Outfit"
 	button_icon_state = "chameleon_outfit"
@@ -530,15 +462,6 @@
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 0, ACID = 0)
 	// which means it offers no protection, it's just air and light
 
-/obj/item/clothing/head/chameleon/drone/Initialize()
-	. = ..()
-	ADD_TRAIT(src, TRAIT_NODROP, ABSTRACT_ITEM_TRAIT)
-	chameleon_action.random_look()
-	var/datum/action/item_action/chameleon/drone/togglehatmask/togglehatmask_action = new(src)
-	togglehatmask_action.UpdateButtonIcon()
-	var/datum/action/item_action/chameleon/drone/randomise/randomise_action = new(src)
-	randomise_action.UpdateButtonIcon()
-
 /obj/item/clothing/mask/chameleon
 	name = "gas mask"
 	desc = "A face-covering mask that can be connected to an air supply. While good for concealing your identity, it isn't good for blocking gas flow." //More accurate
@@ -578,25 +501,6 @@
 /obj/item/clothing/mask/chameleon/attack_self(mob/user)
 	voice_change = !voice_change
 	to_chat(user, SPAN_NOTICE("The voice changer is now [voice_change ? "on" : "off"]!"))
-
-
-/obj/item/clothing/mask/chameleon/drone
-	//Same as the drone chameleon hat, undroppable and no protection
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 0, ACID = 0)
-	// Can drones use the voice changer part? Let's not find out.
-	voice_change = 0
-
-/obj/item/clothing/mask/chameleon/drone/Initialize()
-	. = ..()
-	ADD_TRAIT(src, TRAIT_NODROP, ABSTRACT_ITEM_TRAIT)
-	chameleon_action.random_look()
-	var/datum/action/item_action/chameleon/drone/togglehatmask/togglehatmask_action = new(src)
-	togglehatmask_action.UpdateButtonIcon()
-	var/datum/action/item_action/chameleon/drone/randomise/randomise_action = new(src)
-	randomise_action.UpdateButtonIcon()
-
-/obj/item/clothing/mask/chameleon/drone/attack_self(mob/user)
-	to_chat(user, SPAN_NOTICE("[src] does not have a voice changer."))
 
 /obj/item/clothing/shoes/chameleon
 	name = "black shoes"

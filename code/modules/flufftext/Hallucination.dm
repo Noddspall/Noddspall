@@ -709,9 +709,6 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 			A = image('icons/mob/human.dmi',target,"zombie")
 		if("demon")//Demon
 			A = image('icons/mob/mob.dmi',target,"daemon")
-		if("robot")//Cyborg
-			A = image('icons/mob/robots.dmi',target,"robot")
-			target.playsound_local(target,'sound/voice/liveagain.ogg', 75, 1)
 		if("custom")
 			A = image(custom_icon_file, target, custom_icon)
 	A.override = 1

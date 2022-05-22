@@ -201,35 +201,6 @@ By design, d1 is the smallest direction and d2 is the highest
 	cost = 1
 	color = COLOR_RED
 
-/obj/item/stack/pipe_cleaner_coil/cyborg/attack_self(mob/user)
-	var/list/pipe_cleaner_colors = GLOB.pipe_cleaner_colors
-	var/list/possible_colors = list()
-	for(var/color in pipe_cleaner_colors)
-		var/image/pipe_icon = image(icon = src.icon, icon_state = src.icon_state)
-		pipe_icon.color = pipe_cleaner_colors[color]
-		possible_colors += list("[color]" = pipe_icon)
-
-	var/selected_color = show_radial_menu(user, src, possible_colors, custom_check = CALLBACK(src, .proc/check_menu, user), radius = 40, require_near = TRUE)
-	if(!selected_color)
-		return
-	color = pipe_cleaner_colors[selected_color]
-	update_appearance()
-
-/**
- * Checks if we are allowed to interact with a radial menu
- *
- * Arguments:
- * * user The mob interacting with the menu
- */
-/obj/item/stack/pipe_cleaner_coil/cyborg/proc/check_menu(mob/user)
-	if(!istype(user))
-		return FALSE
-	if(!user.is_holding(src))
-		return FALSE
-	if(user.incapacitated())
-		return FALSE
-	return TRUE
-
 /obj/item/stack/pipe_cleaner_coil/suicide_act(mob/user)
 	if(locate(/obj/structure/chair/stool) in get_turf(user))
 		user.visible_message(SPAN_SUICIDE("[user] is making a noose with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))

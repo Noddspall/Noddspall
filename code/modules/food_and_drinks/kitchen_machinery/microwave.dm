@@ -58,7 +58,7 @@
 	if(!operating)
 		. += SPAN_NOTICE("Right-click [src] to turn it on.")
 
-	if(!in_range(user, src) && !issilicon(user) && !isobserver(user))
+	if(!in_range(user, src) && !isobserver(user))
 		. += SPAN_WARNING("You're too far away to examine [src]'s contents and display!")
 		return
 	if(operating)
@@ -66,10 +66,7 @@
 		return
 
 	if(length(ingredients))
-		if(issilicon(user))
-			. += SPAN_NOTICE("\The [src] camera shows:")
-		else
-			. += SPAN_NOTICE("\The [src] contains:")
+		. += SPAN_NOTICE("\The [src] contains:")
 		var/list/items_counts = new
 		for(var/i in ingredients)
 			if(istype(i, /obj/item/stack))
@@ -199,30 +196,25 @@
 	..()
 
 /obj/machinery/microwave/RightClick(mob/user)
-	if(user.canUseTopic(src, !issilicon(usr)))
+	if(user.canUseTopic(src))
 		cook()
 
 /obj/machinery/microwave/ui_interact(mob/user)
 	. = ..()
 
-	if(operating || panel_open || !anchored || !user.canUseTopic(src, !issilicon(user)))
+	if(operating || panel_open || !anchored || !user.canUseTopic(src))
 		return
-	if(isAI(user) && (machine_stat & NOPOWER))
+	if((machine_stat & NOPOWER))
 		return
 
 	if(!length(ingredients))
-		if(isAI(user))
-			examine(user)
-		else
-			to_chat(user, SPAN_WARNING("\The [src] is empty."))
+		to_chat(user, SPAN_WARNING("\The [src] is empty."))
 		return
 
-	var/choice = show_radial_menu(user, src, isAI(user) ? ai_radial_options : radial_options, require_near = !issilicon(user))
+	var/choice = show_radial_menu(user, src, FALSE ? ai_radial_options : radial_options, require_near = TRUE)
 
 	// post choice verification
-	if(operating || panel_open || !anchored || !user.canUseTopic(src, !issilicon(user)))
-		return
-	if(isAI(user) && (machine_stat & NOPOWER))
+	if(operating || panel_open || !anchored || !user.canUseTopic(src))
 		return
 
 	usr.set_machine(src)

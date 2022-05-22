@@ -104,10 +104,3 @@
 	J.put_in_cart(src, user)
 	J.mybroom=src
 	J.update_appearance()
-
-/obj/item/pushbroom/cyborg
-	name = "robotic push broom"
-
-/obj/item/pushbroom/cyborg/janicart_insert(mob/user, obj/structure/janitorialcart/J)
-	to_chat(user, SPAN_NOTICE("You cannot place your [src] into the [J]"))
-	return FALSE

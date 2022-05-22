@@ -321,13 +321,7 @@
 		addtimer(CALLBACK(closest_mob, /mob/living/proc/reset_shocked), 10)
 		var/shock_damage = (zap_flags & ZAP_MOB_DAMAGE) ? (min(round(power/600), 90) + rand(-5, 5)) : 0
 		closest_mob.electrocute_act(shock_damage, source, 1, SHOCK_TESLA | ((zap_flags & ZAP_MOB_STUN) ? NONE : SHOCK_NOSTUN))
-		if(issilicon(closest_mob))
-			var/mob/living/silicon/S = closest_mob
-			if((zap_flags & ZAP_MOB_STUN) && (zap_flags & ZAP_MOB_DAMAGE))
-				S.emp_act(EMP_LIGHT)
-			next_range = 7 // metallic folks bounce it further
-		else
-			next_range = 5
+		next_range = 5
 		power /= 1.5
 
 	else

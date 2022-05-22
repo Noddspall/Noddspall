@@ -293,7 +293,7 @@
  * * user (mob/living) The user to recive the object
  */
 /obj/machinery/proc/try_put_in_hand(obj/object, mob/living/user)
-	if(!issilicon(user) && in_range(src, user))
+	if(in_range(src, user))
 		user.put_in_hands(object)
 	else
 		object.forceMove(drop_location())
@@ -369,17 +369,8 @@
 		if (user_as_animal.dextrous)
 			is_dextrous = TRUE
 
-	if(!issilicon(user) && !is_dextrous && !user.can_hold_items())
+	if(!is_dextrous && !user.can_hold_items())
 		return FALSE //spiders gtfo
-
-	if(issilicon(user)) // If we are a silicon, make sure the machine allows silicons to interact with it
-		if(!(interaction_flags_machine & INTERACT_MACHINE_ALLOW_SILICON))
-			return FALSE
-
-		if(panel_open && !(interaction_flags_machine & INTERACT_MACHINE_OPEN) && !(interaction_flags_machine & INTERACT_MACHINE_OPEN_SILICON))
-			return FALSE
-
-		return TRUE //silicons don't care about petty mortal concerns like needing to be next to a machine to use it
 
 	if(living_user.incapacitated()) //idk why silicons aren't supposed to care about incapacitation when interacting with machines, but it was apparently like this before
 		return FALSE
@@ -751,17 +742,6 @@
 		datum_flags |= DF_VAR_EDITED
 		return TRUE
 	return ..()
-
-/**
- * Alerts the AI that a hack is in progress.
- *
- * Sends all AIs a message that a hack is occurring.  Specifically used for space ninja tampering as this proc was originally in the ninja files.
- * However, the proc may also be used elsewhere.
- */
-/obj/machinery/proc/AI_notify_hack()
-	var/alertstr = SPAN_USERDANGER("Network Alert: Hacking attempt detected[get_area(src)?" in [get_area_name(src, TRUE)]":". Unable to pinpoint location"].")
-	for(var/mob/living/silicon/ai/AI in GLOB.player_list)
-		to_chat(AI, alertstr)
 
 /obj/machinery/proc/update_last_used(mob/user)
 	if(isliving(user))

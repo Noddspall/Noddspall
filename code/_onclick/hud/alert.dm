@@ -418,24 +418,6 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	icon_state = "guardian_instealth"
 	alerttooltipstyle = "parasite"
 
-//SILICONS
-
-/atom/movable/screen/alert/nocell
-	name = "Missing Power Cell"
-	desc = "Unit has no power cell. No modules available until a power cell is reinstalled. Robotics may provide assistance."
-	icon_state = "no_cell"
-
-/atom/movable/screen/alert/emptycell
-	name = "Out of Power"
-	desc = "Unit's power cell has no charge remaining. No modules available until power cell is recharged. \
-Recharging stations are available in robotics, the dormitory bathrooms, and the AI satellite."
-	icon_state = "empty_cell"
-
-/atom/movable/screen/alert/lowcell
-	name = "Low Charge"
-	desc = "Unit's power cell is running low. Recharging stations are available in robotics, the dormitory bathrooms, and the AI satellite."
-	icon_state = "low_cell"
-
 //Ethereal
 
 /atom/movable/screen/alert/lowcell/ethereal

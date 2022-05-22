@@ -412,9 +412,6 @@
 		H.blur_eyes(20)
 		eyes?.applyOrganDamage(5)
 		H.add_confusion(3)
-	for(var/mob/living/silicon/S in view(2,owner))
-		to_chat(S, SPAN_USERDANGER("Your sensors are disabled by a shower of blood!"))
-		S.Paralyze(60)
 	owner.gib()
 
 /datum/mutation/human/headless

@@ -84,7 +84,7 @@ GLOBAL_LIST_INIT(sandbag_recipes, list ( \
 		to_chat(user, SPAN_NOTICE("You fill the sandbag."))
 		var/obj/item/stack/sheet/mineral/sandbags/I = new /obj/item/stack/sheet/mineral/sandbags(drop_location())
 		qdel(src)
-		if (Adjacent(user) && !issilicon(user))
+		if (Adjacent(user))
 			user.put_in_hands(I)
 		G.use(1)
 	else

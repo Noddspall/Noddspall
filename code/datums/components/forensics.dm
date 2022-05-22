@@ -76,10 +76,7 @@
 		if(!iscameramob(M))
 			return
 		if(isaicamera(M))
-			var/mob/camera/ai_eye/ai_camera = M
-			if(!ai_camera.ai)
-				return
-			M = ai_camera.ai
+			return
 	add_hiddenprint(M)
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
@@ -148,10 +145,7 @@
 		if(!iscameramob(M))
 			return
 		if(isaicamera(M))
-			var/mob/camera/ai_eye/ai_camera = M
-			if(!ai_camera.ai)
-				return
-			M = ai_camera.ai
+			return
 	if(!M.key)
 		return
 	var/hasgloves = ""

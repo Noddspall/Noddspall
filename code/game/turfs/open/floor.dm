@@ -338,10 +338,7 @@
 /turf/open/floor/proc/try_place_tile(obj/item/C, mob/user, can_reinforce, considered_broken)
 	if(istype(C, /obj/item/stack/rods) && can_reinforce)
 		if(considered_broken)
-			if(!iscyborg(user))
-				to_chat(user, SPAN_WARNING("Repair the plating first! Use a welding tool to fix the damage."))
-			else
-				to_chat(user, SPAN_WARNING("Repair the plating first! Use a welding tool or a plating repair tool to fix the damage.")) //we don't need to confuse humans by giving them a message about plating repair tools, since only janiborgs should have access to them outside of Christmas presents or admin intervention
+			to_chat(user, SPAN_WARNING("Repair the plating first! Use a welding tool to fix the damage."))
 			return
 		var/obj/item/stack/rods/R = C
 		if (R.get_amount() < 2)
@@ -366,10 +363,7 @@
 			tile.place_tile(src)
 			playsound(src, 'sound/weapons/genhit.ogg', 50, TRUE)
 		else
-			if(!iscyborg(user))
-				to_chat(user, SPAN_WARNING("This section is too damaged to support a tile! Use a welding tool to fix the damage."))
-			else
-				to_chat(user, SPAN_WARNING("This section is too damaged to support a tile! Use a welding tool or a plating repair tool to fix the damage."))
+			to_chat(user, SPAN_WARNING("This section is too damaged to support a tile! Use a welding tool to fix the damage."))
 
 /turf/open/floor/material
 	name = "floor"

@@ -78,10 +78,7 @@
 			playsound(loc, cuffsound, 30, TRUE, -2)
 			log_combat(user, C, "attempted to handcuff")
 			if(do_mob(user, C, 30) && C.canBeHandcuffed())
-				if(iscyborg(user))
-					apply_cuffs(C, user, TRUE)
-				else
-					apply_cuffs(C, user)
+				apply_cuffs(C, user)
 				C.visible_message(SPAN_NOTICE("[user] handcuffs [C]."), \
 									SPAN_USERDANGER("[user] handcuffs you."))
 				SSblackbox.record_feedback("tally", "handcuffs", 1, type)
@@ -416,9 +413,6 @@
 	spring_trap(null, user)
 	return ..()
 
-/obj/item/restraints/legcuffs/beartrap/energy/cyborg
-	breakouttime = 2 SECONDS // Cyborgs shouldn't have a strong restraint
-
 /obj/item/restraints/legcuffs/bola
 	name = "bola"
 	desc = "A restraining device designed to be thrown at the target. Upon connecting with said target, it will wrap around their legs, making it difficult for them to move quickly."
@@ -489,7 +483,7 @@
 
 /obj/item/restraints/legcuffs/bola/energy/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(iscarbon(hit_atom))
-		var/obj/item/restraints/legcuffs/beartrap/B = new /obj/item/restraints/legcuffs/beartrap/energy/cyborg(get_turf(hit_atom))
+		var/obj/item/restraints/legcuffs/beartrap/B = new /obj/item/restraints/legcuffs/beartrap/energy(get_turf(hit_atom))
 		B.spring_trap(null, hit_atom)
 		qdel(src)
 	. = ..()

@@ -98,7 +98,7 @@
 				step_towards(I, src)
 
 /obj/machinery/dish_drive/AltClick(mob/living/user)
-	if(user.canUseTopic(src, !issilicon(user)))
+	if(user.canUseTopic(src))
 		do_the_dishes(TRUE)
 
 /obj/machinery/dish_drive/proc/do_the_dishes(manual)

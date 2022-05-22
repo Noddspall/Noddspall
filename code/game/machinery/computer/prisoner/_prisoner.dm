@@ -37,7 +37,7 @@
 		return
 	else
 		contained_id.forceMove(drop_location())
-		if(!issilicon(user) && Adjacent(user))
+		if(Adjacent(user))
 			user.put_in_hands(contained_id)
 		contained_id = null
 		user.visible_message(SPAN_NOTICE("[user] gets an ID card from the console."), \

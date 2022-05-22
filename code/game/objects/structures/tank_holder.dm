@@ -77,7 +77,7 @@
 /obj/structure/tank_holder/attack_hand(mob/user, list/modifiers)
 	if(!tank)
 		return ..()
-	if(!Adjacent(user) || issilicon(user))
+	if(!Adjacent(user))
 		return ..()
 	to_chat(user, SPAN_NOTICE("You take [tank] from [src]."))
 	add_fingerprint(user)

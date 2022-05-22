@@ -92,7 +92,7 @@
 		to_chat(user, SPAN_WARNING("There are no cards in \the [src]."))
 		return FALSE
 
-	if(user && !issilicon(user) && in_range(src, user))
+	if(user && in_range(src, user))
 		user.put_in_hands(stored_card)
 	else
 		stored_card.forceMove(drop_location())

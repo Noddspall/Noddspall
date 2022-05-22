@@ -29,11 +29,6 @@
 						continue
 					var/move_dir = get_dir(nearby_object, affected_mob)
 					nearby_object.Move(get_step(nearby_object, move_dir), move_dir)
-				for(var/mob/living/silicon/nearby_silicon in orange(2, affected_mob))
-					if(isAI(nearby_silicon))
-						continue
-					var/move_dir = get_dir(nearby_silicon, affected_mob)
-					nearby_silicon.Move(get_step(nearby_silicon, move_dir), move_dir)
 		if(3)
 			if(DT_PROB(1, delta_time))
 				to_chat(affected_mob, SPAN_DANGER("You feel a strong shock course through your body."))
@@ -47,13 +42,6 @@
 						var/move_dir = get_dir(nearby_object, affected_mob)
 						if(!nearby_object.Move(get_step(nearby_object, move_dir), move_dir))
 							break
-				for(var/mob/living/silicon/nearby_silicon in orange(4, affected_mob))
-					if(isAI(nearby_silicon))
-						continue
-					for(var/i in 1 to rand(1, 2))
-						var/move_dir = get_dir(nearby_silicon, affected_mob)
-						if(!nearby_silicon.Move(get_step(nearby_silicon, move_dir), move_dir))
-							break
 		if(4)
 			if(DT_PROB(1, delta_time))
 				to_chat(affected_mob, SPAN_DANGER("You feel a powerful shock course through your body."))
@@ -66,11 +54,4 @@
 					for(var/i in 1 to rand(1, 3))
 						var/move_dir = get_dir(nearby_object, affected_mob)
 						if(!nearby_object.Move(get_step(nearby_object, move_dir), move_dir))
-							break
-				for(var/mob/living/silicon/nearby_silicon in orange(6, affected_mob))
-					if(isAI(nearby_silicon))
-						continue
-					for(var/i in 1 to rand(1, 3))
-						var/move_dir = get_dir(nearby_silicon, affected_mob)
-						if(!nearby_silicon.Move(get_step(nearby_silicon, move_dir), move_dir))
 							break

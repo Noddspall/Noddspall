@@ -146,7 +146,7 @@
 
 /obj/machinery/aug_manipulator/AltClick(mob/living/user)
 	..()
-	if(!user.canUseTopic(src, !issilicon(user)))
+	if(!user.canUseTopic(src))
 		return
 	else
 		eject_part(user)

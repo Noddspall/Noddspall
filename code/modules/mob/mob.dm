@@ -808,8 +808,6 @@
 		return
 	if(!Adjacent(usr))
 		return
-	if(isAI(M))
-		return
 
 ///Is the mob muzzled (default false)
 /mob/proc/is_muzzled()

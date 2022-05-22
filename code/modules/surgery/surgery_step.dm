@@ -8,14 +8,11 @@
 	var/repeatable = FALSE //can this step be repeated? Make shure it isn't last step, or it used in surgery with `can_cancel = 1`. Or surgion will be stuck in the loop
 	var/list/chems_needed = list()  //list of chems needed to complete the step. Even on success, the step will have no effect if there aren't the chems required in the mob.
 	var/require_all_chems = TRUE    //any on the list or all on the list?
-	var/silicons_obey_prob = FALSE
 
 /datum/surgery_step/proc/try_op(mob/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery, try_to_fail = FALSE)
 	var/success = FALSE
 	if(accept_hand)
 		if(!tool)
-			success = TRUE
-		if(iscyborg(user))
 			success = TRUE
 
 	if(accept_any_item)
@@ -85,13 +82,10 @@
 	fail_prob = min(max(0, modded_time - (time * SURGERY_SLOWDOWN_CAP_MULTIPLIER)),99)//if modded_time > time * modifier, then fail_prob = modded_time - time*modifier. starts at 0, caps at 99
 	modded_time = min(modded_time, time * SURGERY_SLOWDOWN_CAP_MULTIPLIER)//also if that, then cap modded_time at time*modifier
 
-	if(iscyborg(user))//any immunities to surgery slowdown should go in this check.
-		modded_time = time
-
 	if(do_after(user, modded_time, target = target, interaction_key = DOAFTER_SOURCE_SURGERY)) //If we have the hippocratic oath, we can perform one surgery on each target, otherwise we can only do one surgery in total.
 
 		var/chem_check_result = chem_check(target)
-		if((prob(100-fail_prob) || (iscyborg(user) && !silicons_obey_prob)) && chem_check_result && !try_to_fail)
+		if(prob(100-fail_prob) && chem_check_result && !try_to_fail)
 
 			if(success(user, target, target_zone, tool, surgery))
 				advance = TRUE

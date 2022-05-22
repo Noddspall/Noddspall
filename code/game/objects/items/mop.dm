@@ -70,9 +70,6 @@
 		to_chat(user, SPAN_WARNING("You are unable to fit your [name] into the [J.name]."))
 		return
 
-/obj/item/mop/cyborg
-	insertable = FALSE
-
 /obj/item/mop/advanced
 	desc = "The most advanced tool in a custodian's arsenal, complete with a condenser for self-wetting! Just think of all the viscera you will clean up with this!"
 	name = "advanced mop"
@@ -116,6 +113,3 @@
 	if(refill_enabled)
 		STOP_PROCESSING(SSobj, src)
 	return ..()
-
-/obj/item/mop/advanced/cyborg
-	insertable = FALSE

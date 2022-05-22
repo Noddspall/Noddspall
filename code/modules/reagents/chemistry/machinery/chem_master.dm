@@ -345,7 +345,7 @@
 				"Give it a name!",
 				name_default,
 				MAX_NAME_LEN)
-		if(!name || !reagents.total_volume || !src || QDELETED(src) || !usr.canUseTopic(src, !issilicon(usr)))
+		if(!name || !reagents.total_volume || !src || QDELETED(src) || !usr.canUseTopic(src))
 			return FALSE
 		// Start filling
 		if(item_type == "pill")

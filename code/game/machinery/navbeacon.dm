@@ -127,7 +127,7 @@
 
 /obj/machinery/navbeacon/ui_interact(mob/user)
 	. = ..()
-	var/ai = isAI(user)
+	var/ai = FALSE
 	var/turf/T = loc
 	if(T.intact)
 		return // prevent intraction when T-scanner revealed

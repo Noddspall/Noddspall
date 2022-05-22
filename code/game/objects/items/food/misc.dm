@@ -408,9 +408,6 @@
 	throw_speed = 1
 	throwforce = 0
 
-/obj/item/food/lollipop/cyborg
-	food_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 1, /datum/reagent/iron = 10, /datum/reagent/consumable/sugar = 5, /datum/reagent/medicine/psicodine = 2) //psicodine instead of omnizine, because the latter was making coders freak out
-
 /obj/item/food/bubblegum
 	name = "bubblegum"
 	desc = "A rubbery strip of gum. Not exactly filling, but it keeps you busy."

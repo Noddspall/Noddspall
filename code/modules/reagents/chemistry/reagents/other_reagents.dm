@@ -1078,7 +1078,7 @@
 
 /datum/reagent/space_cleaner/ez_clean/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
 	. = ..()
-	if((methods & (TOUCH|VAPOR)) && !issilicon(exposed_mob))
+	if((methods & (TOUCH|VAPOR)))
 		exposed_mob.adjustBruteLoss(1.5)
 		exposed_mob.adjustFireLoss(1.5)
 

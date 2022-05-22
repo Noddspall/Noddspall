@@ -34,9 +34,6 @@
 	if(anti_armour_damage && ismecha(target))
 		var/obj/vehicle/sealed/mecha/M = target
 		M.take_damage(anti_armour_damage)
-	if(issilicon(target))
-		var/mob/living/silicon/S = target
-		S.take_overall_damage(anti_armour_damage*0.75, anti_armour_damage*0.25)
 	return BULLET_ACT_HIT
 
 /// Since some rockets have different booms depending if they hit a living target or not, this is easier than having explosive radius vars

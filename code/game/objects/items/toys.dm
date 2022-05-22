@@ -543,9 +543,9 @@
 
 /obj/item/toy/snappop/proc/on_entered(datum/source, H as mob|obj)
 	SIGNAL_HANDLER
-	if(ishuman(H) || issilicon(H)) //i guess carp and shit shouldn't set them off
+	if(ishuman(H)) //i guess carp and shit shouldn't set them off
 		var/mob/living/carbon/M = H
-		if(issilicon(H) || M.m_intent == MOVE_INTENT_RUN)
+		if(M.m_intent == MOVE_INTENT_RUN)
 			to_chat(M, SPAN_DANGER("You step on the snap pop!"))
 			pop_burst(2, 0)
 
@@ -1078,12 +1078,12 @@
 		playsound(src, 'sound/effects/meteorimpact.ogg', 40, TRUE)
 		explosion(src, devastation_range = -1, heavy_impact_range = -1, light_impact_range = 1)
 		for(var/mob/M in urange(10, src))
-			if(!M.stat && !isAI(M))
+			if(!M.stat)
 				shake_camera(M, 3, 1)
 	else
 		playsound(src, 'sound/effects/meteorimpact.ogg', 40, TRUE)
 		for(var/mob/M in urange(10, src))
-			if(!M.stat && !isAI(M))
+			if(!M.stat)
 				shake_camera(M, 3, 1)
 
 /*
@@ -1103,7 +1103,7 @@
 		user.visible_message(SPAN_WARNING("[user] presses the big red button."), SPAN_NOTICE("You press the button, it plays a loud noise!"), SPAN_HEAR("The button clicks loudly."))
 		playsound(src, 'sound/effects/explosionfar.ogg', 50, FALSE)
 		for(var/mob/M in urange(10, src)) // Checks range
-			if(!M.stat && !isAI(M)) // Checks to make sure whoever's getting shaken is alive/not the AI
+			if(!M.stat) // Checks to make sure whoever's getting shaken is alive/not the AI
 				// Short delay to match up with the explosion sound
 				// Shakes player camera 2 squares for 1 second.
 				addtimer(CALLBACK(GLOBAL_PROC, .proc/shake_camera, M, 2, 1), 0.8 SECONDS)

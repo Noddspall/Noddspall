@@ -78,15 +78,6 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 	inhand_icon_state = "spacepol"
 	fitted_bodytypes = BODYTYPE_DIGITIGRADE
 
-/obj/item/clothing/mask/gas/sechailer/cyborg
-	name = "security hailer"
-	desc = "A set of recognizable pre-recorded messages for cyborgs to use when apprehending criminals."
-	icon = 'icons/obj/device.dmi'
-	icon_state = "taperecorder_idle"
-	slot_flags = null
-	aggressiveness = AGGR_GOOD_COP // Borgs are nicecurity!
-	actions_types = list(/datum/action/item_action/halt)
-
 /obj/item/clothing/mask/gas/sechailer/screwdriver_act(mob/living/user, obj/item/I)
 	. = TRUE
 	if(..())

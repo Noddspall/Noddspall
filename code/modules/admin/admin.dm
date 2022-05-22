@@ -67,8 +67,6 @@
 		body += "<a href='?_src_=holder;[HrefToken()];skill=[REF(M)]'>SKILLS</a> - "
 	else
 		body += "<a href='?_src_=holder;[HrefToken()];initmind=[REF(M)]'>Init Mind</a> - "
-	if (iscyborg(M))
-		body += "<a href='?_src_=holder;[HrefToken()];borgpanel=[REF(M)]'>BP</a> - "
 	body += "<a href='?priv_msg=[M.ckey]'>PM</a> - "
 	body += "<a href='?_src_=holder;[HrefToken()];subtlemessage=[REF(M)]'>SM</a> - "
 	if (ishuman(M) && M.mind)
@@ -137,10 +135,7 @@
 			else
 				body += "<A href='?_src_=holder;[HrefToken()];corgione=[REF(M)]'>Corgize</A> | "
 
-			//AI / Cyborg
-			if(isAI(M))
-				body += "<B>Is an AI</B> "
-			else if(ishuman(M))
+			if(ishuman(M))
 				body += "<A href='?_src_=holder;[HrefToken()];makeai=[REF(M)]'>Make AI</A> | "
 				body += "<A href='?_src_=holder;[HrefToken()];makerobot=[REF(M)]'>Make Robot</A> | "
 				body += "<A href='?_src_=holder;[HrefToken()];makealien=[REF(M)]'>Make Alien</A> | "

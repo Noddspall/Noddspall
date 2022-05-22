@@ -333,7 +333,7 @@
 
 /obj/item/thermometer/proc/try_put_in_hand(obj/object, mob/living/user)
 	to_chat(user, SPAN_NOTICE("You remove the [src] from the [attached_to_reagents.my_atom]."))
-	if(!issilicon(user) && in_range(src.loc, user))
+	if(in_range(src.loc, user))
 		user.put_in_hands(object)
 	else
 		object.forceMove(drop_location())

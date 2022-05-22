@@ -274,7 +274,7 @@ What a mess.*/
 		active2 = null
 	if(!authenticated && href_list["choice"] != "Log In") // logging in is the only action you can do if not logged in
 		return
-	if(usr.contents.Find(src) || (in_range(src, usr) && isturf(loc)) || issilicon(usr) || isAdminGhostAI(usr))
+	if(usr.contents.Find(src) || (in_range(src, usr) && isturf(loc)) || isAdminGhostAI(usr))
 		usr.set_machine(src)
 		switch(href_list["choice"])
 // SORTING!
@@ -310,13 +310,7 @@ What a mess.*/
 				if(isliving(usr))
 					var/mob/living/L = usr
 					I = L.get_idcard(TRUE)
-				if(issilicon(usr))
-					active1 = null
-					active2 = null
-					authenticated = usr.name
-					rank = "AI"
-					screen = 1
-				else if(isAdminGhostAI(usr))
+				if(isAdminGhostAI(usr))
 					active1 = null
 					active2 = null
 					authenticated = usr.client.holder.admin_signature
@@ -834,7 +828,7 @@ What a mess.*/
 
 /obj/machinery/computer/secure_data/proc/canUseSecurityRecordsConsole(mob/user, message1 = 0, record1, record2)
 	if(user && authenticated)
-		if(user.canUseTopic(src, !issilicon(user)))
+		if(user.canUseTopic(src))
 			if(!trim(message1))
 				return FALSE
 			if(!record1 || record1 == active1)

@@ -296,7 +296,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 
 /obj/machinery/newscaster/ui_interact(mob/user)
 	. = ..()
-	if(ishuman(user) || issilicon(user))
+	if(ishuman(user))
 		var/mob/living/human_or_robot_user = user
 		var/dat
 		scan_user(human_or_robot_user)
@@ -540,7 +540,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 /obj/machinery/newscaster/Topic(href, href_list)
 	if(..())
 		return
-	if ((usr.contents.Find(src) || ((get_dist(src, usr) <= 1) && isturf(loc))) || issilicon(usr))
+	if ((usr.contents.Find(src) || ((get_dist(src, usr) <= 1) && isturf(loc))))
 		usr.set_machine(src)
 		scan_user(usr)
 		if(href_list["set_channel_name"])
@@ -820,9 +820,6 @@ GLOBAL_LIST_EMPTY(allCasters)
 			scanned_user ="Unknown"
 			return
 		scanned_user = "[id_card.registered_name] ([id_card.assignment])"
-	else if(issilicon(user))
-		var/mob/living/silicon/ai_user = user
-		scanned_user = "[ai_user.name] ([ai_user.job])"
 	else
 		CRASH("Invalid user for this proc")
 

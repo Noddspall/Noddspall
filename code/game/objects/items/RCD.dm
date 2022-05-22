@@ -81,8 +81,6 @@ RLD
 
 /// Inserts matter into the RCD allowing it to build
 /obj/item/construction/proc/insert_matter(obj/O, mob/user)
-	if(iscyborg(user))
-		return FALSE
 	var/loaded = FALSE
 	if(istype(O, /obj/item/rcd_ammo))
 		var/obj/item/rcd_ammo/R = O

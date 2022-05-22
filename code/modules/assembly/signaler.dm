@@ -191,10 +191,3 @@
 
 /obj/item/assembly/signaler/crystal_anomaly/attack_self()
 	return
-
-/obj/item/assembly/signaler/cyborg
-
-/obj/item/assembly/signaler/cyborg/attackby(obj/item/W, mob/user, params)
-	return
-/obj/item/assembly/signaler/cyborg/screwdriver_act(mob/living/user, obj/item/I)
-	return

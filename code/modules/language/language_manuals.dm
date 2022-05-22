@@ -87,19 +87,3 @@
 /obj/item/language_manual/roundstart_species/five/Initialize()
 	. = ..()
 	name = "extended [initial(language.name)] manual"
-
-// So drones can teach borgs and AI dronespeak. For best effect, combine with mother drone lawset.
-/obj/item/language_manual/dronespeak_manual
-	name = "dronespeak manual"
-	desc = "The book's cover reads: \"Understanding Dronespeak - An exercise in futility.\" The book is written entirely in binary, non-silicons probably won't understand it."
-	language = /datum/language/drone
-	flavour_text = "suddenly the drone chittering makes sense"
-	charges = INFINITY
-
-/obj/item/language_manual/dronespeak_manual/attack(mob/living/M, mob/living/user)
-	// If they are not drone or silicon, we don't want them to learn this language.
-	if(!(isdrone(M) || issilicon(M)))
-		M.visible_message(SPAN_DANGER("[user] beats [M] over the head with [src]!"), SPAN_USERDANGER("[user] beats you over the head with [src]!"), SPAN_HEAR("You hear smacking."))
-		return
-
-	return ..()

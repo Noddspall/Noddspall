@@ -76,8 +76,6 @@
 /obj/vehicle/sealed/car/clowncar/Bump(atom/bumped)
 	. = ..()
 	if(isliving(bumped))
-		if(ismegafauna(bumped))
-			return
 		var/mob/living/hittarget_living = bumped
 		if(iscarbon(hittarget_living))
 			var/mob/living/carbon/carb = hittarget_living

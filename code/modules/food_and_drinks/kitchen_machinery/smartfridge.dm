@@ -207,10 +207,6 @@
 		if("Release")
 			var/desired = 0
 
-			if(!allow_ai_retrieve && isAI(usr))
-				to_chat(usr, SPAN_WARNING("[src] does not seem to be configured to respect your authority!"))
-				return
-
 			if (params["amount"])
 				desired = text2num(params["amount"])
 			else
@@ -219,7 +215,7 @@
 			if(QDELETED(src) || QDELETED(usr) || !usr.Adjacent(src)) // Sanity checkin' in case stupid stuff happens while we wait for input()
 				return FALSE
 
-			if(desired == 1 && Adjacent(usr) && !issilicon(usr))
+			if(desired == 1 && Adjacent(usr))
 				for(var/obj/item/O in src)
 					if(O.name == params["name"])
 						if(O in component_parts)

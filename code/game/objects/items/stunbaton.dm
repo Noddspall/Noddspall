@@ -90,7 +90,7 @@
 /obj/item/melee/baton/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	..()
 	//Only mob/living types have stun handling
-	if(turned_on && prob(throw_stun_chance) && isliving(hit_atom) && !iscyborg(hit_atom))
+	if(turned_on && prob(throw_stun_chance) && isliving(hit_atom))
 		baton_effect(hit_atom)
 
 /obj/item/melee/baton/loaded //this one starts with a cell pre-installed.
@@ -184,11 +184,6 @@
 /obj/item/melee/baton/attack(mob/M, mob/living/carbon/human/user, params)
 	if(clumsy_check(user))
 		return FALSE
-
-	if(iscyborg(M))
-		..()
-		return
-
 
 	if(ishuman(M))
 		var/mob/living/carbon/human/L = M
@@ -329,7 +324,7 @@
 /obj/item/melee/baton/boomerang/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(turned_on)
 		var/caught = hit_atom.hitby(src, FALSE, FALSE, throwingdatum=throwingdatum)
-		if(isliving(hit_atom) && !iscyborg(hit_atom) && !caught && prob(throw_stun_chance))//if they are a living creature and they didn't catch it
+		if(isliving(hit_atom) && !caught && prob(throw_stun_chance))//if they are a living creature and they didn't catch it
 			baton_effect(hit_atom)
 		var/mob/thrown_by = thrownby?.resolve()
 		if(thrown_by && !caught)

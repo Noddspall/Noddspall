@@ -291,10 +291,6 @@
 		flashy.color = "#C62727"
 	. += flashy
 
-/atom/movable/screen/combattoggle/robot
-	icon = 'icons/hud/screen_cyborg.dmi'
-	screen_loc = ui_borg_intents
-
 /atom/movable/screen/internals
 	name = "toggle internals"
 	icon_state = "internal0"
@@ -593,10 +589,6 @@
 	name = "health"
 	icon_state = "health0"
 	screen_loc = ui_health
-
-/atom/movable/screen/healths/robot
-	icon = 'icons/hud/screen_cyborg.dmi'
-	screen_loc = ui_borg_health
 
 /atom/movable/screen/healths/blob
 	name = "blob health"

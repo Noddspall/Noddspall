@@ -529,7 +529,7 @@
 		I.play_tool_sound(src)
 		to_chat(user, SPAN_NOTICE("You unscrew [attached_light] from [src]."))
 		attached_light.forceMove(drop_location())
-		if(Adjacent(user) && !issilicon(user))
+		if(Adjacent(user))
 			user.put_in_hands(attached_light)
 
 		var/obj/item/flashlight/removed_light = set_attached_light(null)

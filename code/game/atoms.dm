@@ -829,9 +829,6 @@
 		blood_dna["UNKNOWN DNA"] = "X*"
 	return blood_dna
 
-/mob/living/silicon/get_blood_dna_list()
-	return
-
 ///to add a mob's dna info into an object's blood_dna list.
 /atom/proc/transfer_mob_blood_dna(mob/living/L)
 	// Returns 0 if we have that blood already

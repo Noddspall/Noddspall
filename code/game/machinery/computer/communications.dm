@@ -22,9 +22,6 @@
 	/// The current state of the UI
 	var/state = STATE_MAIN
 
-	/// The current state of the UI for AIs
-	var/cyborg_state = STATE_MAIN
-
 	/// The name of the user who logged in
 	var/authorize_name
 
@@ -48,20 +45,14 @@
 
 /// Are we NOT a silicon, AND we're logged in as the captain?
 /obj/machinery/computer/communications/proc/authenticated_as_non_silicon_captain(mob/user)
-	if (issilicon(user))
-		return FALSE
 	return ACCESS_CAPTAIN in authorize_access
 
 /// Are we a silicon, OR we're logged in as the captain?
 /obj/machinery/computer/communications/proc/authenticated_as_silicon_or_captain(mob/user)
-	if (issilicon(user))
-		return TRUE
 	return ACCESS_CAPTAIN in authorize_access
 
 /// Are we a silicon, OR logged in?
 /obj/machinery/computer/communications/proc/authenticated(mob/user)
-	if (issilicon(user))
-		return TRUE
 	return authenticated
 
 /obj/machinery/computer/communications/attackby(obj/I, mob/user, params)
@@ -124,18 +115,16 @@
 			if (!authenticated_as_silicon_or_captain(usr))
 				return
 
-			// Check if they have
-			if (!issilicon(usr))
-				var/obj/item/held_item = usr.get_active_held_item()
-				var/obj/item/card/id/id_card = held_item?.GetID()
-				if (!istype(id_card))
-					to_chat(usr, SPAN_WARNING("You need to swipe your ID!"))
-					playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, FALSE)
-					return
-				if (!(ACCESS_CAPTAIN in id_card.access))
-					to_chat(usr, SPAN_WARNING("You are not authorized to do this!"))
-					playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, FALSE)
-					return
+			var/obj/item/held_item = usr.get_active_held_item()
+			var/obj/item/card/id/id_card = held_item?.GetID()
+			if (!istype(id_card))
+				to_chat(usr, SPAN_WARNING("You need to swipe your ID!"))
+				playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, FALSE)
+				return
+			if (!(ACCESS_CAPTAIN in id_card.access))
+				to_chat(usr, SPAN_WARNING("You are not authorized to do this!"))
+				playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, FALSE)
+				return
 
 			var/new_sec_level = seclevel2num(params["newSecurityLevel"])
 			if (new_sec_level != SEC_LEVEL_GREEN && new_sec_level != SEC_LEVEL_BLUE)
@@ -195,7 +184,7 @@
 
 		if ("recallShuttle")
 			// AIs cannot recall the shuttle
-			if (!authenticated(usr) || issilicon(usr))
+			if (!authenticated(usr))
 				return
 			SSshuttle.cancelEvac(usr)
 		if ("requestNukeCodes")
@@ -342,7 +331,7 @@
 		"emagged" = FALSE,
 	)
 
-	var/ui_state = issilicon(user) ? cyborg_state : state
+	var/ui_state = state
 
 	var/has_connection = has_communication()
 	data["hasConnection"] = has_connection
@@ -359,9 +348,9 @@
 			data["safeCodeDeliveryWait"] = 0
 			data["safeCodeDeliveryArea"] = null
 
-	if (authenticated || issilicon(user))
+	if (authenticated)
 		data["authenticated"] = TRUE
-		data["canLogOut"] = !issilicon(user)
+		data["canLogOut"] = TRUE
 		data["page"] = ui_state
 
 		if (obj_flags & EMAGGED)
@@ -372,7 +361,7 @@
 				data["canBuyShuttles"] = can_buy_shuttles(user)
 				data["canMakeAnnouncement"] = FALSE
 				data["canMessageAssociates"] = FALSE
-				data["canRecallShuttles"] = !issilicon(user)
+				data["canRecallShuttles"] = TRUE
 				data["canRequestNuke"] = FALSE
 				data["canSendToSectors"] = FALSE
 				data["canSetAlertLevel"] = FALSE
@@ -383,7 +372,7 @@
 				data["aprilFools"] = SSgamemode.holidays && SSgamemode.holidays[APRIL_FOOLS]
 				data["alertLevel"] = get_security_level()
 				data["authorizeName"] = authorize_name
-				data["canLogOut"] = !issilicon(user)
+				data["canLogOut"] = TRUE
 				data["shuttleCanEvacOrFailReason"] = SSshuttle.canEvac(user)
 
 				if (authenticated_as_non_silicon_captain(user))
@@ -409,7 +398,7 @@
 
 					data["alertLevelTick"] = alert_level_tick
 					data["canMakeAnnouncement"] = TRUE
-					data["canSetAlertLevel"] = issilicon(user) ? "NO_SWIPE_NEEDED" : "SWIPE_NEEDED"
+					data["canSetAlertLevel"] = "SWIPE_NEEDED"
 
 				if (SSshuttle.emergency.mode != SHUTTLE_IDLE && SSshuttle.emergency.mode != SHUTTLE_RECALL)
 					data["shuttleCalled"] = TRUE
@@ -457,17 +446,12 @@
 	return is_station_level(current_turf) || is_centcom_level(current_turf)
 
 /obj/machinery/computer/communications/proc/set_state(mob/user, new_state)
-	if (issilicon(user))
-		cyborg_state = new_state
-	else
-		state = new_state
+	state = new_state
 
 /// Returns TRUE if the user can buy shuttles.
 /// If they cannot, returns FALSE or a string detailing why.
 /obj/machinery/computer/communications/proc/can_buy_shuttles(mob/user)
 	if (!SSmapping.config.allow_custom_shuttles)
-		return FALSE
-	if (issilicon(user))
 		return FALSE
 
 	var/has_access = FALSE
@@ -512,12 +496,12 @@
 	deadchat_broadcast(" called an emergency meeting from [SPAN_NAME("[get_area_name(usr, TRUE)]")].", SPAN_NAME("[user.real_name]"), user, message_type=DEADCHAT_ANNOUNCEMENT)
 
 /obj/machinery/computer/communications/proc/make_announcement(mob/living/user)
-	var/is_ai = issilicon(user)
+	var/is_ai = FALSE
 	if(!SScommunications.can_announce(user, is_ai))
 		to_chat(user, SPAN_ALERT("Intercomms recharging. Please stand by."))
 		return
 	var/input = stripped_input(user, "Please choose a message to announce to the station crew.", "What?")
-	if(!input || !user.canUseTopic(src, !issilicon(usr)))
+	if(!input || !user.canUseTopic(src))
 		return
 	if(!(user.can_speak())) //No more cheating, mime/random mute guy!
 		input = "..."

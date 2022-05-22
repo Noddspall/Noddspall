@@ -88,16 +88,13 @@ GLOBAL_DATUM(current_anonymous_theme, /datum/anonymous_theme)
 /datum/anonymous_theme/proc/anonymous_all_players()
 	var/datum/anonymous_theme/theme = GLOB.current_anonymous_theme
 	for(var/mob/living/player in GLOB.player_list)
-		if(!player.mind || (!ishuman(player) && !issilicon(player)) || player.mind.assigned_role.faction != FACTION_STATION)
+		if(!player.mind || (!ishuman(player)) || player.mind.assigned_role.faction != FACTION_STATION)
 			continue
-		if(issilicon(player))
-			player.fully_replace_character_name(player.real_name, theme.anonymous_ai_name(isAI(player)))
-		else
-			var/original_name = player.real_name //id will not be changed if you do not do this
-			randomize_human(player) //do this first so the special name can be given
-			player.fully_replace_character_name(original_name, theme.anonymous_name(player))
-			if(extras_enabled)
-				player_extras(player)
+		var/original_name = player.real_name //id will not be changed if you do not do this
+		randomize_human(player) //do this first so the special name can be given
+		player.fully_replace_character_name(original_name, theme.anonymous_name(player))
+		if(extras_enabled)
+			player_extras(player)
 
 /**
  * restore_all_players: sets all crewmembers on station back to their preference name.
@@ -107,15 +104,12 @@ GLOBAL_DATUM(current_anonymous_theme, /datum/anonymous_theme)
 /datum/anonymous_theme/proc/restore_all_players()
 	priority_announce("Names and Identities have been restored.", "Identity Restoration", SSstation.announcer.get_rand_alert_sound())
 	for(var/mob/living/player in GLOB.player_list)
-		if(!player.mind || (!ishuman(player) && !issilicon(player)) || player.mind.assigned_role.faction != FACTION_STATION)
+		if(!player.mind || (!ishuman(player)) || player.mind.assigned_role.faction != FACTION_STATION)
 			continue
 		var/old_name = player.real_name //before restoration
-		if(issilicon(player))
-			player.apply_pref_name("[isAI(player) ? "ai" : "cyborg"]", player.client)
-		else
-			player.client.prefs.sanitize_chosen_prefs() // Just in case they changed unlawfully.
-			player.client.prefs.apply_prefs_to(player) // This is not sound logic, as the prefs may have changed since then.
-			player.fully_replace_character_name(old_name, player.real_name) //this changes IDs and PDAs and whatnot
+		player.client.prefs.sanitize_chosen_prefs() // Just in case they changed unlawfully.
+		player.client.prefs.apply_prefs_to(player) // This is not sound logic, as the prefs may have changed since then.
+		player.fully_replace_character_name(old_name, player.real_name) //this changes IDs and PDAs and whatnot
 
 /**
  * anonymous_name: generates a random name, based off of whatever the round's anonymousnames is set to.

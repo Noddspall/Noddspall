@@ -4,10 +4,6 @@
 	//check if it doesn't require any access at all
 	if(src.check_access(null))
 		return TRUE
-	if(issilicon(M))
-		if(ispAI(M))
-			return FALSE
-		return TRUE //AI can do whatever it wants
 	if(isAdminGhostAI(M))
 		//Access can't stop the abuse
 		return TRUE

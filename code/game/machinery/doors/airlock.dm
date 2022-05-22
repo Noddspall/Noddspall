@@ -354,14 +354,13 @@
 		update_appearance()
 
 /obj/machinery/door/airlock/bumpopen(mob/living/user) //Airlocks now zap you when you 'bump' them open when they're electrified. --NeoFite
-	if(!issilicon(usr))
-		if(isElectrified() && shock(user, 100))
+	if(isElectrified() && shock(user, 100))
+		return
+	else if(user.hallucinating() && iscarbon(user) && prob(1) && !operating)
+		var/mob/living/carbon/C = user
+		if(!C.wearing_shock_proof_gloves())
+			new /datum/hallucination/shock(C)
 			return
-		else if(user.hallucinating() && iscarbon(user) && prob(1) && !operating)
-			var/mob/living/carbon/C = user
-			if(!C.wearing_shock_proof_gloves())
-				new /datum/hallucination/shock(C)
-				return
 	if(close_others)
 		for(var/obj/machinery/door/airlock/otherlock as anything in close_others)
 			if(!shuttledocked && !emergency && !otherlock.shuttledocked && !otherlock.emergency && allowed(user))
@@ -620,12 +619,6 @@
 		else
 			. += "It looks very robust."
 
-	if(issilicon(user) && !(machine_stat & BROKEN))
-		. += SPAN_NOTICE("Shift-click [src] to [ density ? "open" : "close"] it.")
-		. += SPAN_NOTICE("Ctrl-click [src] to [ locked ? "raise" : "drop"] its bolts.")
-		. += SPAN_NOTICE("Alt-click [src] to [ secondsElectrified ? "un-electrify" : "permanently electrify"] it.")
-		. += SPAN_NOTICE("Ctrl-Shift-click [src] to [ emergency ? "disable" : "enable"] emergency access.")
-
 /obj/machinery/door/airlock/attack_animal(mob/user, list/modifiers)
 	if(isElectrified() && shock(user, 100))
 		return
@@ -643,7 +636,7 @@
 	. = ..()
 	if(.)
 		return
-	if(!(issilicon(user) || isAdminGhostAI(user)))
+	if(!(isAdminGhostAI(user)))
 		if(isElectrified() && shock(user, 100))
 			return
 
@@ -700,7 +693,7 @@
 
 
 /obj/machinery/door/airlock/attackby(obj/item/C, mob/user, params)
-	if(!issilicon(user) && !isAdminGhostAI(user))
+	if(!isAdminGhostAI(user))
 		if(isElectrified() && shock(user, 75))
 			return
 	add_fingerprint(user)
@@ -1386,7 +1379,7 @@
 			. = TRUE
 
 /obj/machinery/door/airlock/proc/user_allowed(mob/user)
-	return (issilicon(user) && canAIControl(user)) || isAdminGhostAI(user)
+	return (canAIControl(user)) || isAdminGhostAI(user)
 
 /obj/machinery/door/airlock/proc/shock_restore(mob/user)
 	if(!user_allowed(user))

@@ -74,7 +74,7 @@
 
 /obj/machinery/reagentgrinder/examine(mob/user)
 	. = ..()
-	if(!in_range(user, src) && !issilicon(user) && !isobserver(user))
+	if(!in_range(user, src) && !isobserver(user))
 		. += SPAN_WARNING("You're too far away to examine [src]'s contents and display!")
 		return
 
@@ -192,18 +192,13 @@
 /obj/machinery/reagentgrinder/ui_interact(mob/user) // The microwave Menu //I am reasonably certain that this is not a microwave
 	. = ..()
 
-	if(operating || !user.canUseTopic(src, !issilicon(user)))
+	if(operating || !user.canUseTopic(src))
 		return
 
 	var/list/options = list()
 
 	if(beaker || length(holdingitems))
 		options["eject"] = radial_eject
-
-	if(isAI(user))
-		if(machine_stat & NOPOWER)
-			return
-		options["examine"] = radial_examine
 
 	// if there is no power or it's broken, the procs will fail but the buttons will still show
 	if(length(holdingitems))
@@ -220,10 +215,10 @@
 		for(var/key in options)
 			choice = key
 	else
-		choice = show_radial_menu(user, src, options, require_near = !issilicon(user))
+		choice = show_radial_menu(user, src, options, require_near = TRUE)
 
 	// post choice verification
-	if(operating || (isAI(user) && machine_stat & NOPOWER) || !user.canUseTopic(src, !issilicon(user)))
+	if(operating || !user.canUseTopic(src))
 		return
 
 	switch(choice)

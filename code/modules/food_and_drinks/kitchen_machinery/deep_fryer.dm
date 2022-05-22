@@ -115,7 +115,7 @@ GLOBAL_LIST_INIT(oilfry_blacklisted_items, typecacheof(list(
 			frying.fry(cook_time)
 			icon_state = "fryer_off"
 			frying.forceMove(drop_location())
-			if(Adjacent(user) && !issilicon(user))
+			if(Adjacent(user))
 				user.put_in_hands(frying)
 			frying = null
 			cook_time = 0
